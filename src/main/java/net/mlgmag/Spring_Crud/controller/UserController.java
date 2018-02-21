@@ -2,9 +2,11 @@ package net.mlgmag.Spring_Crud.controller;
 
 import net.mlgmag.Spring_Crud.model.Role;
 import net.mlgmag.Spring_Crud.model.User;
-import net.mlgmag.Spring_Crud.service.UserService;
+import net.mlgmag.Spring_Crud.repository.UserRepository;
+import net.mlgmag.Spring_Crud.service.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +18,13 @@ import java.util.UUID;
 @RequestMapping("/user")
 public class UserController {
 
+    private final UserRepository userRepository;
+
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserRepository userRepository, UserService userService) {
+        this.userRepository = userRepository;
         this.userService = userService;
     }
 
@@ -35,7 +40,6 @@ public class UserController {
                           @ModelAttribute("role") Role role) {
 
         user.setRole(role);
-        System.out.println(user);
         userService.save(user);
 
         return "redirect:/user/list";
@@ -43,22 +47,26 @@ public class UserController {
 
     @GetMapping("/list")
     public String getAllUsers(Model model) {
-        model.addAttribute("users", userService.getAll());
+        model.addAttribute("users", userRepository.findAll());
         return "usersList";
     }
 
     @GetMapping("/{id}")
-    public String userView(@PathVariable("id") UUID id, Model model) {
+    @Transactional
+    public String userView(@PathVariable("id") UUID uuid, Model model) {
 
-        model.addAttribute("user", userService.getById(id));
+        model.addAttribute("user", userRepository.getOne(uuid));
+        System.out.println(userRepository.getOne(uuid));
         return "userView";
     }
 
     @GetMapping("/update/{id}")
+    @Transactional
     public String userUpdatePage(@PathVariable("id") UUID uuid, Model model) {
         List<Role> roles = Arrays.asList(Role.values());
-        model.addAttribute("user", userService.getById(uuid));
+        model.addAttribute("user", userRepository.getOne(uuid));
         model.addAttribute("roles", roles);
+        System.out.println(userRepository.getOne(uuid));
         return "userUpdate";
     }
 
@@ -74,7 +82,7 @@ public class UserController {
 
     @GetMapping("/delete/{id}")
     public String userDelete(@PathVariable("id") UUID uuid) {
-        userService.delete(userService.getById(uuid));
+        userRepository.delete(userRepository.getOne(uuid));
         return "redirect:/user/list";
     }
 }

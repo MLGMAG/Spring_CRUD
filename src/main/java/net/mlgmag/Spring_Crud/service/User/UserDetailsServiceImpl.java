@@ -1,6 +1,6 @@
-package net.mlgmag.Spring_Crud.service.ServiceImpl.User;
+package net.mlgmag.Spring_Crud.service.User;
 
-import net.mlgmag.Spring_Crud.dao.UserDao;
+import net.mlgmag.Spring_Crud.repository.UserRepository;
 import net.mlgmag.Spring_Crud.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,10 +16,10 @@ import java.util.Set;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private UserDao userDao;
+    private UserRepository userDao;
 
     @Autowired
-    public UserDetailsServiceImpl(UserDao userDao) {
+    public UserDetailsServiceImpl(UserRepository userDao) {
         this.userDao = userDao;
     }
 
@@ -29,8 +29,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
-//        grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
+        grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().name()));
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
     }
+
+
 }

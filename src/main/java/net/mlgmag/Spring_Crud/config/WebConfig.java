@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 @EnableWebMvc
 @ComponentScan(basePackages = {"net.mlgmag.Spring_Crud.controller", "net.mlgmag.Spring_Crud.config"})
 //                               "net.mlgmag.Spring_Crud.config.security"
-@Import({SpringConfig.class})
+@Import({SpringConfig.class, DatabaseConfig.class})
 
 
 public class WebConfig {

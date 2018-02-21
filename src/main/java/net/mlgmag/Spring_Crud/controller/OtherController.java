@@ -1,8 +1,8 @@
 package net.mlgmag.Spring_Crud.controller;
 
 import net.mlgmag.Spring_Crud.model.User;
+import net.mlgmag.Spring_Crud.repository.UserRepository;
 import net.mlgmag.Spring_Crud.service.SecurityService;
-import net.mlgmag.Spring_Crud.service.UserService;
 import net.mlgmag.Spring_Crud.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class OtherController {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     private final SecurityService securityService;
 
     private final UserValidator userValidator;
 
     @Autowired
-    public OtherController(UserService userService, SecurityService securityService, UserValidator userValidator) {
-        this.userService = userService;
+    public OtherController(UserRepository userRepository, SecurityService securityService, UserValidator userValidator) {
+        this.userRepository = userRepository;
         this.securityService = securityService;
         this.userValidator = userValidator;
     }
@@ -48,7 +48,7 @@ public class OtherController {
             return "SingUp";
         }
 
-        userService.save(user);
+        userRepository.save(user);
 
         securityService.autoLogin(user.getUsername(), user.getConfirmPassword());
 

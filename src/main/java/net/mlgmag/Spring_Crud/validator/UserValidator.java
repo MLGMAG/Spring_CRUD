@@ -1,7 +1,7 @@
 package net.mlgmag.Spring_Crud.validator;
 
 import net.mlgmag.Spring_Crud.model.User;
-import net.mlgmag.Spring_Crud.service.UserService;
+import net.mlgmag.Spring_Crud.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -11,11 +11,11 @@ import org.springframework.validation.Validator;
 @Component
 public class UserValidator implements Validator {
 
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
-    public UserValidator(UserService userService) {
-        this.userService = userService;
+    public UserValidator(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class UserValidator implements Validator {
             errors.rejectValue("username", "Size.userForm.username");
         }
 
-        if (userService.finedByUsername(user.getUsername()) != null) {
+        if (userRepository.findByUsername(user.getUsername()) != null) {
             errors.rejectValue("username", "Deprecate.userForm.username");
         }
 
