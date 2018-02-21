@@ -4,6 +4,8 @@ import net.mlgmag.Spring_Crud.model.Manufacturer;
 import net.mlgmag.Spring_Crud.model.Product;
 import net.mlgmag.Spring_Crud.repository.ManufacturerRepository;
 import net.mlgmag.Spring_Crud.repository.ProductRepository;
+import net.mlgmag.Spring_Crud.service.service.ManufacturerService;
+import net.mlgmag.Spring_Crud.service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,25 +18,19 @@ import java.util.UUID;
 @RequestMapping("/product")
 public class ProductController {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    private final ManufacturerRepository manufacturerRepository;
+    private final ManufacturerService manufacturerService;
 
     @Autowired
-    public ProductController(ManufacturerRepository manufacturerRepository, ProductRepository productRepository) {
-        this.manufacturerRepository = manufacturerRepository;
-        this.productRepository = productRepository;
-    }
-
-    @GetMapping("/list")
-    public String productsList(Model model) {
-        model.addAttribute("products", productRepository.findAll());
-        return "productsList";
+    public ProductController(ManufacturerService manufacturerService, ProductService productService) {
+        this.manufacturerService = manufacturerService;
+        this.productService = productService;
     }
 
     @GetMapping("/add")
     public String productAddPage(Model model) {
-        model.addAttribute("manufacturers", manufacturerRepository.findAll());
+        model.addAttribute("manufacturers", manufacturerService.getAll());
         return "productAdd";
     }
 
@@ -42,34 +38,17 @@ public class ProductController {
     public String productAdd(@ModelAttribute("product") Product product,
                              @ModelAttribute("manufacturer") Manufacturer manufacturer) {
 
-        product.setManufacturer(manufacturerRepository.getOne(manufacturer.getId()));
-        productRepository.save(product);
+        product.setManufacturer(manufacturerService.getById(manufacturer.getId()));
+        productService.save(product);
         return "redirect:/product/list";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String productDelete(@PathVariable("id") UUID uuid) {
-        productRepository.delete(productRepository.getOne(uuid));
-        return "redirect:/product/list";
-    }
-
-    @GetMapping("/{id}")
-    @Transactional
-    public String productView(@PathVariable("id") UUID uuid, Model model) {
-        model.addAttribute("product", productRepository.getOne(uuid));
-        System.out.println(productRepository.getOne(uuid));
-        return "productView";
     }
 
     @GetMapping("/update/{id}")
-    @Transactional
     public String productUpdatePage(@PathVariable("id") UUID uuid, Model model) {
-        model.addAttribute("manufacturers", manufacturerRepository.findAll());
-        model.addAttribute("product", productRepository.getOne(uuid));
-        System.out.println(productRepository.getOne(uuid));
+        model.addAttribute("manufacturers", manufacturerService.getAll());
+        model.addAttribute("product", productService.getById(uuid));
         return "productUpdate";
     }
-
 
     @PostMapping("/update/{id}")
     public String productUpdate(@PathVariable("id") UUID uuid,
@@ -77,8 +56,25 @@ public class ProductController {
                                 @ModelAttribute("manufacturer") Manufacturer manufacturer) {
 
         product.setId(uuid);
-        product.setManufacturer(manufacturerRepository.getOne(manufacturer.getId()));
-        productRepository.saveAndFlush(product);
+        product.setManufacturer(manufacturerService.getById(manufacturer.getId()));
         return "redirect:/product/list";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String productDelete(@PathVariable("id") UUID uuid) {
+        productService.delete(productService.getById(uuid));
+        return "redirect:/product/list";
+    }
+
+    @GetMapping("/{id}")
+    public String productView(@PathVariable("id") UUID uuid, Model model) {
+        model.addAttribute("product", productService.getById(uuid));
+        return "productView";
+    }
+
+    @GetMapping("/list")
+    public String productsList(Model model) {
+        model.addAttribute("products", productService.getAll());
+        return "productsList";
     }
 }

@@ -2,7 +2,7 @@ package net.mlgmag.Spring_Crud.controller;
 
 import net.mlgmag.Spring_Crud.model.User;
 import net.mlgmag.Spring_Crud.repository.UserRepository;
-import net.mlgmag.Spring_Crud.service.SecurityService;
+import net.mlgmag.Spring_Crud.service.service.SecurityService;
 import net.mlgmag.Spring_Crud.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

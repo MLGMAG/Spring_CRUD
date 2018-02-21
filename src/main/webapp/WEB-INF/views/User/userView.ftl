@@ -57,11 +57,6 @@
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
-                    <div class="col-md-6 title">Password:</div>
-                    <div class="col-md-6 text-center data">${user.password}</div>
-
-                    <div class="clearfix"></div>
-                    <div class="bot-border"></div>
                     <div class="col-md-6 title">Role:</div>
                     <div class="col-md-6 text-center data">${user.role}</div>
 

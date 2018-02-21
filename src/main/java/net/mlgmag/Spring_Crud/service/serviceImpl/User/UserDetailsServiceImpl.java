@@ -1,4 +1,4 @@
-package net.mlgmag.Spring_Crud.service.User;
+package net.mlgmag.Spring_Crud.service.serviceImpl.User;
 
 import net.mlgmag.Spring_Crud.repository.UserRepository;
 import net.mlgmag.Spring_Crud.model.User;

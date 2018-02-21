@@ -2,6 +2,7 @@ package net.mlgmag.Spring_Crud.controller;
 
 import net.mlgmag.Spring_Crud.model.Manufacturer;
 import net.mlgmag.Spring_Crud.repository.ManufacturerRepository;
+import net.mlgmag.Spring_Crud.service.service.ManufacturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,18 +15,11 @@ import java.util.UUID;
 @RequestMapping("/manufacturer")
 public class ManufacturerController {
 
-    private final ManufacturerRepository manufacturerRepository;
+    private final ManufacturerService manufacturerService;
 
     @Autowired
-    public ManufacturerController(ManufacturerRepository manufacturerRepository) {
-        this.manufacturerRepository = manufacturerRepository;
-    }
-
-    @GetMapping("/list")
-    public String manufacturersList(Model model) {
-        model.addAttribute("manufacturers", manufacturerRepository.findAll());
-        model.addAttribute("products", manufacturerRepository);
-        return "manufacturersList";
+    public ManufacturerController(ManufacturerService manufacturerService) {
+        this.manufacturerService = manufacturerService;
     }
 
     @GetMapping("/add")
@@ -35,21 +29,13 @@ public class ManufacturerController {
 
     @PostMapping("/add")
     public String manufacturerAdd(@ModelAttribute("manufacturer") Manufacturer manufacturer) {
-        manufacturerRepository.save(manufacturer);
-        return "redirect:/manufacturer/list";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String manufacturerDelete(@PathVariable("id") UUID uuid) {
-        manufacturerRepository.delete(manufacturerRepository.getOne(uuid));
+        manufacturerService.save(manufacturer);
         return "redirect:/manufacturer/list";
     }
 
     @GetMapping("/update/{id}")
-    @Transactional
     public String manufacturerUpdatePage(@PathVariable("id") UUID uuid, Model model) {
-        model.addAttribute("manufacturer", manufacturerRepository.getOne(uuid));
-        System.out.println(manufacturerRepository.getOne(uuid));
+        model.addAttribute("manufacturer", manufacturerService.getById(uuid));
         return "manufacturerUpdate";
     }
 
@@ -58,17 +44,28 @@ public class ManufacturerController {
                                      @ModelAttribute("manufacturer") Manufacturer manufacturer) {
 
         manufacturer.setId(uuid);
-        manufacturerRepository.saveAndFlush(manufacturer);
+        manufacturerService.update(manufacturer);
 
         return "redirect:/manufacturer/list";
     }
 
+    @GetMapping("/delete/{id}")
+    public String manufacturerDelete(@PathVariable("id") UUID uuid) {
+        manufacturerService.delete(manufacturerService.getById(uuid));
+        return "redirect:/manufacturer/list";
+    }
+
     @GetMapping("/{id}")
-    @Transactional
     public String manufacturerView(@PathVariable("id") UUID uuid, Model model) {
-        model.addAttribute("manufacturer", manufacturerRepository.getOne(uuid));
-        model.addAttribute("products", manufacturerRepository.getOne(uuid).getProducts());
-        System.out.println(manufacturerRepository.getOne(uuid));
+        model.addAttribute("manufacturer", manufacturerService.getById(uuid));
+        model.addAttribute("products", manufacturerService.getById(uuid).getProducts());
         return "manufacturerView";
+    }
+
+    @GetMapping("/list")
+    public String manufacturersList(Model model) {
+        model.addAttribute("manufacturers", manufacturerService.getAll());
+        model.addAttribute("products", manufacturerService);
+        return "manufacturersList";
     }
 }

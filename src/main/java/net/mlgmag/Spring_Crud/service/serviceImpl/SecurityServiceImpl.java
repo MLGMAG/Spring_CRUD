@@ -1,5 +1,6 @@
-package net.mlgmag.Spring_Crud.service;
+package net.mlgmag.Spring_Crud.service.serviceImpl;
 
+import net.mlgmag.Spring_Crud.service.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
