@@ -48,9 +48,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="manufacturer">Manufacturer</label>
+                                <label th:for="manufacturer.id">Manufacturer</label>
                                 <br>
-                                <select id="manufacturer" class="selectpicker" th:field="*{manufacturer.id}">
+                                <select class="selectpicker" th:field="*{manufacturer.id}">
                                     <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.id}"
                                             th:text="${manufacturer.name}">
                                     </option>

@@ -47,7 +47,7 @@ public class OtherController {
         userValidator.validate(user, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "Other/SingUp";
+            return "Other/singUp";
         }
 
         user.setRole(Role.User);
@@ -55,7 +55,7 @@ public class OtherController {
 
 //        securityService.autoLogin(user.getUsername(), user.getConfirmPassword());
 
-        return "redirect:/";
+        return "redirect:/user/list";
     }
 
     @GetMapping("/singIn")
