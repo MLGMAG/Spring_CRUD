@@ -28,45 +28,41 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
+            <div class="panel panel-default" th:object="${user}">
 
                 <div class="panel-heading">
-                    <h4 class="text-center title" th:text="${user.firstName} + '&nbsp' + ${user.lastName}">
-                        <div th:text="${user.firstName}"></div>
-                        &nbsp
-                        <div th:text="${user.lastName}"></div>
-                    </h4>
+                    <h4 class="text-center title" th:text="*{firstName} + '&nbsp' + *{lastName}"></h4>
                 </div>
 
                 <div class="panel-body">
 
                     <div class="col-md-6 title">Id:</div>
-                    <div class="col-md-6 text-center data" th:text="${user.id}"></div>
+                    <div class="col-md-6 text-center data" th:text="*{id}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
                     <div class="col-md-6 title">Username:</div>
-                    <div class="col-md-6 text-center data" th:text="${user.username}"></div>
+                    <div class="col-md-6 text-center data" th:text="*{username}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
                     <div class="col-md-6 title">First Name:</div>
-                    <div class="col-md-6 text-center data" th:text="${user.firstName}"></div>
+                    <div class="col-md-6 text-center data" th:text="*{firstName}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
                     <div class="col-md-6 title">Last Name:</div>
-                    <div class="col-md-6 text-center data" th:text="${user.lastName}"></div>
+                    <div class="col-md-6 text-center data" th:text="*{lastName}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
                     <div class="col-md-6 title">Email:</div>
-                    <div class="col-md-6 text-center data" th:text="${user.email}"></div>
+                    <div class="col-md-6 text-center data" th:text="*{email}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
                     <div class="col-md-6 title">Role:</div>
-                    <div class="col-md-6 text-center data" th:text="${user.role}"></div>
+                    <div class="col-md-6 text-center data" th:text="*{role}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>

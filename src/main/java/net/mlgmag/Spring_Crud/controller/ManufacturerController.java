@@ -23,7 +23,8 @@ public class ManufacturerController {
     }
 
     @GetMapping("/add")
-    public String manufacturerAddPage() {
+    public String manufacturerAddPage(Model model) {
+        model.addAttribute("manufacturer", new Manufacturer());
         return "Manufacturer/manufacturerAdd";
     }
 

@@ -32,12 +32,13 @@
             <div class="panel panel-default">
                 <div class="panel-body">
 
-                    <form th:method="@{/manufacturer/add}" method="post">
+                    <form th:object="${manufacturer}" th:method="@{/manufacturer/add}" method="post">
                         <fieldset>
 
                             <div class="form-group">
-                                <label>Name</label>
-                                <input class="form-control" type="text" name="name" placeholder="Name">
+                                <label th:for="name">Name</label>
+                                <input class="form-control" type="text" placeholder="Name"
+                                       th:field="*{name}">
                             </div>
 
                             <input class="btn btn-lg btn-success btn-block" type="submit" value="Add Manufacturer">

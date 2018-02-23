@@ -28,21 +28,21 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
+            <div class="panel panel-default" th:object="${manufacturer}">
 
                 <div class="panel-heading">
-                    <h4 class="text-center title" th:text="${manufacturer.name}"></h4>
+                    <h4 class="text-center title" th:text="*{name}"></h4>
                 </div>
 
                 <div class="panel-body">
 
                     <div class="col-md-6 title">Id:</div>
-                    <div class="col-md-6 text-center data" th:text="${manufacturer.id}"></div>
+                    <div class="col-md-6 text-center data" th:text="*{id}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
                     <div class="col-md-6 title">Name:</div>
-                    <div class="col-md-6 text-center data" th:text="${manufacturer.name}"></div>
+                    <div class="col-md-6 text-center data" th:text="*{name}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>

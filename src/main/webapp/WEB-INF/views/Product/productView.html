@@ -28,31 +28,31 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
+            <div class="panel panel-default" th:object="${product}">
 
                 <div class="panel-heading">
-                    <h4 class="text-center title" th:text="${product.name}"></h4>
+                    <h4 class="text-center title" th:text="*{name}"></h4>
                 </div>
 
                 <div class="panel-body">
 
                     <div class="col-md-6 title">Id:</div>
-                    <div class="col-md-6 text-center data" th:text="${product.id}"></div>
+                    <div class="col-md-6 text-center data" th:text="*{id}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
                     <div class="col-md-6 title">Name:</div>
-                    <div class="col-md-6 text-center data" th:text="${product.name}"></div>
+                    <div class="col-md-6 text-center data" th:text="*{name}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
                     <div class="col-md-6 title">Price:</div>
-                    <div class="col-md-6 text-center data" th:text="${product.price}"></div>
+                    <div class="col-md-6 text-center data" th:text="*{price}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
                     <div class="col-md-6 title">Manufacturer:</div>
-                    <div class="col-md-6 text-center data" th:text="${product.manufacturer.name}"></div>
+                    <div class="col-md-6 text-center data" th:text="*{manufacturer.name}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>

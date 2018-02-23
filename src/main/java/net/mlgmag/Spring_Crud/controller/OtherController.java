@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/")
 public class OtherController {
@@ -38,15 +40,18 @@ public class OtherController {
     }
 
     @GetMapping("/singUp")
-    public String singUpPage() {
+    public String singUpPage(Model model) {
+        model.addAttribute("user", new User());
         return "Other/singUp";
     }
 
     @PostMapping("/singUp")
-    public String singUp(@ModelAttribute("user") User user, BindingResult bindingResult) {
+    public String singUp(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
         userValidator.validate(user, bindingResult);
 
         if (bindingResult.hasErrors()) {
+            System.out.println("errors: " + bindingResult.getAllErrors());
+            model.addAttribute("errors", bindingResult.getAllErrors());
             return "Other/singUp";
         }
 

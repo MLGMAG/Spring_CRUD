@@ -31,13 +31,13 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form accept-charset="UTF-8" th:method="@{/manufacturer/update/}" method="post">
+                    <form th:object="${manufacturer}" th:method="@{/manufacturer/update/}" method="post">
                         <fieldset>
 
                             <div class="form-group">
-                                <label>Name</label>
-                                <input class="form-control" type="text" name="name"
-                                       th:value="${manufacturer.name}" placeholder="Name">
+                                <label th:for="name">Name</label>
+                                <input class="form-control" type="text" placeholder="Name"
+                                       th:field="*{name}">
                             </div>
 
                             <input class="btn btn-lg btn-success btn-block" type="submit" value="Update Manufacturer">

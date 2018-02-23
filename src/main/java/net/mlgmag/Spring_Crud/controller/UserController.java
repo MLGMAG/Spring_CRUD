@@ -31,6 +31,7 @@ public class UserController {
     public String userAddPage(Model model) {
         List<Role> roles = Arrays.asList(Role.values());
         model.addAttribute("roles", roles);
+        model.addAttribute("user", new User());
         return "User/userAdd";
     }
 

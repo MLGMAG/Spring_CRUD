@@ -31,14 +31,14 @@ public class ProductController {
     @GetMapping("/add")
     public String productAddPage(Model model) {
         model.addAttribute("manufacturers", manufacturerService.getAll());
+        model.addAttribute("product", new Product());
         return "Product/productAdd";
     }
 
     @PostMapping("/add")
-    public String productAdd(@ModelAttribute("product") Product product,
-                             @ModelAttribute("manufacturer") Manufacturer manufacturer) {
+    public String productAdd(@ModelAttribute("product") Product product) {
 
-        product.setManufacturer(manufacturerService.getById(manufacturer.getId()));
+        product.getManufacturer().setName(manufacturerService.getById(product.getManufacturer().getId()).getName());
         productService.save(product);
         return "redirect:/product/list";
     }
