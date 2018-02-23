@@ -1,14 +1,18 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
 
     <meta charset="UTF-8">
     <title>User</title>
 
-    <#include "templates/head.ftl">
+    <div th:replace="templates :: header"></div>
+    <div th:replace="templates :: style"></div>
 
 </head>
+
 <body>
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
 
@@ -16,7 +20,7 @@
             User
         </div>
 
-        <#include "templates/navbar.ftl">
+        <div th:replace="templates :: navbar"></div>
 
     </div>
 </nav>
@@ -27,38 +31,42 @@
             <div class="panel panel-default">
 
                 <div class="panel-heading">
-                    <h4 class="text-center title">${user.firstName}&nbsp${user.lastName}</h4>
+                    <h4 class="text-center title" th:text="${user.firstName} + '&nbsp' + ${user.lastName}">
+                        <div th:text="${user.firstName}"></div>
+                        &nbsp
+                        <div th:text="${user.lastName}"></div>
+                    </h4>
                 </div>
 
                 <div class="panel-body">
 
                     <div class="col-md-6 title">Id:</div>
-                    <div class="col-md-6 text-center data">${user.id}</div>
+                    <div class="col-md-6 text-center data" th:text="${user.id}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
                     <div class="col-md-6 title">Username:</div>
-                    <div class="col-md-6 text-center data">${user.username}</div>
+                    <div class="col-md-6 text-center data" th:text="${user.username}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
                     <div class="col-md-6 title">First Name:</div>
-                    <div class="col-md-6 text-center data">${user.firstName}</div>
+                    <div class="col-md-6 text-center data" th:text="${user.firstName}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
                     <div class="col-md-6 title">Last Name:</div>
-                    <div class="col-md-6 text-center data">${user.lastName}</div>
+                    <div class="col-md-6 text-center data" th:text="${user.lastName}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
                     <div class="col-md-6 title">Email:</div>
-                    <div class="col-md-6 text-center data">${user.email}</div>
+                    <div class="col-md-6 text-center data" th:text="${user.email}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
                     <div class="col-md-6 title">Role:</div>
-                    <div class="col-md-6 text-center data">${user.role}</div>
+                    <div class="col-md-6 text-center data" th:text="${user.role}"></div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>

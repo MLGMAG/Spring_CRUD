@@ -1,11 +1,15 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
+
     <meta charset="UTF-8">
     <title>Sing In</title>
 
-    <#include "templates/head.ftl" >
+    <div th:replace="templates :: header"></div>
 
 </head>
+
 <body>
 
 <nav class="navbar navbar-default">
@@ -15,7 +19,7 @@
             Sing In
         </div>
 
-        <#include "templates/navbar.ftl">
+        <div th:replace="templates :: navbar"></div>
 
     </div>
 </nav>
@@ -28,15 +32,15 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form accept-charset="UTF-8" role="form">
+                    <form>
                         <fieldset>
                             <div class="form-group">
-                                <label for="email">Email</label>
-                                <input class="form-control" id="email" placeholder="E-mail" type="text">
+                                <label>Email</label>
+                                <input class="form-control" type="text" placeholder="E-mail">
                             </div>
                             <div class="form-group">
-                                <label for="password">Password</label>
-                                <input class="form-control" id="password" placeholder="Password" type="password">
+                                <label>Password</label>
+                                <input class="form-control" type="password" placeholder="Password">
                             </div>
 
                             <input class="btn btn-lg btn-success btn-block" type="submit" value="Sing In">

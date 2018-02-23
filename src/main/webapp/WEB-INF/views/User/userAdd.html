@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Add User</title>
+
+    <div th:replace="templates :: header"></div>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+
+        <div class="navbar-header navbar-brand">
+            Add User
+        </div>
+
+        <div th:replace="templates :: navbar"></div>
+
+    </div>
+</nav>
+
+<h2 class="text-center">Add User</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form th:method="@{/user/add}" method="post">
+                        <fieldset>
+
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input class="form-control" type="text" placeholder="Username"
+                                       name="username">
+                            </div>
+
+                            <div class="form-group">
+                                <label>First name</label>
+                                <input class="form-control" type="text" placeholder="First name"
+                                       name="firstName">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Last name</label>
+                                <input class="form-control" type="text" placeholder="Last name"
+                                       name="lastName">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input class="form-control" type="text" placeholder="E-mail"
+                                       name="email">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input class="form-control" type="password" placeholder="Password"
+                                       name="password">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="role">Role</label>
+                                <br>
+                                <select id="role" name="role">
+                                    <option th:each="role : ${roles}" th:value="${role}"
+                                            th:text="${role}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <input class="btn btn-success btn-block" type="submit" value="Add User">
+
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

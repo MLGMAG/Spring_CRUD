@@ -1,12 +1,15 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
 
     <meta charset="UTF-8">
     <title>Add Product</title>
 
-    <#include "templates/head.ftl">
+    <div th:replace="templates :: header"></div>
 
 </head>
+
 <body>
 
 <nav class="navbar navbar-default">
@@ -16,7 +19,7 @@
             Add Product
         </div>
 
-        <#include "templates/navbar.ftl">
+        <div th:replace="templates :: navbar"></div>
 
     </div>
 </nav>
@@ -28,26 +31,27 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form accept-charset="UTF-8" role="form" action="/product/add" method="post">
+                    <form th:method="@{/product/add}" method="post">
                         <fieldset>
 
                             <div class="form-group">
-                                <label for="name">Name</label>
-                                <input class="form-control" type="text" name="name" id="name" placeholder="Name">
+                                <label>Name</label>
+                                <input class="form-control" type="text" name="name" placeholder="Name">
                             </div>
 
                             <div class="form-group">
-                                <label for="price">Price</label>
-                                <input class="form-control" type="text" name="price" id="price" placeholder="Price">
+                                <label>Price</label>
+                                <input class="form-control" type="text" name="price" placeholder="Price">
                             </div>
 
                             <div class="form-group">
                                 <label for="manufacturer">Manufacturer</label>
                                 <br>
-                                <#list manufacturers as manufacturer>
-                                    <input type="radio" id="manufacturer" name="id"
-                                           value="${manufacturer.id}">${manufacturer.name}<br>
-                                </#list>
+                                <select id="manufacturer" name="id">
+                                    <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.id}"
+                                            th:text="${manufacturer.name}">
+                                    </option>
+                                </select>
                             </div>
 
                             <input class="btn btn-lg btn-success btn-block" type="submit" value="Add product">

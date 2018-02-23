@@ -31,7 +31,7 @@ public class ProductController {
     @GetMapping("/add")
     public String productAddPage(Model model) {
         model.addAttribute("manufacturers", manufacturerService.getAll());
-        return "productAdd";
+        return "Product/productAdd";
     }
 
     @PostMapping("/add")
@@ -43,38 +43,35 @@ public class ProductController {
         return "redirect:/product/list";
     }
 
-    @GetMapping("/update/{id}")
-    public String productUpdatePage(@PathVariable("id") UUID uuid, Model model) {
+    @GetMapping("/update/")
+    public String productUpdatePage(@RequestParam(value = "id") UUID uuid, Model model) {
         model.addAttribute("manufacturers", manufacturerService.getAll());
         model.addAttribute("product", productService.getById(uuid));
-        return "productUpdate";
+        return "Product/productUpdate";
     }
 
-    @PostMapping("/update/{id}")
-    public String productUpdate(@PathVariable("id") UUID uuid,
-                                @ModelAttribute("product") Product product,
-                                @ModelAttribute("manufacturer") Manufacturer manufacturer) {
-
-        product.setId(uuid);
-        product.setManufacturer(manufacturerService.getById(manufacturer.getId()));
+    @PostMapping("/update/")
+    public String productUpdate(@ModelAttribute("product") Product product) {
+        product.getManufacturer().setName(manufacturerService.getById(product.getManufacturer().getId()).getName());
+        productService.update(product);
         return "redirect:/product/list";
     }
 
-    @GetMapping("/delete/{id}")
-    public String productDelete(@PathVariable("id") UUID uuid) {
+    @GetMapping("/delete/")
+    public String productDelete(@RequestParam(value = "id") UUID uuid) {
         productService.delete(productService.getById(uuid));
         return "redirect:/product/list";
     }
 
-    @GetMapping("/{id}")
-    public String productView(@PathVariable("id") UUID uuid, Model model) {
+    @GetMapping("/")
+    public String productView(@RequestParam(value = "id") UUID uuid, Model model) {
         model.addAttribute("product", productService.getById(uuid));
-        return "productView";
+        return "Product/productView";
     }
 
     @GetMapping("/list")
     public String productsList(Model model) {
         model.addAttribute("products", productService.getAll());
-        return "productsList";
+        return "Product/productsList";
     }
 }

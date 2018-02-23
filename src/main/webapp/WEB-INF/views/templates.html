@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<div th:fragment="header">
+<link rel="icon" href="http://i.imgur.com/8pTfNU5.png">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</div>
+
+<style th:fragment="style">
+    .data {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .title {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .bot-border {
+        border-bottom: 1px #f8f8f8 solid;
+        margin: 5px 0 5px 0
+    }
+
+</style>
+
+<div th:fragment="navbar">
+    <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+
+        <li><a href="/user/list">Users</a></li>
+
+        <li><a href="/product/list">Products</a></li>
+
+        <li><a href="/manufacturer/list">Manufacturers</a></li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="/singUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a href="/singIn"><span class="glyphicon glyphicon-log-in"></span> Sing In</a></li>
+    </ul>
+</div>
+
+</html>

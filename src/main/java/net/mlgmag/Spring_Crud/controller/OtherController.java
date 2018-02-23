@@ -1,8 +1,10 @@
 package net.mlgmag.Spring_Crud.controller;
 
+import net.mlgmag.Spring_Crud.model.Role;
 import net.mlgmag.Spring_Crud.model.User;
 import net.mlgmag.Spring_Crud.repository.UserRepository;
 import net.mlgmag.Spring_Crud.service.service.SecurityService;
+import net.mlgmag.Spring_Crud.service.service.UserService;
 import net.mlgmag.Spring_Crud.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,27 +19,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class OtherController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     private final SecurityService securityService;
 
     private final UserValidator userValidator;
 
     @Autowired
-    public OtherController(UserRepository userRepository, SecurityService securityService, UserValidator userValidator) {
-        this.userRepository = userRepository;
+    public OtherController(UserService userService, SecurityService securityService, UserValidator userValidator) {
+        this.userService = userService;
         this.securityService = securityService;
         this.userValidator = userValidator;
     }
 
     @GetMapping("/")
-    public String index() {
-        return "index";
+    public String home() {
+        return "Other/home";
     }
 
     @GetMapping("/singUp")
     public String singUpPage() {
-        return "singUp";
+        return "Other/singUp";
     }
 
     @PostMapping("/singUp")
@@ -45,12 +47,13 @@ public class OtherController {
         userValidator.validate(user, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "SingUp";
+            return "Other/SingUp";
         }
 
-        userRepository.save(user);
+        user.setRole(Role.User);
+        userService.save(user);
 
-        securityService.autoLogin(user.getUsername(), user.getConfirmPassword());
+//        securityService.autoLogin(user.getUsername(), user.getConfirmPassword());
 
         return "redirect:/";
     }
@@ -65,7 +68,7 @@ public class OtherController {
             model.addAttribute("massage", "Logged out successfully.");
         }
 
-        return "singIn";
+        return "Other/singIn";
     }
 
 }

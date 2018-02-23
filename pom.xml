@@ -32,7 +32,7 @@
         <servlet-api-vercion>3.1.0</servlet-api-vercion>
         <hibernate-entitymanager-version>5.2.12.Final</hibernate-entitymanager-version>
         <jdbc-version>6.0.6</jdbc-version>
-        <freemarker-version>2.3.23</freemarker-version>
+        <thymeleaf-version>3.0.9.RELEASE</thymeleaf-version>
         <tomcat-dbcp-version>2.1.1</tomcat-dbcp-version>
     </properties>
 
@@ -97,12 +97,6 @@
         <!--SpringSecure-->
         <dependency>
             <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-            <version>${spring-security-core-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
             <version>${spring-security-core-version}</version>
         </dependency>
@@ -115,9 +109,9 @@
 
         <!--Frontend-->
         <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>${freemarker-version}</version>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring5</artifactId>
+            <version>${thymeleaf-version}</version>
         </dependency>
 
     </dependencies>

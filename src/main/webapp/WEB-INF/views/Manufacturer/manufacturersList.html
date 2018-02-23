@@ -1,13 +1,16 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
 
     <meta charset="UTF-8">
     <title>Manufacturers</title>
 
-    <#include "templates/head.ftl">
+    <div th:replace="templates :: header"></div>
+    <div th:replace="templates :: style"></div>
 
 </head>
+
 <body>
 
 <nav class="navbar navbar-default">
@@ -17,10 +20,11 @@
             Manufacturers
         </div>
 
-        <#include "templates/navbar.ftl">
+        <div th:replace="templates :: navbar"></div>
 
     </div>
 </nav>
+
 <h2 class="text-center">Manufacturers</h2>
 
 <div class="container-fluid row">
@@ -42,21 +46,19 @@
         <th>Actions</th>
     </tr>
     </thead>
-<tbody>
-    <#list manufacturers as manufacturer>
+    <tbody th:each="manufacturer : ${manufacturers}">
     <tr>
-        <td class="data">${manufacturer.id}</td>
-        <td class="data">${manufacturer.name}</td>
+        <td class="data" th:text="${manufacturer.id}"></td>
+        <td class="data" th:text="${manufacturer.name}"></td>
         <td>
-            <a href="/manufacturer/${manufacturer.id}" class="btn btn-info">VIEW</a>
+            <a th:href="@{/manufacturer/(id=${manufacturer.id})}" class="btn btn-info">VIEW</a>
             &nbsp
-            <a href="/manufacturer/delete/${manufacturer.id}" class="btn btn-danger">DELETE</a>
+            <a th:href="@{/manufacturer/delete/(id=${manufacturer.id})}" class="btn btn-danger">DELETE</a>
             &nbsp
-            <a href="/manufacturer/update/${manufacturer.id}" class="btn btn-primary">EDIT</a>
+            <a th:href="@{/manufacturer/update/(id=${manufacturer.id})}" class="btn btn-primary">EDIT</a>
         </td>
     </tr>
     </tbody>
-    </#list>
 </table>
 
 </body>

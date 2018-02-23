@@ -1,10 +1,12 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
 
     <meta charset="UTF-8">
     <title>Home</title>
-<#include "templates/head.ftl">
+
+    <div th:replace="templates :: header"></div>
 
 </head>
 
@@ -17,12 +19,12 @@
             Home
         </div>
 
-        <#include "templates/navbar.ftl">
+        <div th:replace="templates :: navbar"></div>
 
     </div>
 </nav>
 
-<h1>Hello</h1>
+<h1>Hello, it's Spring_CRUD app</h1>
 
 </body>
 </html>

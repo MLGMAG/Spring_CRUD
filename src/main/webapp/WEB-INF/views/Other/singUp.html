@@ -1,12 +1,15 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
 
     <meta charset="UTF-8">
     <title>Sing Up</title>
 
-    <#include "templates/head.ftl">
+    <div th:replace="templates :: header"></div>
 
 </head>
+
 <body>
 
 <nav class="navbar navbar-default">
@@ -16,7 +19,7 @@
             Sing Up
         </div>
 
-        <#include "templates/navbar.ftl">
+        <div th:replace="templates :: navbar"></div>
 
     </div>
 </nav>
@@ -28,43 +31,42 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form accept-charset="UTF-8" role="form" action="/singUp" method="post">
+                    <form th:method="@{/singUp}" method="post">
                         <fieldset>
 
                             <div class="form-group">
-                                <label for="username">Username</label>
-                                <input class="form-control" type="text" id="username" placeholder="Username"
+                                <label>Username</label>
+                                <input class="form-control" type="text" placeholder="Username"
                                        name="username">
                             </div>
 
                             <div class="form-group">
-                                <label for="first_name">First name</label>
-                                <input class="form-control" type="text" id="first_name" placeholder="First name"
+                                <label>First name</label>
+                                <input class="form-control" type="text" placeholder="First name"
                                        name="firstName">
                             </div>
 
                             <div class="form-group">
-                                <label for="last_name">Last name</label>
-                                <input class="form-control" type="text" id="last_name" placeholder="Last name"
+                                <label>Last name</label>
+                                <input class="form-control" type="text" placeholder="Last name"
                                        name="lastName">
                             </div>
 
                             <div class="form-group">
-                                <label for="email">Email</label>
-                                <input class="form-control" type="text" id="email" placeholder="E-mail"
+                                <label>Email</label>
+                                <input class="form-control" type="text" placeholder="E-mail"
                                        name="email">
                             </div>
 
                             <div class="form-group">
-                                <label for="password">Password</label>
-                                <input class="form-control" type="password" id="password" placeholder="Password"
+                                <label>Password</label>
+                                <input class="form-control" type="password" placeholder="Password"
                                        name="password">
                             </div>
 
                             <div class="form-group">
-                                <label for="confirmPassword">Password</label>
-                                <input class="form-control" type="password" id="confirmPassword"
-                                       placeholder="Confirm password"
+                                <label>Password</label>
+                                <input class="form-control" type="password" placeholder="Confirm password"
                                        name="confirmPassword">
                             </div>
 

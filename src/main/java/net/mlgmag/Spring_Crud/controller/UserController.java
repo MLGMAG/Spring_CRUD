@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -30,51 +31,44 @@ public class UserController {
     public String userAddPage(Model model) {
         List<Role> roles = Arrays.asList(Role.values());
         model.addAttribute("roles", roles);
-        return "userAdd";
+        return "User/userAdd";
     }
 
     @PostMapping("/add")
-    public String userAdd(@ModelAttribute("user") User user,
-                          @ModelAttribute("role") Role role) {
-
-        user.setRole(role);
+    public String userAdd(@ModelAttribute("user") User user) {
         userService.save(user);
-
         return "redirect:/user/list";
     }
 
-    @GetMapping("/update/{id}")
-    public String userUpdatePage(@PathVariable("id") UUID uuid, Model model) {
+    @GetMapping("/update/")
+    public String userUpdatePage(@RequestParam(value = "id") UUID uuid, Model model) {
         List<Role> roles = Arrays.asList(Role.values());
         model.addAttribute("user", userService.getById(uuid));
         model.addAttribute("roles", roles);
-        return "userUpdate";
+        return "User/userUpdate";
     }
 
-    @PostMapping("/update/{id}")
-    public String userUpdate(@PathVariable("id") UUID uuid,
-                             @ModelAttribute("user") User user,
-                             @ModelAttribute("role") Role role) {
-        user.setId(uuid);
+    @PostMapping("/update/")
+    public String userUpdate(@ModelAttribute("user") User user) {
         userService.update(user);
         return "redirect:/user/list";
     }
 
-    @GetMapping("/delete/{id}")
-    public String userDelete(@PathVariable("id") UUID uuid) {
+    @GetMapping("/delete/")
+    public String userDelete(@RequestParam(value = "id") UUID uuid) {
         userService.delete(userService.getById(uuid));
         return "redirect:/user/list";
     }
 
-    @GetMapping("/{id}")
-    public String userView(@PathVariable("id") UUID uuid, Model model) {
+    @GetMapping("/")
+    public String userView(@RequestParam(value = "id") UUID uuid, Model model) {
         model.addAttribute("user", userService.getById(uuid));
-        return "userView";
+        return "User/userView";
     }
 
     @GetMapping("/list")
     public String getAllUsers(Model model) {
         model.addAttribute("users", userService.getAll());
-        return "usersList";
+        return "User/usersList";
     }
 }

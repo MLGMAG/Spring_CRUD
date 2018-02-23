@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Edit Product</title>
+
+    <div th:replace="templates :: header"></div>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+
+        <div class="navbar-header navbar-brand">
+            Edit Product
+        </div>
+
+        <div th:replace="templates :: navbar"></div>
+
+    </div>
+</nav>
+
+<h2 class="text-center">Edit Product</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form th:object="${product}" th:method="@{/product/update/}" method="post">
+                        <fieldset>
+
+                            <input type="hidden" th:field="*{id}">
+
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input class="form-control" type="text" placeholder="Name"
+                                       th:field="*{name}">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input class="form-control" type="text" placeholder="Price" th:field="*{price}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="manufacturer">Manufacturer</label>
+                                <br>
+                                <select id="manufacturer" class="selectpicker" th:field="*{manufacturer.id}">
+                                    <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.id}"
+                                            th:text="${manufacturer.name}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Update Product">
+
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

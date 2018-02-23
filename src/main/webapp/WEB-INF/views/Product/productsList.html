@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Products</title>
+
+    <div th:replace="templates :: header"></div>
+    <div th:replace="templates :: style"></div>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+
+        <div class="navbar-header navbar-brand">
+            Products
+        </div>
+
+        <div th:replace="templates :: navbar"></div>
+
+    </div>
+</nav>
+
+<h2 class="text-center">Products</h2>
+
+<div class="container-fluid row">
+
+    <div class="col-md-11"></div>
+
+    <div class="col-md-1">
+        <a href="/product/add" class="btn btn-success">Add</a>
+    </div>
+
+</div>
+
+<br>
+
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr class="active">
+        <th>Name</th>
+        <th>Price</th>
+        <th>Manufacturer</th>
+        <th>Action</th>
+    </tr>
+
+    </thead>
+    <tbody th:each="product : ${products}">
+    <tr>
+        <td class="data" th:text="${product.name}"></td>
+        <td class="data" th:text="${product.price}"></td>
+        <td class="data" th:text="${product.manufacturer.name}"></td>
+        <td>
+            <a th:href="@{/product/(id=${product.id})}" class="btn btn-info">VIEW</a>
+            &nbsp
+            <a th:href="@{/product/delete/(id=${product.id})}" class="btn btn-danger">DELETE</a>
+            &nbsp
+            <a th:href="@{/product/update/(id=${product.id})}" class="btn btn-primary">EDIT</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

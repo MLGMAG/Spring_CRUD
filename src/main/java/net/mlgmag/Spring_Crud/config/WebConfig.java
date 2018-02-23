@@ -4,38 +4,50 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"net.mlgmag.Spring_Crud.controller", "net.mlgmag.Spring_Crud.config"})
-//                               "net.mlgmag.Spring_Crud.config.security"
+@ComponentScan(basePackages = {"net.mlgmag.Spring_Crud.controller", "net.mlgmag.Spring_Crud.config",
+//        "net.mlgmag.Spring_Crud.config.security"
+})
 @Import({SpringConfig.class, DatabaseConfig.class})
-
 
 public class WebConfig {
 
-
     @Bean
-    public ViewResolver getViewResolver() {
-        FreeMarkerViewResolver freeMarkerViewResolver = new FreeMarkerViewResolver();
+    public SpringResourceTemplateResolver templateResolver() {
 
-        freeMarkerViewResolver.setOrder(1);
-        freeMarkerViewResolver.setSuffix(".ftl");
-        freeMarkerViewResolver.setPrefix("");
+        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
 
-        return freeMarkerViewResolver;
+        templateResolver.setOrder(1);
+        templateResolver.setSuffix(".html");
+        templateResolver.setPrefix("WEB-INF/views/");
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        templateResolver.setCacheable(true);
+
+        return templateResolver;
     }
 
     @Bean
-    public FreeMarkerConfigurer getFreeMarkerConfigurer() {
-        FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
+    public SpringTemplateEngine templateEngine() {
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 
-        freeMarkerConfigurer.setTemplateLoaderPaths("WEB-INF/views/Other", "WEB-INF/views/User", "WEB-INF/views/Product", "WEB-INF/views/Manufacturer");
+        templateEngine.setTemplateResolver(templateResolver());
+        templateEngine.setEnableSpringELCompiler(true);
 
-        return freeMarkerConfigurer;
+        return templateEngine;
+    }
+
+    @Bean
+    public ThymeleafViewResolver viewResolver() {
+        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+        viewResolver.setTemplateEngine(templateEngine());
+
+        return viewResolver;
     }
 }
