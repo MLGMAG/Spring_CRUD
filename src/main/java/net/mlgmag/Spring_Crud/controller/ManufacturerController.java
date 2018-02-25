@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @Controller
@@ -29,7 +31,19 @@ public class ManufacturerController {
     }
 
     @PostMapping("/add")
-    public String manufacturerAdd(@ModelAttribute("manufacturer") Manufacturer manufacturer) {
+    public String manufacturerAdd(@ModelAttribute("manufacturer") @Valid Manufacturer manufacturer, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            manufacturerService.validate(manufacturer, model);
+            return "Manufacturer/manufacturerAdd";
+        }
+
+        if (!bindingResult.hasErrors()) {
+            if (manufacturerService.validate(manufacturer, model)) {
+                return "Manufacturer/manufacturerAdd";
+            }
+        }
+
         manufacturerService.save(manufacturer);
         return "redirect:/manufacturer/list";
     }
@@ -41,7 +55,21 @@ public class ManufacturerController {
     }
 
     @PostMapping("/update/")
-    public String manufacturerUpdate(@ModelAttribute("manufacturer") Manufacturer manufacturer) {
+    public String manufacturerUpdate(@ModelAttribute("manufacturer") @Valid Manufacturer manufacturer, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return "Manufacturer/manufacturerUpdate";
+        }
+
+        if (!bindingResult.hasErrors()) {
+            if (!manufacturer.getName().equals(manufacturerService.getById(manufacturer.getId()).getName())) {
+                if (manufacturerService.findByName(manufacturer.getName()) != null){
+                    model.addAttribute("DuplicateManufacturer", "Manufacturer name already exist");
+                    return "Manufacturer/manufacturerUpdate";
+                }
+            }
+        }
+
         manufacturerService.update(manufacturer);
         return "redirect:/manufacturer/list";
     }

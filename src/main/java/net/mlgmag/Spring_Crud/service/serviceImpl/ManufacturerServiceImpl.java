@@ -6,6 +6,7 @@ import net.mlgmag.Spring_Crud.service.service.ManufacturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.UUID;
@@ -48,5 +49,20 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     @Override
     public List<Manufacturer> getAll() {
         return manufacturerRepository.findAll();
+    }
+
+    @Override
+    public Manufacturer findByName(String name) {
+        return manufacturerRepository.findByName(name);
+    }
+
+    @Override
+    public Boolean validate(Manufacturer manufacturer, Model model) {
+        boolean Error = false;
+        if (findByName(manufacturer.getName()) != null) {
+            Error = true;
+            model.addAttribute("DuplicateManufacturer", "Manufacturer name already exist");
+        }
+        return Error;
     }
 }

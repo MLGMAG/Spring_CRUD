@@ -2,6 +2,7 @@ package net.mlgmag.Spring_Crud.controller;
 
 import net.mlgmag.Spring_Crud.model.Manufacturer;
 import net.mlgmag.Spring_Crud.model.Product;
+import net.mlgmag.Spring_Crud.model.Role;
 import net.mlgmag.Spring_Crud.repository.ManufacturerRepository;
 import net.mlgmag.Spring_Crud.repository.ProductRepository;
 import net.mlgmag.Spring_Crud.service.service.ManufacturerService;
@@ -10,8 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -36,7 +41,20 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public String productAdd(@ModelAttribute("product") Product product) {
+    public String productAdd(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            productService.validate(product, model);
+            model.addAttribute("manufacturers", manufacturerService.getAll());
+            return "Product/productAdd";
+        }
+
+        if (!bindingResult.hasErrors()) {
+            if (productService.validate(product, model)) {
+                model.addAttribute("manufacturers", manufacturerService.getAll());
+                return "Product/productAdd";
+            }
+        }
 
         product.getManufacturer().setName(manufacturerService.getById(product.getManufacturer().getId()).getName());
         productService.save(product);
@@ -51,7 +69,23 @@ public class ProductController {
     }
 
     @PostMapping("/update/")
-    public String productUpdate(@ModelAttribute("product") Product product) {
+    public String productUpdate(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("manufacturers", manufacturerService.getAll());
+            return "Product/productUpdate";
+        }
+
+        if (!bindingResult.hasErrors()) {
+            if (!product.getName().equals(productService.getById(product.getId()).getName())) {
+                if (productService.findByName(product.getName()) != null) {
+                    model.addAttribute("manufacturers", manufacturerService.getAll());
+                    model.addAttribute("DuplicateProductName", "Product name already exist");
+                    return "Product/productUpdate";
+                }
+            }
+        }
+
         product.getManufacturer().setName(manufacturerService.getById(product.getManufacturer().getId()).getName());
         productService.update(product);
         return "redirect:/product/list";

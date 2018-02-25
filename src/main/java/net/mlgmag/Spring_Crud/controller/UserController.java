@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -36,7 +37,23 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String userAdd(@ModelAttribute("user") User user) {
+    public String userAdd(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            userService.validate(user, model);
+            List<Role> roles = Arrays.asList(Role.values());
+            model.addAttribute("roles", roles);
+            return "User/userAdd";
+        }
+
+        if (!bindingResult.hasErrors()) {
+            if (userService.validate(user, model)) {
+                List<Role> roles = Arrays.asList(Role.values());
+                model.addAttribute("roles", roles);
+                return "User/userAdd";
+            }
+        }
+
         userService.save(user);
         return "redirect:/user/list";
     }
@@ -44,13 +61,47 @@ public class UserController {
     @GetMapping("/update/")
     public String userUpdatePage(@RequestParam(value = "id") UUID uuid, Model model) {
         List<Role> roles = Arrays.asList(Role.values());
-        model.addAttribute("user", userService.getById(uuid));
+        User user = userService.getById(uuid);
+        user.setPassword(null);
+        model.addAttribute("user", user);
         model.addAttribute("roles", roles);
         return "User/userUpdate";
     }
 
     @PostMapping("/update/")
-    public String userUpdate(@ModelAttribute("user") User user) {
+    public String userUpdate(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+
+        List<Role> roles = Arrays.asList(Role.values());
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("roles", roles);
+            return "User/userUpdate";
+        }
+
+        if (!bindingResult.hasErrors()) {
+            boolean Error = false;
+            if (!user.getUsername().equals(userService.getById(user.getId()).getUsername())) {
+                if (userService.findByUsername(user.getUsername()) != null){
+                    Error = true;
+                    model.addAttribute("DuplicateUsername", "Username already exist");
+                }
+            }
+            if (!user.getEmail().equals(userService.getById(user.getId()).getEmail())) {
+                if (userService.findByEmail(user.getEmail()) != null){
+                    Error = true;
+                    model.addAttribute("DuplicateEmail", "Email already exist");
+                }
+            }
+            if (!user.getPassword().equals(user.getConfirmPassword())) {
+                Error = true;
+                model.addAttribute("PasswordMatch", "Passwords don't match");
+            }
+            if (Error){
+                model.addAttribute("roles", roles);
+                return "User/userUpdate";
+            }
+        }
+
         userService.update(user);
         return "redirect:/user/list";
     }

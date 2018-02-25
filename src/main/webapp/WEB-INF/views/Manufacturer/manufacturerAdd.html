@@ -7,6 +7,7 @@
     <title>Add Manufacturer</title>
 
     <div th:replace="templates :: header"></div>
+    <div th:replace="templates :: style"></div>
 
 </head>
 
@@ -39,6 +40,8 @@
                                 <label th:for="name">Name</label>
                                 <input class="form-control" type="text" placeholder="Name"
                                        th:field="*{name}">
+                                <span th:errors="*{name}" class="error"></span>
+                                <span th:text="${DuplicateManufacturer}" class="error"></span>
                             </div>
 
                             <input class="btn btn-lg btn-success btn-block" type="submit" value="Add Manufacturer">

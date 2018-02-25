@@ -5,8 +5,8 @@ USE products_and_users;
 
 
 CREATE TABLE manufacturers (
-  id   BINARY(16)  NOT NULL UNIQUE,
-  name VARCHAR(45) NOT NULL,
+  id   BINARY(16)   NOT NULL UNIQUE,
+  name VARCHAR(255) NOT NULL UNIQUE,
 
   PRIMARY KEY (id)
 )
@@ -15,7 +15,7 @@ CREATE TABLE manufacturers (
 
 CREATE TABLE products (
   id              BINARY(16)     NOT NULL UNIQUE,
-  name            VARCHAR(45)    NOT NULL,
+  name            VARCHAR(255)   NOT NULL UNIQUE,
   price           DECIMAL(16, 2) NOT NULL,
   manufacturer_id BINARY(16)     NOT NULL,
 
@@ -26,13 +26,13 @@ CREATE TABLE products (
 
 CREATE TABLE users (
   id         BINARY(16)   NOT NULL UNIQUE,
-  first_name VARCHAR(45)  NOT NULL,
-  last_name  VARCHAR(45)  NOT NULL,
+  first_name VARCHAR(255) NOT NULL,
+  last_name  VARCHAR(255) NOT NULL,
   username   VARCHAR(32)  NOT NULL UNIQUE,
-  password   VARCHAR(255) NOT NULL,
-  email      VARCHAR(255) NOT NULL,
+  password   VARCHAR(60)  NOT NULL,
+  email      VARCHAR(255) NOT NULL UNIQUE,
 
-  role       VARCHAR(255)  NOT NULL,
+  role       VARCHAR(10)  NOT NULL,
 
   PRIMARY KEY (id)
 )

@@ -7,6 +7,7 @@
     <title>Edit Product</title>
 
     <div th:replace="templates :: header"></div>
+    <div th:replace="templates :: style"></div>
 
 </head>
 
@@ -40,12 +41,15 @@
                                 <label th:for="name">Name</label>
                                 <input class="form-control" type="text" placeholder="Name"
                                        th:field="*{name}">
+                                <span th:errors="*{name}" class="error"></span>
+                                <span th:text="${DuplicateProductName}" class="error"></span>
                             </div>
 
                             <div class="form-group">
                                 <label th:for="price">Price</label>
                                 <input class="form-control" type="text" placeholder="Price"
                                        th:field="*{price}">
+                                <span th:errors="*{price}" class="error"></span>
                             </div>
 
                             <div class="form-group">

@@ -1,14 +1,13 @@
 package net.mlgmag.Spring_Crud.service.serviceImpl.User;
 
-import net.mlgmag.Spring_Crud.repository.UserRepository;
 import net.mlgmag.Spring_Crud.model.User;
+import net.mlgmag.Spring_Crud.repository.UserRepository;
 import net.mlgmag.Spring_Crud.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.UUID;
@@ -61,5 +60,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public Boolean validate(User user, Model model) {
+        boolean Error = false;
+        if (findByUsername(user.getUsername()) != null) {
+            Error = true;
+            model.addAttribute("DuplicateUsername", "Username already exist");
+        }
+        if (findByEmail(user.getEmail()) != null) {
+            Error = true;
+            model.addAttribute("DuplicateEmail", "Email already exist");
+        }
+        if (!user.getPassword().equals(user.getConfirmPassword())) {
+            Error = true;
+            model.addAttribute("PasswordMatch", "Passwords don't match");
+        }
+        return Error;
     }
 }

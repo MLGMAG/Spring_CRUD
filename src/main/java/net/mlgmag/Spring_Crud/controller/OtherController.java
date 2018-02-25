@@ -2,10 +2,8 @@ package net.mlgmag.Spring_Crud.controller;
 
 import net.mlgmag.Spring_Crud.model.Role;
 import net.mlgmag.Spring_Crud.model.User;
-import net.mlgmag.Spring_Crud.repository.UserRepository;
 import net.mlgmag.Spring_Crud.service.service.SecurityService;
 import net.mlgmag.Spring_Crud.service.service.UserService;
-import net.mlgmag.Spring_Crud.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,13 +23,10 @@ public class OtherController {
 
     private final SecurityService securityService;
 
-    private final UserValidator userValidator;
-
     @Autowired
-    public OtherController(UserService userService, SecurityService securityService, UserValidator userValidator) {
+    public OtherController(UserService userService, SecurityService securityService) {
         this.userService = userService;
         this.securityService = securityService;
-        this.userValidator = userValidator;
     }
 
     @GetMapping("/")
@@ -46,13 +41,17 @@ public class OtherController {
     }
 
     @PostMapping("/singUp")
-    public String singUp(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
-        userValidator.validate(user, bindingResult);
+    public String singUp(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
-            System.out.println("errors: " + bindingResult.getAllErrors());
-            model.addAttribute("errors", bindingResult.getAllErrors());
+            userService.validate(user, model);
             return "Other/singUp";
+        }
+
+        if (!bindingResult.hasErrors()) {
+            if (userService.validate(user, model)) {
+                return "Other/singUp";
+            }
         }
 
         user.setRole(Role.User);
@@ -70,7 +69,7 @@ public class OtherController {
         }
 
         if (logout != null) {
-            model.addAttribute("massage", "Logged out successfully.");
+            model.addAttribute("messages", "Logged out successfully.");
         }
 
         return "Other/singIn";

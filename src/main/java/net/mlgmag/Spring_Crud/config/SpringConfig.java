@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
-@ComponentScan(basePackages = {"net.mlgmag.Spring_Crud.service", "net.mlgmag.Spring_Crud.validator"})
+@ComponentScan(basePackages = "net.mlgmag.Spring_Crud.service")
 public class SpringConfig {
 
     @Bean

@@ -7,6 +7,7 @@
     <title>Edit User</title>
 
     <div th:replace="templates :: header"></div>
+    <div th:replace="templates :: style"></div>
 
 </head>
 
@@ -38,30 +39,46 @@
                                 <label th:for="username">Username</label>
                                 <input class="form-control" type="text" placeholder="Username"
                                        th:field="*{username}">
+                                <span th:errors="*{username}" class="error"></span>
+                                <span th:text="${DuplicateUsername}" class="error"></span>
                             </div>
 
                             <div class="form-group">
                                 <label th:for="firstName">First name</label>
                                 <input class="form-control" type="text" placeholder="Name"
                                        th:field="*{firstName}">
+                                <span th:errors="*{firstName}" class="error"></span>
                             </div>
 
                             <div class="form-group">
                                 <label th:for="lastName">Last name</label>
-                                <input class="form-control" type="text" name="lastName" placeholder="Last name"
-                                       th:value="*{lastName}">
+                                <input class="form-control" type="text" placeholder="Last name"
+                                       th:field="*{lastName}">
+                                <span th:errors="*{lastName}" class="error"></span>
                             </div>
 
                             <div class="form-group">
                                 <label th:for="email">Email</label>
-                                <input class="form-control" type="text" name="email" placeholder="E-mail"
+                                <input class="form-control" type="text" placeholder="E-mail"
                                        th:field="*{email}">
+                                <span th:errors="*{email}" class="error"></span>
+                                <span th:text="${DuplicateEmail}" class="error"></span>
                             </div>
 
                             <div class="form-group">
                                 <label th:for="password">Password</label>
-                                <input class="form-control" type="password" id="password" name="password"
-                                       placeholder="Password">
+                                <input class="form-control" type="password" placeholder="Password"
+                                       th:field="*{password}">
+                                <span th:errors="*{password}" class="error"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Confirm password</label>
+                                <input class="form-control" type="password" placeholder="Confirm password"
+                                       th:field="*{confirmPassword}">
+                                <span th:errors="*{confirmPassword}" class="error"></span>
+                                <br>
+                                <span th:text="${PasswordMatch}" class="error"></span>
                             </div>
 
                             <div class="form-group">

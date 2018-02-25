@@ -6,6 +6,7 @@ import net.mlgmag.Spring_Crud.service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.UUID;
@@ -48,5 +49,19 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getAll() {
         return productRepository.findAll();
+    }
+
+    @Override
+    public Product findByName(String name) {
+        return productRepository.findByName(name);
+    }
+
+    public Boolean validate(Product product, Model model) {
+        boolean Error = false;
+        if (findByName(product.getName()) != null) {
+            Error = true;
+            model.addAttribute("DuplicateProductName", "Product name already exist");
+        }
+        return Error;
     }
 }
