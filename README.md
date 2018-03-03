@@ -12,32 +12,47 @@ You need to create a web application that allows you to:
 ==========================
 
 Product:
+
 UUID id;
+
 String name;
+
 BigDecimal price;
+
 Manufacturer manufacturer;
 
 ==========================
 
 Manufacturer
+
 UUID id;
+
 String name;
+
 Set<Product> products;
 
 ==========================
 
 Role
+
 UUID id;
+
 String name;
 
 ==========================
 
 User
+
 UUID id;
+
 String email;
+
 String password;
+
 String firstName;
+
 String lastName;
+
 Set<Role> roles;
 
 ==========================
