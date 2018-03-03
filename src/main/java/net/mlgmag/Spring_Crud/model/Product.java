@@ -1,10 +1,11 @@
 package net.mlgmag.Spring_Crud.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -12,6 +13,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "products")
+@Data
+@NoArgsConstructor
 public class Product implements Serializable {
 
     @Id
@@ -32,48 +35,4 @@ public class Product implements Serializable {
     @JoinColumn(name = "manufacturer_id", columnDefinition = "BINARY(16)")
     private Manufacturer manufacturer;
 
-    public Product() {
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Manufacturer getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(Manufacturer manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", manufacturer=" + manufacturer +
-                '}';
-    }
 }

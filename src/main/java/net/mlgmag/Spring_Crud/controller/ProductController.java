@@ -1,22 +1,15 @@
 package net.mlgmag.Spring_Crud.controller;
 
-import net.mlgmag.Spring_Crud.model.Manufacturer;
 import net.mlgmag.Spring_Crud.model.Product;
-import net.mlgmag.Spring_Crud.model.Role;
-import net.mlgmag.Spring_Crud.repository.ManufacturerRepository;
-import net.mlgmag.Spring_Crud.repository.ProductRepository;
 import net.mlgmag.Spring_Crud.service.service.ManufacturerService;
 import net.mlgmag.Spring_Crud.service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 @Controller

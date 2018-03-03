@@ -1,5 +1,7 @@
 package net.mlgmag.Spring_Crud.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "manufacturers")
+@Data
 public class Manufacturer implements Serializable {
 
     @Id
@@ -25,38 +28,4 @@ public class Manufacturer implements Serializable {
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "manufacturer")
     private Set<Product> products;
 
-    public Manufacturer() {
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products;
-    }
-
-    @Override
-    public String toString() {
-        return "Manufacturer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }
