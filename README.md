@@ -1,11 +1,11 @@
 # Spring_CRUD
-Необходимо создать веб-приложение, которое позволяет:
+You need to create a web application that allows you to:
 
-1. Выполнять регистрацию пользоваталей
+1. Perform user registration
 
-2. Выполнять авторизацию пользователей
+2. Authorize users
 
-3. Выполнять CRUD операции над следующими объектами:
+3. Perform CRUD operations on the following objects:
 
 ==========================
 
@@ -40,26 +40,26 @@ Set<Role> roles;
 
 ==========================
 
-Роли пользователей:
+User roles:
 
-1. Admin - имеет возможность выполнять все CRUD операции
+1. Admin - has the ability to perform all CRUD operations
 
-2. User - имеет доступ только для чтения
+2. User - has read-only access
 
-В базе данных хранятся данные о производителях (Manufacturer) и товарах (Product).
+The database stores data on manufacturers (Manufacturer) and products (Product).
 
-Каждый товар имеет одного производителя, и каждый производитель имеет набор товаров.
+Each product has a single manufacturer, and each manufacturer has a set of products.
 
-Страницы:
-1. Manufacturers (список производителей + возможность создавать новых, редактировать и удалять созданных производителей)
+Pages:
+1. Manufacturers (the list of manufacturers + the ability to create new, edit and delete created manufacturers)
 
-2. Products (список товаров + возможность создавать новых, редактировать и удалять созданные товары)
+2. Products (the list of products + the ability to create new, edit and delete created goods).
 
-3. Users (список всех ползователей приложения + возможность создавать новых, редактировать и удалять созданных пользователей) - ТОЛЬКО для ADMIN (и чтение и редактирование)
-
-
-При создании товара выбор производителя реализовать с помощью выпадающего меню.
+3. Users (list of all users of the application and the ability to create new ones, edit and delete the created users) - ONLY for ADMIN (and reading and editing).
 
 
-Технологии:
+When creating a product, select the manufacturer using the drop-down menu.
+
+
+Technologies:
 Java, SQL, Spring (MVC, Data, Security), JSP, Maven, Tomcat, Git
