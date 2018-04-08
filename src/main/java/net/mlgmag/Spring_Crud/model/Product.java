@@ -1,7 +1,6 @@
 package net.mlgmag.Spring_Crud.model;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,7 +13,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "products")
 @Data
-@NoArgsConstructor
 public class Product implements Serializable {
 
     @Id
