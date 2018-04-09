@@ -42,4 +42,5 @@ public class SecurityServiceImpl implements SecurityService {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
     }
+
 }

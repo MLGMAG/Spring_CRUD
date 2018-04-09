@@ -56,6 +56,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByName(name);
     }
 
+    @Override
     public Boolean validate(Product product, Model model) {
         boolean Error = false;
         if (findByName(product.getName()) != null) {
@@ -64,4 +65,5 @@ public class ProductServiceImpl implements ProductService {
         }
         return Error;
     }
+
 }

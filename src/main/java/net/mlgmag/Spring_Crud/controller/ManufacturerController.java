@@ -91,4 +91,5 @@ public class ManufacturerController {
         model.addAttribute("products", manufacturerService);
         return "Manufacturer/manufacturersList";
     }
+
 }

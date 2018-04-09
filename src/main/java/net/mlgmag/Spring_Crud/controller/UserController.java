@@ -120,4 +120,5 @@ public class UserController {
         model.addAttribute("users", userService.getAll());
         return "User/usersList";
     }
+
 }

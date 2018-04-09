@@ -101,4 +101,5 @@ public class ProductController {
         model.addAttribute("products", productService.getAll());
         return "Product/productsList";
     }
+
 }

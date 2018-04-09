@@ -16,7 +16,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 //        "net.mlgmag.Spring_Crud.config.security"
 })
 @Import({SpringConfig.class, DatabaseConfig.class})
-
 public class WebConfig {
 
     @Bean
@@ -50,4 +49,5 @@ public class WebConfig {
 
         return viewResolver;
     }
+
 }

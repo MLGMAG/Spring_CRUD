@@ -7,9 +7,11 @@ import org.springframework.validation.BindingResult;
 import java.util.UUID;
 
 public interface UserService extends GenericService<User, UUID> {
+
     User findByUsername(String username);
 
     User findByEmail(String email);
 
     Boolean validate(User user, Model model);
+
 }
