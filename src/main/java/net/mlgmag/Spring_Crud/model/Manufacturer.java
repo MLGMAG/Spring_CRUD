@@ -1,6 +1,8 @@
 package net.mlgmag.Spring_Crud.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,6 +14,9 @@ import java.util.UUID;
 @Entity
 @Table(name = "manufacturers")
 @Data
+@EqualsAndHashCode(exclude = "products")
+//Added 2 annotations (@EqualsAndHashCode and @ToString), because throws StackOverflow exception
+@ToString(exclude = "products")
 public class Manufacturer implements Serializable {
 
     @Id
