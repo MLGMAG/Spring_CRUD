@@ -2,11 +2,9 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-
-    <meta charset="UTF-8">
     <title>Home</title>
 
-    <div th:replace="templates :: header"></div>
+    <th:block th:include="templates :: header"></th:block>
 
 </head>
 
@@ -19,7 +17,7 @@
             Home
         </div>
 
-        <div th:replace="templates :: navbar"></div>
+        <th:block th:replace="templates :: navbar"></th:block>
 
     </div>
 </nav>

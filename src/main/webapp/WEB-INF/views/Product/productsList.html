@@ -2,12 +2,10 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-
-    <meta charset="UTF-8">
     <title>Products</title>
 
-    <div th:replace="templates :: header"></div>
-    <div th:replace="templates :: style"></div>
+    <th:block th:include="templates :: header"></th:block>
+    <th:block th:replace="templates :: style"></th:block>
 
 </head>
 
@@ -20,7 +18,7 @@
             Products
         </div>
 
-        <div th:replace="templates :: navbar"></div>
+        <th:block th:replace="templates :: navbar"></th:block>
 
     </div>
 </nav>
@@ -38,8 +36,8 @@
 </div>
 
 <br>
-
 <table class="table table-bordered table-hover">
+
     <thead>
     <tr class="active">
         <th>Name</th>
@@ -47,8 +45,8 @@
         <th>Manufacturer</th>
         <th>Action</th>
     </tr>
-
     </thead>
+
     <tbody th:each="product : ${products}">
     <tr>
         <td class="data" th:text="${product.name}"></td>

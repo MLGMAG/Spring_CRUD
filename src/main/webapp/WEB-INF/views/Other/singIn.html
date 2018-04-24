@@ -2,11 +2,9 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-
-    <meta charset="UTF-8">
     <title>Sing In</title>
 
-    <div th:replace="templates :: header"></div>
+    <th:block th:include="templates :: header"></th:block>
 
 </head>
 
@@ -19,7 +17,7 @@
             Sing In
         </div>
 
-        <div th:replace="templates :: navbar"></div>
+        <th:block th:replace="templates :: navbar"></th:block>
 
     </div>
 </nav>
@@ -34,16 +32,19 @@
                 <div class="panel-body">
                     <form>
                         <fieldset>
+
                             <div class="form-group">
                                 <label>Email</label>
                                 <input class="form-control" type="text" placeholder="E-mail">
                             </div>
+
                             <div class="form-group">
                                 <label>Password</label>
                                 <input class="form-control" type="password" placeholder="Password">
                             </div>
 
-                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Sing In">
+                            <input class="btn btn-success btn-block" type="submit" value="Sing In">
+
                         </fieldset>
                     </form>
                 </div>
