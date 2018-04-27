@@ -2,28 +2,14 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>Manufacturer Update</title>
-
     <th:block th:include="templates :: header"></th:block>
-    <th:block th:replace="templates :: style"></th:block>
-
 </head>
 
 <body>
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
+<th:block th:replace="templates :: navbar"></th:block>
 
-        <div class="navbar-header navbar-brand">
-            Edit Manufacturer
-        </div>
-
-        <th:block th:replace="templates :: navbar"></th:block>
-
-    </div>
-</nav>
-
-<h2 class="text-center">Edit Manufacturer</h2>
+<h2 class="text-center" th:text="${title}"></h2>
 
 <div class="container">
     <div class="row">

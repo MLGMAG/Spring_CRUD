@@ -30,6 +30,7 @@ public class ProductController {
     public String productAddPage(Model model) {
         model.addAttribute("manufacturers", manufacturerService.getAll());
         model.addAttribute("product", new Product());
+        model.addAttribute("title", "Add Product");
         return "Product/productAdd";
     }
 
@@ -58,6 +59,7 @@ public class ProductController {
     public String productUpdatePage(@RequestParam(value = "id") UUID uuid, Model model) {
         model.addAttribute("manufacturers", manufacturerService.getAll());
         model.addAttribute("product", productService.getById(uuid));
+        model.addAttribute("title", "Edit Product");
         return "Product/productUpdate";
     }
 
@@ -93,12 +95,14 @@ public class ProductController {
     @GetMapping("/")
     public String productView(@RequestParam(value = "id") UUID uuid, Model model) {
         model.addAttribute("product", productService.getById(uuid));
+        model.addAttribute("title", "Product");
         return "Product/productView";
     }
 
     @GetMapping("/list")
     public String productsList(Model model) {
         model.addAttribute("products", productService.getAll());
+        model.addAttribute("title", "Products");
         return "Product/productsList";
     }
 

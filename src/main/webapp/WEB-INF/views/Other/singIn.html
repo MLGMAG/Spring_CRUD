@@ -2,45 +2,33 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>Sing In</title>
-
     <th:block th:include="templates :: header"></th:block>
-
 </head>
 
 <body>
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
+<th:block th:include="templates :: navbar"></th:block>
 
-        <div class="navbar-header navbar-brand">
-            Sing In
-        </div>
-
-        <th:block th:replace="templates :: navbar"></th:block>
-
-    </div>
-</nav>
-
-
-<h2 class="text-center">Sing In</h2>
+<h2 class="text-center" th:text="${title}"></h2>
 
 <div class="container">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form>
+                    <form th:object="${user}" th:method="@{/singIn}" method="post">
                         <fieldset>
 
                             <div class="form-group">
-                                <label>Email</label>
-                                <input class="form-control" type="text" placeholder="E-mail">
+                                <label>Username</label>
+                                <input class="form-control" type="text" placeholder="Username"
+                                       th:field="*{username}">
                             </div>
 
                             <div class="form-group">
                                 <label>Password</label>
-                                <input class="form-control" type="password" placeholder="Password">
+                                <input class="form-control" type="password" placeholder="Password"
+                                       th:field="*{password}">
                             </div>
 
                             <input class="btn btn-success btn-block" type="submit" value="Sing In">

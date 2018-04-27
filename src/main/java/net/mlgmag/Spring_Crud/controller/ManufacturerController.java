@@ -25,6 +25,7 @@ public class ManufacturerController {
     @GetMapping("/add")
     public String manufacturerAddPage(Model model) {
         model.addAttribute("manufacturer", new Manufacturer());
+        model.addAttribute("title", "Add Manufacturer");
         return "Manufacturer/manufacturerAdd";
     }
 
@@ -49,6 +50,7 @@ public class ManufacturerController {
     @GetMapping("/update/")
     public String manufacturerUpdatePage(@RequestParam(value = "id") UUID uuid, Model model) {
         model.addAttribute("manufacturer", manufacturerService.getById(uuid));
+        model.addAttribute("title", "Edit Manufacturer");
         return "Manufacturer/manufacturerUpdate";
     }
 
@@ -61,7 +63,7 @@ public class ManufacturerController {
 
         if (!bindingResult.hasErrors()) {
             if (!manufacturer.getName().equals(manufacturerService.getById(manufacturer.getId()).getName())) {
-                if (manufacturerService.findByName(manufacturer.getName()) != null){
+                if (manufacturerService.findByName(manufacturer.getName()) != null) {
                     model.addAttribute("DuplicateManufacturer", "Manufacturer name already exist");
                     return "Manufacturer/manufacturerUpdate";
                 }
@@ -82,6 +84,7 @@ public class ManufacturerController {
     public String manufacturerView(@RequestParam(value = "id") UUID uuid, Model model) {
         model.addAttribute("manufacturer", manufacturerService.getById(uuid));
         model.addAttribute("products", manufacturerService.getById(uuid).getProducts());
+        model.addAttribute("title", "Manufacturer");
         return "Manufacturer/manufacturerView";
     }
 
@@ -89,6 +92,7 @@ public class ManufacturerController {
     public String manufacturersList(Model model) {
         model.addAttribute("manufacturers", manufacturerService.getAll());
         model.addAttribute("products", manufacturerService);
+        model.addAttribute("title", "Manufacturers");
         return "Manufacturer/manufacturersList";
     }
 

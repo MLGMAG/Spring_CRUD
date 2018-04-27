@@ -30,6 +30,7 @@ public class UserController {
         List<Role> roles = Arrays.asList(Role.values());
         model.addAttribute("roles", roles);
         model.addAttribute("user", new User());
+        model.addAttribute("title", "Add User");
         return "User/userAdd";
     }
 
@@ -62,6 +63,7 @@ public class UserController {
         user.setPassword(null);
         model.addAttribute("user", user);
         model.addAttribute("roles", roles);
+        model.addAttribute("title", "Edit User");
         return "User/userUpdate";
     }
 
@@ -112,12 +114,14 @@ public class UserController {
     @GetMapping("/")
     public String userView(@RequestParam(value = "id") UUID uuid, Model model) {
         model.addAttribute("user", userService.getById(uuid));
+        model.addAttribute("title", "User");
         return "User/userView";
     }
 
     @GetMapping("/list")
     public String getAllUsers(Model model) {
         model.addAttribute("users", userService.getAll());
+        model.addAttribute("title", "Users");
         return "User/usersList";
     }
 

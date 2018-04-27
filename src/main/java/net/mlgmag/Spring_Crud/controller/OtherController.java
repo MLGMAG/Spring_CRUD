@@ -30,13 +30,15 @@ public class OtherController {
     }
 
     @GetMapping("/")
-    public String home() {
+    public String home(Model model) {
+        model.addAttribute("title", "Home");
         return "Other/home";
     }
 
     @GetMapping("/singUp")
     public String singUpPage(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("title", "Sing Up");
         return "Other/singUp";
     }
 
@@ -54,25 +56,23 @@ public class OtherController {
             }
         }
 
-        user.setRole(Role.User);
+        user.setRole(Role.USER);
         userService.save(user);
 
-//        securityService.autoLogin(user.getUsername(), user.getConfirmPassword());
+//        securityService.autoLogin(user.getUsername(), user.getPassword());
 
         return "redirect:/user/list";
     }
 
     @GetMapping("/singIn")
-    public String singIn(Model model, String error, String logout) {
-        if (error != null) {
-            model.addAttribute("error", "Username or password is incorrect.");
-        }
-
-        if (logout != null) {
-            model.addAttribute("messages", "Logged out successfully.");
-        }
-
+    public String singInPage(Model model) {
+        model.addAttribute("user", new User());
+        model.addAttribute("title", "Sing In");
         return "Other/singIn";
     }
 
+    @PostMapping("/singIn")
+    public String singIn(@ModelAttribute("user") User user) {
+        return "login";
+    }
 }

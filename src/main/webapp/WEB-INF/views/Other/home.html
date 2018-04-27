@@ -2,25 +2,12 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>Home</title>
-
     <th:block th:include="templates :: header"></th:block>
-
 </head>
 
 <body>
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-
-        <div class="navbar-header navbar-brand">
-            Home
-        </div>
-
-        <th:block th:replace="templates :: navbar"></th:block>
-
-    </div>
-</nav>
+<th:block th:include="templates :: navbar"></th:block>
 
 <h1>Hello, it's Spring_CRUD app</h1>
 
