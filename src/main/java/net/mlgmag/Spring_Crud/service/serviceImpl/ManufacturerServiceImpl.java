@@ -2,7 +2,7 @@ package net.mlgmag.Spring_Crud.service.serviceImpl;
 
 import net.mlgmag.Spring_Crud.model.Manufacturer;
 import net.mlgmag.Spring_Crud.repository.ManufacturerRepository;
-import net.mlgmag.Spring_Crud.service.service.ManufacturerService;
+import net.mlgmag.Spring_Crud.service.genericService.ManufacturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;

@@ -1,8 +1,8 @@
 package net.mlgmag.Spring_Crud.controller;
 
 import net.mlgmag.Spring_Crud.model.Product;
-import net.mlgmag.Spring_Crud.service.service.ManufacturerService;
-import net.mlgmag.Spring_Crud.service.service.ProductService;
+import net.mlgmag.Spring_Crud.service.genericService.ManufacturerService;
+import net.mlgmag.Spring_Crud.service.genericService.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -2,7 +2,7 @@ package net.mlgmag.Spring_Crud.controller;
 
 import net.mlgmag.Spring_Crud.model.Role;
 import net.mlgmag.Spring_Crud.model.User;
-import net.mlgmag.Spring_Crud.service.service.UserService;
+import net.mlgmag.Spring_Crud.service.genericService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -2,7 +2,7 @@ package net.mlgmag.Spring_Crud.service.serviceImpl.User;
 
 import net.mlgmag.Spring_Crud.model.User;
 import net.mlgmag.Spring_Crud.repository.UserRepository;
-import net.mlgmag.Spring_Crud.service.service.UserService;
+import net.mlgmag.Spring_Crud.service.genericService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
