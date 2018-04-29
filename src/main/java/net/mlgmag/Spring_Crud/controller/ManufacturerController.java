@@ -9,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/manufacturer")
@@ -48,8 +47,8 @@ public class ManufacturerController {
     }
 
     @GetMapping("/update/")
-    public String manufacturerUpdatePage(@RequestParam(value = "id") UUID uuid, Model model) {
-        model.addAttribute("manufacturer", manufacturerService.getById(uuid));
+    public String manufacturerUpdatePage(@RequestParam(value = "id") String id, Model model) {
+        model.addAttribute("manufacturer", manufacturerService.getById(id));
         model.addAttribute("title", "Edit Manufacturer");
         return "Manufacturer/manufacturerUpdate";
     }
@@ -75,15 +74,15 @@ public class ManufacturerController {
     }
 
     @GetMapping("/delete/")
-    public String manufacturerDelete(@RequestParam(value = "id") UUID uuid) {
-        manufacturerService.delete(manufacturerService.getById(uuid));
+    public String manufacturerDelete(@RequestParam(value = "id") String id) {
+        manufacturerService.delete(manufacturerService.getById(id));
         return "redirect:/manufacturer/list";
     }
 
     @GetMapping("/")
-    public String manufacturerView(@RequestParam(value = "id") UUID uuid, Model model) {
-        model.addAttribute("manufacturer", manufacturerService.getById(uuid));
-        model.addAttribute("products", manufacturerService.getById(uuid).getProducts());
+    public String manufacturerView(@RequestParam(value = "id") String id, Model model) {
+        model.addAttribute("manufacturer", manufacturerService.getById(id));
+        model.addAttribute("products", manufacturerService.getById(id).getProducts());
         model.addAttribute("title", "Manufacturer");
         return "Manufacturer/manufacturerView";
     }

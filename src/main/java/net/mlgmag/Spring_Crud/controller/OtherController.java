@@ -2,7 +2,6 @@ package net.mlgmag.Spring_Crud.controller;
 
 import net.mlgmag.Spring_Crud.model.Role;
 import net.mlgmag.Spring_Crud.model.User;
-import net.mlgmag.Spring_Crud.service.service.SecurityService;
 import net.mlgmag.Spring_Crud.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,12 +20,14 @@ public class OtherController {
 
     private final UserService userService;
 
-    private final SecurityService securityService;
+//    private final SecurityService securityService;
 
     @Autowired
-    public OtherController(UserService userService, SecurityService securityService) {
+    public OtherController(UserService userService
+//                           ,SecurityService securityService
+    ) {
         this.userService = userService;
-        this.securityService = securityService;
+//        this.securityService = securityService;
     }
 
     @GetMapping("/")
@@ -56,7 +57,7 @@ public class OtherController {
             }
         }
 
-        user.setRole(Role.USER);
+        user.setRole(Role.User);
         userService.save(user);
 
 //        securityService.autoLogin(user.getUsername(), user.getPassword());

@@ -5,11 +5,9 @@ import net.mlgmag.Spring_Crud.repository.ProductRepository;
 import net.mlgmag.Spring_Crud.service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -22,28 +20,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Transactional
     public void save(Product product) {
         productRepository.save(product);
     }
 
     @Override
-    @Transactional
     public void update(Product product) {
-        productRepository.saveAndFlush(product);
+        productRepository.save(product);
     }
 
     @Override
-    @Transactional
     public void delete(Product product) {
         productRepository.delete(product);
     }
 
     @Override
-    @Transactional
-    public Product getById(UUID uuid) {
-        System.out.println(productRepository.getOne(uuid));
-        return productRepository.getOne(uuid);
+    public Product getById(String uuid) {
+        return productRepository.findById(uuid).get();
     }
 
     @Override

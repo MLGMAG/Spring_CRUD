@@ -3,33 +3,28 @@ package net.mlgmag.Spring_Crud.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Set;
-import java.util.UUID;
 
-@Entity
-@Table(name = "manufacturers")
 @Data
+@Document(collection = "manufacturers")
 @EqualsAndHashCode(exclude = "products")
 //Added 2 annotations (@EqualsAndHashCode and @ToString), because throws StackOverflow exception
 @ToString(exclude = "products")
 public class Manufacturer implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    private String id;
 
-    @Column(name = "name", columnDefinition = "VARCHAR(255)")
+    @Indexed(unique = true)
     @NotBlank(message = "Name can't be empty")
     private String name;
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "manufacturer")
     private Set<Product> products;
 
 }

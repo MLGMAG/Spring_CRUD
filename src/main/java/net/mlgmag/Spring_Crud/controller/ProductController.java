@@ -10,7 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/product")
@@ -56,9 +55,9 @@ public class ProductController {
     }
 
     @GetMapping("/update/")
-    public String productUpdatePage(@RequestParam(value = "id") UUID uuid, Model model) {
+    public String productUpdatePage(@RequestParam(value = "id") String id, Model model) {
         model.addAttribute("manufacturers", manufacturerService.getAll());
-        model.addAttribute("product", productService.getById(uuid));
+        model.addAttribute("product", productService.getById(id));
         model.addAttribute("title", "Edit Product");
         return "Product/productUpdate";
     }
@@ -87,14 +86,14 @@ public class ProductController {
     }
 
     @GetMapping("/delete/")
-    public String productDelete(@RequestParam(value = "id") UUID uuid) {
-        productService.delete(productService.getById(uuid));
+    public String productDelete(@RequestParam(value = "id") String id) {
+        productService.delete(productService.getById(id));
         return "redirect:/product/list";
     }
 
     @GetMapping("/")
-    public String productView(@RequestParam(value = "id") UUID uuid, Model model) {
-        model.addAttribute("product", productService.getById(uuid));
+    public String productView(@RequestParam(value = "id") String id, Model model) {
+        model.addAttribute("product", productService.getById(id));
         model.addAttribute("title", "Product");
         return "Product/productView";
     }
