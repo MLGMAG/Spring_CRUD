@@ -1,15 +1,13 @@
 package net.mlgmag.Spring_Crud.controller;
 
-import net.mlgmag.Spring_Crud.model.Role;
+import net.mlgmag.Spring_Crud.model.Authority;
 import net.mlgmag.Spring_Crud.model.User;
 import net.mlgmag.Spring_Crud.service.genericService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,29 +24,21 @@ public class UserController {
 
     @GetMapping("/add")
     public String userAddPage(Model model) {
-        List<Role> roles = Arrays.asList(Role.values());
-        model.addAttribute("roles", roles);
+        List<Authority> authorities = Arrays.asList(Authority.values());
+        model.addAttribute("authorities", authorities);
         model.addAttribute("user", new User());
         model.addAttribute("title", "Add User");
         return "User/userAdd";
     }
 
     @PostMapping("/add")
-    public String userAdd(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+    public String userAdd(@ModelAttribute("user") User user, Model model) {
 
-        if (bindingResult.hasErrors()) {
-            userService.validate(user, model);
-            List<Role> roles = Arrays.asList(Role.values());
-            model.addAttribute("roles", roles);
+        if (userService.validate(user, model)) {
+            List<Authority> authorities = Arrays.asList(Authority.values());
+            model.addAttribute("authorities", authorities);
+            model.addAttribute("title", "Add User");
             return "User/userAdd";
-        }
-
-        if (!bindingResult.hasErrors()) {
-            if (userService.validate(user, model)) {
-                List<Role> roles = Arrays.asList(Role.values());
-                model.addAttribute("roles", roles);
-                return "User/userAdd";
-            }
         }
 
         userService.save(user);
@@ -57,47 +47,39 @@ public class UserController {
 
     @GetMapping("/update/")
     public String userUpdatePage(@RequestParam(value = "id") String id, Model model) {
-        List<Role> roles = Arrays.asList(Role.values());
+        List<Authority> authorities = Arrays.asList(Authority.values());
         User user = userService.getById(id);
         user.setPassword(null);
         model.addAttribute("user", user);
-        model.addAttribute("roles", roles);
+        model.addAttribute("authorities", authorities);
         model.addAttribute("title", "Edit User");
         return "User/userUpdate";
     }
 
     @PostMapping("/update/")
-    public String userUpdate(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+    public String userUpdate(@ModelAttribute("user") User user, Model model) {
 
-        List<Role> roles = Arrays.asList(Role.values());
+        List<Authority> authorities = Arrays.asList(Authority.values());
 
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("roles", roles);
-            return "User/userUpdate";
+        boolean Error = false;
+        if (!user.getUsername().equals(userService.getById(user.getId()).getUsername())) {
+            if (userService.findByUsername(user.getUsername()) != null) {
+                Error = true;
+                model.addAttribute("DuplicateUsername", "Username already exist");
+            }
         }
 
-        if (!bindingResult.hasErrors()) {
-            boolean Error = false;
-            if (!user.getUsername().equals(userService.getById(user.getId()).getUsername())) {
-                if (userService.findByUsername(user.getUsername()) != null){
-                    Error = true;
-                    model.addAttribute("DuplicateUsername", "Username already exist");
-                }
-            }
-            if (!user.getEmail().equals(userService.getById(user.getId()).getEmail())) {
-                if (userService.findByEmail(user.getEmail()) != null){
-                    Error = true;
-                    model.addAttribute("DuplicateEmail", "Email already exist");
-                }
-            }
-            if (!user.getPassword().equals(user.getConfirmPassword())) {
+        if (!user.getEmail().equals(userService.getById(user.getId()).getEmail())) {
+            if (userService.findByEmail(user.getEmail()) != null) {
                 Error = true;
-                model.addAttribute("PasswordMatch", "Passwords don't match");
+                model.addAttribute("DuplicateEmail", "Email already exist");
             }
-            if (Error){
-                model.addAttribute("roles", roles);
-                return "User/userUpdate";
-            }
+        }
+
+        if (Error) {
+            model.addAttribute("authorities", authorities);
+            model.addAttribute("title", "Edit User");
+            return "User/userUpdate";
         }
 
         userService.update(user);

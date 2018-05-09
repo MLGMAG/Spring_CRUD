@@ -6,10 +6,7 @@ import net.mlgmag.Spring_Crud.service.genericService.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/product")
@@ -34,19 +31,12 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public String productAdd(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, Model model) {
+    public String productAdd(@ModelAttribute("product") Product product, Model model) {
 
-        if (bindingResult.hasErrors()) {
-            productService.validate(product, model);
+        if (productService.validate(product, model)) {
             model.addAttribute("manufacturers", manufacturerService.getAll());
+            model.addAttribute("title", "Add Product");
             return "Product/productAdd";
-        }
-
-        if (!bindingResult.hasErrors()) {
-            if (productService.validate(product, model)) {
-                model.addAttribute("manufacturers", manufacturerService.getAll());
-                return "Product/productAdd";
-            }
         }
 
         product.getManufacturer().setName(manufacturerService.getById(product.getManufacturer().getId()).getName());
@@ -63,20 +53,14 @@ public class ProductController {
     }
 
     @PostMapping("/update/")
-    public String productUpdate(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, Model model) {
+    public String productUpdate(@ModelAttribute("product") Product product, Model model) {
 
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("manufacturers", manufacturerService.getAll());
-            return "Product/productUpdate";
-        }
-
-        if (!bindingResult.hasErrors()) {
-            if (!product.getName().equals(productService.getById(product.getId()).getName())) {
-                if (productService.findByName(product.getName()) != null) {
-                    model.addAttribute("manufacturers", manufacturerService.getAll());
-                    model.addAttribute("DuplicateProductName", "Product name already exist");
-                    return "Product/productUpdate";
-                }
+        if (!product.getName().equals(productService.getById(product.getId()).getName())) {
+            if (productService.findByName(product.getName()) != null) {
+                model.addAttribute("manufacturers", manufacturerService.getAll());
+                model.addAttribute("DuplicateProductName", "Product name already exist");
+                model.addAttribute("title", "Edit Product");
+                return "Product/productUpdate";
             }
         }
 

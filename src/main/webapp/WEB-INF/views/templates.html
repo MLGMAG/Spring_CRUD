@@ -33,32 +33,45 @@
     </style>
 </head>
 
+<nav class="navbar navbar-default" th:fragment="navbar">
+    <div class="container-fluid">
 
-<div th:fragment="navbar">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-
-            <div class="navbar-header navbar-brand">
-                <th:block th:text="${title}"></th:block>
-            </div>
-
-            <ul class="nav navbar-nav">
-                <li><a href="/">Home</a></li>
-
-                <li><a href="/user/list">Users</a></li>
-
-                <li><a href="/product/list">Products</a></li>
-
-                <li><a href="/manufacturer/list">Manufacturers</a></li>
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/singUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                <li><a href="/singIn"><span class="glyphicon glyphicon-log-in"></span> Sing In</a></li>
-            </ul>
-
+        <div class="navbar-header navbar-brand">
+            <th:block th:text="${title}"></th:block>
         </div>
-    </nav>
-</div>
+
+        <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+
+            <li><a href="/user/list">Users</a></li>
+
+            <li><a href="/product/list">Products</a></li>
+
+            <li><a href="/manufacturer/list">Manufacturers</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="/singUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="/singIn"><span class="glyphicon glyphicon-log-in"></span> Sing In</a></li>
+        </ul>
+
+    </div>
+</nav>
+
+<script th:fragment="passwords_match_script">
+    var password = document.getElementById("password"),
+        confirmPassword = document.getElementById("confirmPassword");
+
+    function validatePassword() {
+        if (password.value != confirmPassword.value) {
+            confirmPassword.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirmPassword.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirmPassword.onkeyup = validatePassword;
+</script>
 
 </html>

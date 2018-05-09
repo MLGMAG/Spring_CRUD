@@ -1,18 +1,16 @@
 package net.mlgmag.Spring_Crud.controller;
 
-import net.mlgmag.Spring_Crud.model.Role;
+import com.google.common.collect.ImmutableList;
+import net.mlgmag.Spring_Crud.model.Authority;
 import net.mlgmag.Spring_Crud.model.User;
 import net.mlgmag.Spring_Crud.service.genericService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/")
@@ -44,24 +42,19 @@ public class OtherController {
     }
 
     @PostMapping("/singUp")
-    public String singUp(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+    public String singUp(@ModelAttribute("user") User user, Model model) {
 
-        if (bindingResult.hasErrors()) {
-            userService.validate(user, model);
+        if (userService.validate(user, model)) {
+            model.addAttribute("title", "Sing Up");
             return "Other/singUp";
         }
 
-        if (!bindingResult.hasErrors()) {
-            if (userService.validate(user, model)) {
-                return "Other/singUp";
-            }
-        }
 
-        user.setRole(Role.User);
-        userService.save(user);
+        user.setAuthorities(ImmutableList.of(Authority.USER));
 
 //        securityService.autoLogin(user.getUsername(), user.getPassword());
 
+        userService.save(user);
         return "redirect:/user/list";
     }
 

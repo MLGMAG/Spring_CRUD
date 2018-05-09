@@ -5,10 +5,7 @@ import net.mlgmag.Spring_Crud.service.genericService.ManufacturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/manufacturer")
@@ -29,17 +26,11 @@ public class ManufacturerController {
     }
 
     @PostMapping("/add")
-    public String manufacturerAdd(@ModelAttribute("manufacturer") @Valid Manufacturer manufacturer, BindingResult bindingResult, Model model) {
+    public String manufacturerAdd(@ModelAttribute("manufacturer") Manufacturer manufacturer, Model model) {
 
-        if (bindingResult.hasErrors()) {
-            manufacturerService.validate(manufacturer, model);
+        if (manufacturerService.validate(manufacturer, model)) {
+            model.addAttribute("title", "Add Manufacturer");
             return "Manufacturer/manufacturerAdd";
-        }
-
-        if (!bindingResult.hasErrors()) {
-            if (manufacturerService.validate(manufacturer, model)) {
-                return "Manufacturer/manufacturerAdd";
-            }
         }
 
         manufacturerService.save(manufacturer);
@@ -54,18 +45,13 @@ public class ManufacturerController {
     }
 
     @PostMapping("/update/")
-    public String manufacturerUpdate(@ModelAttribute("manufacturer") @Valid Manufacturer manufacturer, BindingResult bindingResult, Model model) {
+    public String manufacturerUpdate(@ModelAttribute("manufacturer") Manufacturer manufacturer, Model model) {
 
-        if (bindingResult.hasErrors()) {
-            return "Manufacturer/manufacturerUpdate";
-        }
-
-        if (!bindingResult.hasErrors()) {
-            if (!manufacturer.getName().equals(manufacturerService.getById(manufacturer.getId()).getName())) {
-                if (manufacturerService.findByName(manufacturer.getName()) != null) {
-                    model.addAttribute("DuplicateManufacturer", "Manufacturer name already exist");
-                    return "Manufacturer/manufacturerUpdate";
-                }
+        if (!manufacturer.getName().equals(manufacturerService.getById(manufacturer.getId()).getName())) {
+            if (manufacturerService.findByName(manufacturer.getName()) != null) {
+                model.addAttribute("DuplicateManufacturer", "Manufacturer name already exist");
+                model.addAttribute("title", "Edit Manufacturer");
+                return "Manufacturer/manufacturerUpdate";
             }
         }
 

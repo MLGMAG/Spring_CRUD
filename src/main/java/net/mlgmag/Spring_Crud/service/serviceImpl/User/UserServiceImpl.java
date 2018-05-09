@@ -26,7 +26,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//        try {
         userRepository.save(user);
+//        } catch (DuplicateKeyException e) {
+//            System.out.println("Full:  " + e);
+//            System.out.println("Cause: " + e.getCause());
+//            System.out.println("Massage: " + e.getMessage());
+//        }
+//
     }
 
     @Override
@@ -70,10 +77,6 @@ public class UserServiceImpl implements UserService {
         if (findByEmail(user.getEmail()) != null) {
             Error = true;
             model.addAttribute("DuplicateEmail", "Email already exist");
-        }
-        if (!user.getPassword().equals(user.getConfirmPassword())) {
-            Error = true;
-            model.addAttribute("PasswordMatch", "Passwords don't match");
         }
         return Error;
     }

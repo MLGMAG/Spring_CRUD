@@ -7,7 +7,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -22,7 +21,6 @@ public class Manufacturer implements Serializable {
     private String id;
 
     @Indexed(unique = true)
-    @NotBlank(message = "Name can't be empty")
     private String name;
 
     private Set<Product> products;

@@ -53,11 +53,11 @@ String firstName;
 
 String lastName;
 
-Set<Role> roles;
+Set<Authority> authorities;
 
 ==========================
 
-User roles:
+User authorities:
 
 1. Admin - has the ability to perform all CRUD operations
 
@@ -79,4 +79,4 @@ When creating a product, select the manufacturer using the drop-down menu.
 
 
 Technologies:
-Java, SQL, Spring (MVC, Data, Security), JSP, Maven, Tomcat, Git
+Java, SQL, Spring (MVC, Data, Security), JSP, Maven, Tomcat, Git, MongoDB

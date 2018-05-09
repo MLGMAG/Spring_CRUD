@@ -9,8 +9,6 @@
 
 <th:block th:replace="templates :: navbar"></th:block>
 
-<h2 class="text-center" th:text="${title}"></h2>
-
 <div class="container">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
@@ -19,11 +17,11 @@
                     <form th:object="${manufacturer}" th:method="@{/manufacturer/update/}" method="post">
                         <fieldset>
 
+                            <legend th:text="${title}"></legend>
+
                             <div class="form-group">
                                 <label th:for="name">Name</label>
-                                <input class="form-control" type="text" placeholder="Name"
-                                       th:field="*{name}">
-                                <span th:errors="*{name}" class="error"></span>
+                                <input class="form-control" type="text" placeholder="Name" th:field="*{name}" required>
                                 <span th:text="${DuplicateManufacturer}" class="error"></span>
                             </div>
 

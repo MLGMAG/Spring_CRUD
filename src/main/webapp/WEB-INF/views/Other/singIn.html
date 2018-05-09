@@ -9,8 +9,6 @@
 
 <th:block th:include="templates :: navbar"></th:block>
 
-<h2 class="text-center" th:text="${title}"></h2>
-
 <div class="container">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
@@ -19,16 +17,18 @@
                     <form th:object="${user}" th:method="@{/singIn}" method="post">
                         <fieldset>
 
+                            <legend th:text="${title}"></legend>
+
                             <div class="form-group">
                                 <label>Username</label>
-                                <input class="form-control" type="text" placeholder="Username"
-                                       th:field="*{username}">
+                                <input class="form-control" type="text" placeholder="Username" th:field="*{username}"
+                                       required>
                             </div>
 
                             <div class="form-group">
                                 <label>Password</label>
                                 <input class="form-control" type="password" placeholder="Password"
-                                       th:field="*{password}">
+                                       th:field="*{password}" required>
                             </div>
 
                             <input class="btn btn-success btn-block" type="submit" value="Sing In">
