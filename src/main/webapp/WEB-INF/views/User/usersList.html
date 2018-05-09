@@ -9,9 +9,7 @@
 
 <th:block th:replace="templates :: navbar"></th:block>
 
-<h2 class="text-center" th:text="${title}"></h2>
-
-<div class="container-fluid row">
+<div class="container-fluid">
 
     <div class="col-md-11"></div>
 
@@ -21,8 +19,9 @@
 
 </div>
 
-<br>
 <table class="table table-bordered table-hover">
+
+    <caption th:text="${title}"></caption>
 
     <thead>
     <tr class="active">
@@ -47,6 +46,7 @@
         </td>
     </tr>
     </tbody>
+
 </table>
 
 </body>

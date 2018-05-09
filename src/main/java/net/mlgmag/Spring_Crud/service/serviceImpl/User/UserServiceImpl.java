@@ -26,14 +26,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//        try {
+        user.setEnabled(true);
+        user.setCredentialsNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setAccountNonExpired(true);
         userRepository.save(user);
-//        } catch (DuplicateKeyException e) {
-//            System.out.println("Full:  " + e);
-//            System.out.println("Cause: " + e.getCause());
-//            System.out.println("Massage: " + e.getMessage());
-//        }
-//
     }
 
     @Override
