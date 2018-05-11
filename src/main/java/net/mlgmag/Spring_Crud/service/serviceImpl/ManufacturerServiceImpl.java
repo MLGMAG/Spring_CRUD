@@ -5,9 +5,11 @@ import net.mlgmag.Spring_Crud.repository.ManufacturerRepository;
 import net.mlgmag.Spring_Crud.service.genericService.ManufacturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ManufacturerServiceImpl implements ManufacturerService {
@@ -26,7 +28,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 
     @Override
     public void update(Manufacturer manufacturer) {
-        manufacturerRepository.save(manufacturer);
+        manufacturerRepository.saveAndFlush(manufacturer);
     }
 
     @Override
@@ -35,8 +37,10 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public Manufacturer getById(String uuid) {
-        return manufacturerRepository.findById(uuid).get();
+    @Transactional
+    public Manufacturer getById(UUID uuid) {
+        System.out.println(manufacturerRepository.getOne(uuid));
+        return manufacturerRepository.getOne(uuid);
     }
 
     @Override

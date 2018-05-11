@@ -44,23 +44,21 @@
 <nav class="navbar navbar-default" th:fragment="navbar">
     <div class="container-fluid">
 
-        <div class="navbar-header navbar-brand">
-            <th:block th:text="${title}"></th:block>
-        </div>
+        <div class="navbar-header navbar-brand" th:text="${title}"></div>
 
         <ul class="nav navbar-nav">
-            <li><a href="/">Home</a></li>
+            <li><a th:href="@{/}">Home</a></li>
 
-            <li><a href="/user/list">Users</a></li>
+            <li><a th:href="@{/user/list}">Users</a></li>
 
-            <li><a href="/product/list">Products</a></li>
+            <li><a th:href="@{/product/list}">Products</a></li>
 
-            <li><a href="/manufacturer/list">Manufacturers</a></li>
+            <li><a th:href="@{/manufacturer/list}">Manufacturers</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/singUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="/singIn"><span class="glyphicon glyphicon-log-in"></span> Sing In</a></li>
+            <li><a th:href="@{/singUp}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a th:href="@{/singIn}"><span class="glyphicon glyphicon-log-in"></span> Sing In</a></li>
         </ul>
 
     </div>
@@ -71,7 +69,7 @@
         confirmPassword = document.getElementById("confirmPassword");
 
     function validatePassword() {
-        if (password.value != confirmPassword.value) {
+        if (password.value !== confirmPassword.value) {
             confirmPassword.setCustomValidity("Passwords Don't Match");
         } else {
             confirmPassword.setCustomValidity('');

@@ -40,7 +40,7 @@
 
                             <div class="form-group">
                                 <label th:for="email">Email</label>
-                                <input class="form-control" type="text" placeholder="E-mail" th:field="*{email}"
+                                <input class="form-control" type="email" placeholder="E-mail" th:field="*{email}"
                                        required>
                                 <span th:text="${DuplicateEmail}" class="error"></span>
                             </div>

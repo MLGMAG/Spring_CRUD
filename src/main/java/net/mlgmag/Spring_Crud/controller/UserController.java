@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/user")
@@ -46,7 +47,7 @@ public class UserController {
     }
 
     @GetMapping("/update/")
-    public String userUpdatePage(@RequestParam(value = "id") String id, Model model) {
+    public String userUpdatePage(@RequestParam(value = "id") UUID id, Model model) {
         List<Authority> authorities = Arrays.asList(Authority.values());
         User user = userService.getById(id);
         user.setPassword(null);
@@ -87,14 +88,15 @@ public class UserController {
     }
 
     @GetMapping("/delete/")
-    public String userDelete(@RequestParam(value = "id") String id) {
+    public String userDelete(@RequestParam(value = "id") UUID id) {
         userService.delete(userService.getById(id));
         return "redirect:/user/list";
     }
 
     @GetMapping("/")
-    public String userView(@RequestParam(value = "id") String id, Model model) {
+    public String userView(@RequestParam(value = "id") UUID id, Model model) {
         model.addAttribute("user", userService.getById(id));
+        System.out.println(userService.getById(id));
         model.addAttribute("title", "User");
         return "User/userView";
     }

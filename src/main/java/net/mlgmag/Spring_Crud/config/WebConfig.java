@@ -3,7 +3,6 @@ package net.mlgmag.Spring_Crud.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
@@ -15,7 +14,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 @ComponentScan(basePackages = {"net.mlgmag.Spring_Crud.controller", "net.mlgmag.Spring_Crud.config",
 //        "net.mlgmag.Spring_Crud.config.security"
 })
-@Import({SpringConfig.class, DatabaseConfig.class})
 public class WebConfig {
 
     @Bean

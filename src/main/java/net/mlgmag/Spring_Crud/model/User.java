@@ -1,41 +1,52 @@
 package net.mlgmag.Spring_Crud.model;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.UUID;
 
 @Data
-@Document(collection = "users")
-public class User implements Serializable, UserDetails {
+@Entity
+@Table(name = "Users")
+public class User implements Serializable {
 
     @Id
-    private String id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", columnDefinition = "BINARY(16)")
+    private UUID id;
 
-    private String firstName;
-
-    private String lastName;
-
-    @Indexed(unique = true)
+    @Column(name = "username", columnDefinition = "VARCHAR(32)", unique = true)
     private String username;
 
-    @Indexed(unique = true)
+    @Column(name = "first_name", columnDefinition = "VARCHAR(255)")
+    private String firstName;
+
+    @Column(name = "last_name", columnDefinition = "VARCHAR(255)")
+    private String lastName;
+
+    @Column(name = "email", columnDefinition = "VARCHAR(255)", unique = true)
     private String email;
 
+    @Column(name = "password")
     private String password;
 
     @Transient
     private String confirmPassword;
 
-    private List<Authority> authorities;
+    @Column(name = "authorities", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Authority authorities;
 
+    @Column(name = "NonExpired")
     private boolean isAccountNonExpired;
+    @Column(name = "NonLocked")
     private boolean isAccountNonLocked;
+    @Column(name = "CredentialsNonExpired")
     private boolean isCredentialsNonExpired;
+    @Column(name = "Enabled")
     private boolean isEnabled;
 }

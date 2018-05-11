@@ -6,9 +6,11 @@ import net.mlgmag.Spring_Crud.service.genericService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -36,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        userRepository.saveAndFlush(user);
     }
 
     @Override
@@ -45,8 +47,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getById(String uuid) {
-        return userRepository.findById(uuid).get();
+    @Transactional
+    public User getById(UUID uuid) {
+        System.out.println(userRepository.getOne(uuid));
+        return userRepository.getOne(uuid);
     }
 
     @Override

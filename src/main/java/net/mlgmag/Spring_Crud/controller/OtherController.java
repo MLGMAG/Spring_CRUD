@@ -1,6 +1,5 @@
 package net.mlgmag.Spring_Crud.controller;
 
-import com.google.common.collect.ImmutableList;
 import net.mlgmag.Spring_Crud.model.Authority;
 import net.mlgmag.Spring_Crud.model.User;
 import net.mlgmag.Spring_Crud.service.genericService.UserService;
@@ -50,7 +49,7 @@ public class OtherController {
         }
 
 
-        user.setAuthorities(ImmutableList.of(Authority.USER));
+        user.setAuthorities(Authority.USER);
 
 //        securityService.autoLogin(user.getUsername(), user.getPassword());
 

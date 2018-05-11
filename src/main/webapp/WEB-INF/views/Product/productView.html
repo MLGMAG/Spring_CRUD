@@ -36,13 +36,15 @@
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
                     <div class="col-md-6 title">Manufacturer:</div>
-                    <div class="col-md-6 text-center data" th:text="*{manufacturer.name}"></div>
+                    <div class="col-md-6 text-center data">
+                        <a th:href="@{/manufacturer/(id=*{manufacturer.id})}" th:text="*{manufacturer.name}"></a>
+                    </div>
 
                     <div class="clearfix"></div>
                     <div class="bot-border"></div>
 
                     <h2 class="text-center">
-                        <a href="/product/list" class="btn btn-success" role="button">Back</a>
+                        <a th:href="@{/product/list}" class="btn btn-success" role="button">Back</a>
                     </h2>
                 </div>
 

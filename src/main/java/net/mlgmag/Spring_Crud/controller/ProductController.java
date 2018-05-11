@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @Controller
 @RequestMapping("/product")
 public class ProductController {
@@ -38,14 +40,12 @@ public class ProductController {
             model.addAttribute("title", "Add Product");
             return "Product/productAdd";
         }
-
-        product.getManufacturer().setName(manufacturerService.getById(product.getManufacturer().getId()).getName());
         productService.save(product);
         return "redirect:/product/list";
     }
 
     @GetMapping("/update/")
-    public String productUpdatePage(@RequestParam(value = "id") String id, Model model) {
+    public String productUpdatePage(@RequestParam(value = "id") UUID id, Model model) {
         model.addAttribute("manufacturers", manufacturerService.getAll());
         model.addAttribute("product", productService.getById(id));
         model.addAttribute("title", "Edit Product");
@@ -70,13 +70,13 @@ public class ProductController {
     }
 
     @GetMapping("/delete/")
-    public String productDelete(@RequestParam(value = "id") String id) {
+    public String productDelete(@RequestParam(value = "id") UUID id) {
         productService.delete(productService.getById(id));
         return "redirect:/product/list";
     }
 
     @GetMapping("/")
-    public String productView(@RequestParam(value = "id") String id, Model model) {
+    public String productView(@RequestParam(value = "id") UUID id, Model model) {
         model.addAttribute("product", productService.getById(id));
         model.addAttribute("title", "Product");
         return "Product/productView";

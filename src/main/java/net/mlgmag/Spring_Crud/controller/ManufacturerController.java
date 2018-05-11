@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @Controller
 @RequestMapping("/manufacturer")
 public class ManufacturerController {
@@ -38,7 +40,7 @@ public class ManufacturerController {
     }
 
     @GetMapping("/update/")
-    public String manufacturerUpdatePage(@RequestParam(value = "id") String id, Model model) {
+    public String manufacturerUpdatePage(@RequestParam(value = "id") UUID id, Model model) {
         model.addAttribute("manufacturer", manufacturerService.getById(id));
         model.addAttribute("title", "Edit Manufacturer");
         return "Manufacturer/manufacturerUpdate";
@@ -60,13 +62,13 @@ public class ManufacturerController {
     }
 
     @GetMapping("/delete/")
-    public String manufacturerDelete(@RequestParam(value = "id") String id) {
+    public String manufacturerDelete(@RequestParam(value = "id") UUID id) {
         manufacturerService.delete(manufacturerService.getById(id));
         return "redirect:/manufacturer/list";
     }
 
     @GetMapping("/")
-    public String manufacturerView(@RequestParam(value = "id") String id, Model model) {
+    public String manufacturerView(@RequestParam(value = "id") UUID id, Model model) {
         model.addAttribute("manufacturer", manufacturerService.getById(id));
         model.addAttribute("products", manufacturerService.getById(id).getProducts());
         model.addAttribute("title", "Manufacturer");
@@ -78,6 +80,7 @@ public class ManufacturerController {
         model.addAttribute("manufacturers", manufacturerService.getAll());
         model.addAttribute("products", manufacturerService);
         model.addAttribute("title", "Manufacturers");
+        System.out.println(manufacturerService.getAll());
         return "Manufacturer/manufacturersList";
     }
 
