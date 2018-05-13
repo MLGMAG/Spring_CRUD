@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -74,31 +75,40 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) {
+    public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
     @Override
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
     public Boolean validate(User user, Model model) {
         boolean Error = false;
-        if (findByUsername(user.getUsername()) != null) {
+
+        if (findByUsername(user.getUsername()).orElse(null) != null) {
             Error = true;
             model.addAttribute("DuplicateUsername", "Username already exist");
         }
-        if (findByEmail(user.getEmail()) != null) {
+
+        if (findByEmail(user.getEmail()).orElse(null) != null) {
             Error = true;
             model.addAttribute("DuplicateEmail", "Email already exist");
         }
+
         return Error;
     }
 
     @Override
     public List<Authority> findAllAuthority() {
         return authorityRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public Authority findAuthorityByName(String name) {
+        return authorityRepository.findByName(name);
     }
 }

@@ -4,9 +4,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
@@ -15,7 +15,7 @@ import java.util.UUID;
 @Table(name = "authorities")
 @EqualsAndHashCode(exclude = "users")
 @ToString(exclude = "users")
-public class Authority implements Serializable {
+public class Authority implements GrantedAuthority {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -28,4 +28,9 @@ public class Authority implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "authorities")
     private Set<User> users;
+
+    @Override
+    public String getAuthority() {
+        return name;
+    }
 }

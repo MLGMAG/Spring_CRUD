@@ -2,16 +2,16 @@ package net.mlgmag.Spring_Crud.model;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
 @Data
 @Entity
 @Table(name = "Users")
-public class User implements Serializable {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(generator = "uuid")

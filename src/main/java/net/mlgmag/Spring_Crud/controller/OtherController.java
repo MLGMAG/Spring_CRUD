@@ -1,6 +1,5 @@
 package net.mlgmag.Spring_Crud.controller;
 
-import net.mlgmag.Spring_Crud.model.Authority;
 import net.mlgmag.Spring_Crud.model.User;
 import net.mlgmag.Spring_Crud.service.genericService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/")
@@ -51,12 +47,8 @@ public class OtherController {
             return "Other/singUp";
         }
 
-        Authority authority = new Authority();
-        authority.setName("USER");
-        Set<Authority> authorities = new HashSet<>();
-        authorities.add(authority);
-
-        user.setAuthorities(authorities);
+        user.setAuthorityId(userService.findAuthorityByName("USER").getId());
+        System.out.println(user);
 
 //        securityService.autoLogin(user.getUsername(), user.getPassword());
 

@@ -3,6 +3,7 @@ package net.mlgmag.Spring_Crud.controller;
 import net.mlgmag.Spring_Crud.model.Manufacturer;
 import net.mlgmag.Spring_Crud.service.genericService.ManufacturerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class ManufacturerController {
     }
 
     @GetMapping("/add")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String manufacturerAddPage(Model model) {
         model.addAttribute("manufacturer", new Manufacturer());
         model.addAttribute("title", "Add Manufacturer");
@@ -28,6 +30,7 @@ public class ManufacturerController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String manufacturerAdd(@ModelAttribute("manufacturer") Manufacturer manufacturer, Model model) {
 
         if (manufacturerService.validate(manufacturer, model)) {
@@ -40,6 +43,7 @@ public class ManufacturerController {
     }
 
     @GetMapping("/update/")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String manufacturerUpdatePage(@RequestParam(value = "id") UUID id, Model model) {
         model.addAttribute("manufacturer", manufacturerService.findById(id));
         model.addAttribute("title", "Edit Manufacturer");
@@ -47,6 +51,7 @@ public class ManufacturerController {
     }
 
     @PostMapping("/update/")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String manufacturerUpdate(@ModelAttribute("manufacturer") Manufacturer manufacturer, Model model) {
 
         if (!manufacturer.getName().equals(manufacturerService.findById(manufacturer.getId()).getName())) {
@@ -62,6 +67,7 @@ public class ManufacturerController {
     }
 
     @GetMapping("/delete/")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String manufacturerDelete(@RequestParam(value = "id") UUID id) {
         manufacturerService.delete(manufacturerService.findById(id));
         return "redirect:/manufacturer/list";

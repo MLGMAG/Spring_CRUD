@@ -11,9 +11,11 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"net.mlgmag.Spring_Crud.controller", "net.mlgmag.Spring_Crud.config",
-//        "net.mlgmag.Spring_Crud.config.security"
-})
+@ComponentScan(basePackages = {
+        "net.mlgmag.Spring_Crud.config",
+        "net.mlgmag.Spring_Crud.service",
+        "net.mlgmag.Spring_Crud.controller",
+        "net.mlgmag.Spring_Crud.config.security"})
 public class WebConfig {
 
     @Bean

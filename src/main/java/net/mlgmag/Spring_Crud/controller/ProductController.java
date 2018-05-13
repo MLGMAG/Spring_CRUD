@@ -4,6 +4,7 @@ import net.mlgmag.Spring_Crud.model.Product;
 import net.mlgmag.Spring_Crud.service.genericService.ManufacturerService;
 import net.mlgmag.Spring_Crud.service.genericService.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ public class ProductController {
     }
 
     @GetMapping("/add")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String productAddPage(Model model) {
         model.addAttribute("manufacturers", manufacturerService.findAll());
         model.addAttribute("product", new Product());
@@ -33,6 +35,7 @@ public class ProductController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String productAdd(@ModelAttribute("product") Product product, Model model) {
 
         if (productService.validate(product, model)) {
@@ -45,6 +48,7 @@ public class ProductController {
     }
 
     @GetMapping("/update/")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String productUpdatePage(@RequestParam(value = "id") UUID id, Model model) {
         model.addAttribute("manufacturers", manufacturerService.findAll());
         model.addAttribute("product", productService.findById(id));
@@ -53,6 +57,7 @@ public class ProductController {
     }
 
     @PostMapping("/update/")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String productUpdate(@ModelAttribute("product") Product product, Model model) {
 
         if (!product.getName().equals(productService.findById(product.getId()).getName())) {
@@ -70,6 +75,7 @@ public class ProductController {
     }
 
     @GetMapping("/delete/")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String productDelete(@RequestParam(value = "id") UUID id) {
         productService.delete(productService.findById(id));
         return "redirect:/product/list";

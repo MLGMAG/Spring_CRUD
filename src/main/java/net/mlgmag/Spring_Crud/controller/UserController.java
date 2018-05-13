@@ -3,6 +3,7 @@ package net.mlgmag.Spring_Crud.controller;
 import net.mlgmag.Spring_Crud.model.User;
 import net.mlgmag.Spring_Crud.service.genericService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class UserController {
     }
 
     @GetMapping("/add")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String userAddPage(Model model) {
         model.addAttribute("authorities", userService.findAllAuthority());
         model.addAttribute("user", new User());
@@ -29,6 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String userAdd(@ModelAttribute("user") User user, Model model) {
 
         if (userService.validate(user, model)) {
@@ -41,7 +44,8 @@ public class UserController {
         return "redirect:/user/list";
     }
 
-    @GetMapping("/update/")
+    @GetMapping("/update")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String userUpdatePage(@RequestParam(value = "id") UUID id, Model model) {
         User user = userService.findById(id);
         user.setPassword(null);
@@ -51,7 +55,8 @@ public class UserController {
         return "User/userUpdate";
     }
 
-    @PostMapping("/update/")
+    @PostMapping("/update")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String userUpdate(@ModelAttribute("user") User user, Model model) {
 
         boolean Error = false;
@@ -79,7 +84,8 @@ public class UserController {
         return "redirect:/user/list";
     }
 
-    @GetMapping("/delete/")
+    @GetMapping("/delete")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String userDelete(@RequestParam(value = "id") UUID id) {
         userService.delete(userService.findById(id));
         return "redirect:/user/list";
