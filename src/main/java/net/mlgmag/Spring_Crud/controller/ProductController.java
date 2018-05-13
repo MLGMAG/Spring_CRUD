@@ -26,7 +26,7 @@ public class ProductController {
 
     @GetMapping("/add")
     public String productAddPage(Model model) {
-        model.addAttribute("manufacturers", manufacturerService.getAll());
+        model.addAttribute("manufacturers", manufacturerService.findAll());
         model.addAttribute("product", new Product());
         model.addAttribute("title", "Add Product");
         return "Product/productAdd";
@@ -36,7 +36,7 @@ public class ProductController {
     public String productAdd(@ModelAttribute("product") Product product, Model model) {
 
         if (productService.validate(product, model)) {
-            model.addAttribute("manufacturers", manufacturerService.getAll());
+            model.addAttribute("manufacturers", manufacturerService.findAll());
             model.addAttribute("title", "Add Product");
             return "Product/productAdd";
         }
@@ -46,8 +46,8 @@ public class ProductController {
 
     @GetMapping("/update/")
     public String productUpdatePage(@RequestParam(value = "id") UUID id, Model model) {
-        model.addAttribute("manufacturers", manufacturerService.getAll());
-        model.addAttribute("product", productService.getById(id));
+        model.addAttribute("manufacturers", manufacturerService.findAll());
+        model.addAttribute("product", productService.findById(id));
         model.addAttribute("title", "Edit Product");
         return "Product/productUpdate";
     }
@@ -55,36 +55,36 @@ public class ProductController {
     @PostMapping("/update/")
     public String productUpdate(@ModelAttribute("product") Product product, Model model) {
 
-        if (!product.getName().equals(productService.getById(product.getId()).getName())) {
+        if (!product.getName().equals(productService.findById(product.getId()).getName())) {
             if (productService.findByName(product.getName()) != null) {
-                model.addAttribute("manufacturers", manufacturerService.getAll());
+                model.addAttribute("manufacturers", manufacturerService.findAll());
                 model.addAttribute("DuplicateProductName", "Product name already exist");
                 model.addAttribute("title", "Edit Product");
                 return "Product/productUpdate";
             }
         }
 
-        product.getManufacturer().setName(manufacturerService.getById(product.getManufacturer().getId()).getName());
+        product.getManufacturer().setName(manufacturerService.findById(product.getManufacturer().getId()).getName());
         productService.update(product);
         return "redirect:/product/list";
     }
 
     @GetMapping("/delete/")
     public String productDelete(@RequestParam(value = "id") UUID id) {
-        productService.delete(productService.getById(id));
+        productService.delete(productService.findById(id));
         return "redirect:/product/list";
     }
 
     @GetMapping("/")
     public String productView(@RequestParam(value = "id") UUID id, Model model) {
-        model.addAttribute("product", productService.getById(id));
+        model.addAttribute("product", productService.findById(id));
         model.addAttribute("title", "Product");
         return "Product/productView";
     }
 
     @GetMapping("/list")
     public String productsList(Model model) {
-        model.addAttribute("products", productService.getAll());
+        model.addAttribute("products", productService.findAll());
         model.addAttribute("title", "Products");
         return "Product/productsList";
     }

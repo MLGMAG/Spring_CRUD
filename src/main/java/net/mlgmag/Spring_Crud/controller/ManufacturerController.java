@@ -41,7 +41,7 @@ public class ManufacturerController {
 
     @GetMapping("/update/")
     public String manufacturerUpdatePage(@RequestParam(value = "id") UUID id, Model model) {
-        model.addAttribute("manufacturer", manufacturerService.getById(id));
+        model.addAttribute("manufacturer", manufacturerService.findById(id));
         model.addAttribute("title", "Edit Manufacturer");
         return "Manufacturer/manufacturerUpdate";
     }
@@ -49,7 +49,7 @@ public class ManufacturerController {
     @PostMapping("/update/")
     public String manufacturerUpdate(@ModelAttribute("manufacturer") Manufacturer manufacturer, Model model) {
 
-        if (!manufacturer.getName().equals(manufacturerService.getById(manufacturer.getId()).getName())) {
+        if (!manufacturer.getName().equals(manufacturerService.findById(manufacturer.getId()).getName())) {
             if (manufacturerService.findByName(manufacturer.getName()) != null) {
                 model.addAttribute("DuplicateManufacturer", "Manufacturer name already exist");
                 model.addAttribute("title", "Edit Manufacturer");
@@ -63,24 +63,24 @@ public class ManufacturerController {
 
     @GetMapping("/delete/")
     public String manufacturerDelete(@RequestParam(value = "id") UUID id) {
-        manufacturerService.delete(manufacturerService.getById(id));
+        manufacturerService.delete(manufacturerService.findById(id));
         return "redirect:/manufacturer/list";
     }
 
     @GetMapping("/")
     public String manufacturerView(@RequestParam(value = "id") UUID id, Model model) {
-        model.addAttribute("manufacturer", manufacturerService.getById(id));
-        model.addAttribute("products", manufacturerService.getById(id).getProducts());
+        model.addAttribute("manufacturer", manufacturerService.findById(id));
+        model.addAttribute("products", manufacturerService.findById(id).getProducts());
         model.addAttribute("title", "Manufacturer");
         return "Manufacturer/manufacturerView";
     }
 
     @GetMapping("/list")
     public String manufacturersList(Model model) {
-        model.addAttribute("manufacturers", manufacturerService.getAll());
+        model.addAttribute("manufacturers", manufacturerService.findAll());
         model.addAttribute("products", manufacturerService);
         model.addAttribute("title", "Manufacturers");
-        System.out.println(manufacturerService.getAll());
+        System.out.println(manufacturerService.findAll());
         return "Manufacturer/manufacturersList";
     }
 

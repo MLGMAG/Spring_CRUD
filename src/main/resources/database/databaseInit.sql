@@ -32,8 +32,6 @@ CREATE TABLE users (
   password                VARCHAR(60)  NOT NULL,
   email                   VARCHAR(255) NOT NULL UNIQUE,
 
-  authorities             VARCHAR(255)  NOT NULL,
-
   NonExpired              TINYINT     NOT NULL,
   NonLocked               TINYINT     NOT NULL,
   CredentialsNonExpired   TINYINT     NOT NULL,
@@ -42,3 +40,20 @@ CREATE TABLE users (
   PRIMARY KEY (id)
 )
   ENGINE = InnoDB;
+
+CREATE TABLE authorities (
+  id              BINARY(16)        NOT NULL UNIQUE,
+  name            VARCHAR(255)      NOT NULL UNIQUE,
+
+  PRIMARY KEY(id)
+)
+  ENGINE=InnoDB;
+
+CREATE TABLE user_authority(
+user_id       BINARY(16) NOT NULL UNIQUE,
+authority_id  BINARY(16) NOT NULL,
+
+FOREIGN KEY(user_id) REFERENCES users(id),
+FOREIGN KEY(authority_id) REFERENCES authorities(id)
+)
+  ENGINE=InnoDB;

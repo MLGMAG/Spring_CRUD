@@ -2,10 +2,10 @@ package net.mlgmag.Spring_Crud.model;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.Transient;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -15,7 +15,7 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
@@ -37,9 +37,12 @@ public class User implements Serializable {
     @Transient
     private String confirmPassword;
 
-    @Column(name = "authorities", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Authority authorities;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "authority_id"))
+    private Set<Authority> authorities;
+
+    @Transient
+    private UUID authorityId;
 
     @Column(name = "NonExpired")
     private boolean isAccountNonExpired;

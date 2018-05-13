@@ -1,6 +1,9 @@
 package net.mlgmag.Spring_Crud.service.serviceImpl.User;
 
+import com.google.common.collect.ImmutableSet;
+import net.mlgmag.Spring_Crud.model.Authority;
 import net.mlgmag.Spring_Crud.model.User;
+import net.mlgmag.Spring_Crud.repository.AuthorityRepository;
 import net.mlgmag.Spring_Crud.repository.UserRepository;
 import net.mlgmag.Spring_Crud.service.genericService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +20,23 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    private final AuthorityRepository authorityRepository;
+
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userDao, AuthorityRepository authorityRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userDao;
+        this.authorityRepository = authorityRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
+    @Transactional
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setAuthorities(ImmutableSet.of(authorityRepository.getOne(user.getAuthorityId())));
+        user.setCredentialsNonExpired(true);
         user.setEnabled(true);
         user.setCredentialsNonExpired(true);
         user.setAccountNonLocked(true);
@@ -38,6 +47,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setAuthorities(ImmutableSet.of(authorityRepository.getOne(user.getAuthorityId())));
+        user.setCredentialsNonExpired(true);
+        user.setEnabled(true);
+        user.setCredentialsNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setAccountNonExpired(true);
         userRepository.saveAndFlush(user);
     }
 
@@ -48,13 +63,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User getById(UUID uuid) {
+    public User findById(UUID uuid) {
         System.out.println(userRepository.getOne(uuid));
         return userRepository.getOne(uuid);
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
@@ -82,4 +97,8 @@ public class UserServiceImpl implements UserService {
         return Error;
     }
 
+    @Override
+    public List<Authority> findAllAuthority() {
+        return authorityRepository.findAll();
+    }
 }

@@ -38,13 +38,13 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 
     @Override
     @Transactional
-    public Manufacturer getById(UUID uuid) {
+    public Manufacturer findById(UUID uuid) {
         System.out.println(manufacturerRepository.getOne(uuid));
         return manufacturerRepository.getOne(uuid);
     }
 
     @Override
-    public List<Manufacturer> getAll() {
+    public List<Manufacturer> findAll() {
         return manufacturerRepository.findAll();
     }
 

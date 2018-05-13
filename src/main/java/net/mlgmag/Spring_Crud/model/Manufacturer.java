@@ -14,14 +14,13 @@ import java.util.UUID;
 @Entity
 @Table(name = "manufacturers")
 @EqualsAndHashCode(exclude = "products")
-//Added 2 annotations (@EqualsAndHashCode and @ToString), because throws StackOverflow exception
 @ToString(exclude = "products")
 public class Manufacturer implements Serializable {
 
     @Id
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id", columnDefinition = "BINARY(16)")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "id", columnDefinition = "BINARY(16)", unique = true)
     private UUID id;
 
     @Column(name = "name", columnDefinition = "VARCHAR(255)", unique = true)

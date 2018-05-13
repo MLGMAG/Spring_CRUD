@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Controller
 @RequestMapping("/")
 public class OtherController {
@@ -48,8 +51,12 @@ public class OtherController {
             return "Other/singUp";
         }
 
+        Authority authority = new Authority();
+        authority.setName("USER");
+        Set<Authority> authorities = new HashSet<>();
+        authorities.add(authority);
 
-        user.setAuthorities(Authority.USER);
+        user.setAuthorities(authorities);
 
 //        securityService.autoLogin(user.getUsername(), user.getPassword());
 

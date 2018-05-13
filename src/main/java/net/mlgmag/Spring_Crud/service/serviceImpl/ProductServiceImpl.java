@@ -38,13 +38,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public Product getById(UUID uuid) {
+    public Product findById(UUID uuid) {
         System.out.println(productRepository.getOne(uuid));
         return productRepository.getOne(uuid);
     }
 
     @Override
-    public List<Product> getAll() {
+    public List<Product> findAll() {
         return productRepository.findAll();
     }
 

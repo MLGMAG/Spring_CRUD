@@ -15,14 +15,14 @@ public class Product implements Serializable {
 
     @Id
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id", columnDefinition = "BINARY(16)")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "id", columnDefinition = "BINARY(16)", unique = true)
     private UUID id;
 
     @Column(name = "name", columnDefinition = "VARCHAR(255)", unique = true)
     private String name;
 
-    @Column(name = "price", columnDefinition = "DECIMAL(16, 2)")
+    @Column(name = "price", columnDefinition = "DECIMAL(16, 2)", nullable = false)
     private BigDecimal price;
 
     @ManyToOne(fetch = FetchType.EAGER)
