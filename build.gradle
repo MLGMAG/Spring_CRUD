@@ -25,5 +25,5 @@ dependencies {
     compile group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.9.RELEASE'
     compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
     compile group: 'com.google.guava', name: 'guava', version: '24.1-jre'
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
 }
