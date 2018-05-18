@@ -11,6 +11,9 @@ repositories {
     mavenCentral()
 }
 
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
+
 dependencies {
     compile group: 'org.springframework', name: 'spring-webmvc', version: '5.0.4.RELEASE'
     compile group: 'org.springframework', name: 'spring-context-support', version: '5.0.4.RELEASE'
