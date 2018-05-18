@@ -19,6 +19,16 @@
 
                             <legend th:text="${title}"></legend>
 
+                            <div th:if="${logout}">
+                                <div class="alert alert-info" role="alert">You've has been logged out successfully</div>
+                            </div>
+
+                            <div th:if="${error}">
+                                <div class="alert alert-danger" role="alert">Invalid username or password</div>
+                            </div>
+
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
                             <div class="form-group">
                                 <label>Username</label>
                                 <input class="form-control" type="text" placeholder="Username" th:field="*{username}"
