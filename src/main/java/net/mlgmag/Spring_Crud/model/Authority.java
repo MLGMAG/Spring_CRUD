@@ -20,10 +20,10 @@ public class Authority implements GrantedAuthority {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "id", columnDefinition = "BINARY(16)", unique = true)
+    @Column(name = "id", columnDefinition = "uuid", unique = true)
     private UUID id;
 
-    @Column(name = "name", unique = true)
+    @Column(name = "name", columnDefinition = "VARCHAR(255)", unique = true)
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "authorities")
@@ -33,4 +33,5 @@ public class Authority implements GrantedAuthority {
     public String getAuthority() {
         return name;
     }
+
 }

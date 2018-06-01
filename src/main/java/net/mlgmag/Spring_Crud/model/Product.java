@@ -16,7 +16,7 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "id", columnDefinition = "BINARY(16)", unique = true)
+    @Column(name = "id", columnDefinition = "uuid", unique = true)
     private UUID id;
 
     @Column(name = "name", columnDefinition = "VARCHAR(255)", unique = true)
@@ -26,7 +26,7 @@ public class Product implements Serializable {
     private BigDecimal price;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "manufacturer_id", columnDefinition = "BINARY(16)")
+    @JoinColumn(name = "manufacturer_id", columnDefinition = "uuid")
     private Manufacturer manufacturer;
 
 }

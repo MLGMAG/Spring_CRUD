@@ -20,7 +20,7 @@ public class Manufacturer implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "id", columnDefinition = "BINARY(16)", unique = true)
+    @Column(name = "id", columnDefinition = "uuid", unique = true)
     private UUID id;
 
     @Column(name = "name", columnDefinition = "VARCHAR(255)", unique = true)
