@@ -11,9 +11,6 @@ repositories {
     mavenCentral()
 }
 
-task stage(dependsOn: ['build', 'clean'])
-build.mustRunAfter clean
-
 dependencies {
     compile group: 'org.springframework', name: 'spring-webmvc', version: '5.0.4.RELEASE'
     compile group: 'org.springframework', name: 'spring-context-support', version: '5.0.4.RELEASE'
@@ -28,5 +25,20 @@ dependencies {
     compile group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.9.RELEASE'
     compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
     compile group: 'com.google.guava', name: 'guava', version: '24.1-jre'
+    compile 'com.github.jsimone:webapp-runner:8.5.11.3'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
 }
+
+task stage() {
+    dependsOn clean, war
+}
+war.mustRunAfter clean
+
+task copyToLib(type: Copy) {
+    into "$buildDir/server"
+    from(configurations.compile) {
+        include "webapp-runner*"
+    }
+}
+
+stage.dependsOn(copyToLib)

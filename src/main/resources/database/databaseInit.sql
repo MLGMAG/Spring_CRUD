@@ -1,7 +1,3 @@
-DROP DATABASE IF EXISTS products_and_users;
-
-CREATE DATABASE products_and_users
-
 CREATE TABLE manufacturers (
   id                      uuid            NOT NULL UNIQUE,
   name                    VARCHAR(255)    NOT NULL UNIQUE,
