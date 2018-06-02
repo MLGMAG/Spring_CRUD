@@ -48,16 +48,18 @@ public class OtherController {
         user.setAuthorityId(userService.findAuthorityByName("USER").getId());
 
         userService.save(user);
-        return "redirect:/user/list";
+        return "redirect:/singIn?regSuccess";
     }
 
     @GetMapping("/singIn")
     public String singInPage(@RequestParam(value = "error", required = false) String error,
                              @RequestParam(value = "logout", required = false) String logout,
+                             @RequestParam(value = "regSuccess", required = false) String regSuccess,
                              Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("error", error != null);
         model.addAttribute("logout", logout != null);
+        model.addAttribute("regSuccess", regSuccess != null);
         model.addAttribute("title", "Sing In");
         return "Other/singIn";
     }
