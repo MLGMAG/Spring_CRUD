@@ -1,6 +1,7 @@
 package net.mlgmag.Spring_Crud.service.serviceImpl.User;
 
 import com.google.common.collect.ImmutableSet;
+import lombok.extern.slf4j.Slf4j;
 import net.mlgmag.Spring_Crud.model.Authority;
 import net.mlgmag.Spring_Crud.model.User;
 import net.mlgmag.Spring_Crud.repository.AuthorityRepository;
@@ -17,6 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -42,6 +44,7 @@ public class UserServiceImpl implements UserService {
         user.setCredentialsNonExpired(true);
         user.setAccountNonLocked(true);
         user.setAccountNonExpired(true);
+        log.info("IN UserServiceImpl save {}", user);
         userRepository.save(user);
     }
 
@@ -54,11 +57,13 @@ public class UserServiceImpl implements UserService {
         user.setCredentialsNonExpired(true);
         user.setAccountNonLocked(true);
         user.setAccountNonExpired(true);
+        log.info("IN UserServiceImpl update {}", user);
         userRepository.saveAndFlush(user);
     }
 
     @Override
     public void delete(User user) {
+        log.info("IN UserServiceImpl delete {}", user);
         userRepository.delete(user);
     }
 
@@ -66,21 +71,25 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User findById(UUID uuid) {
         System.out.println(userRepository.getOne(uuid));
+        log.info("IN UserServiceImpl findById {}", uuid);
         return userRepository.getOne(uuid);
     }
 
     @Override
     public List<User> findAll() {
+        log.info("IN UserServiceImpl findAll {}");
         return userRepository.findAll();
     }
 
     @Override
     public Optional<User> findByUsername(String username) {
+        log.info("IN UserServiceImpl findByUsername {}", username);
         return userRepository.findByUsername(username);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
+        log.info("IN UserServiceImpl findByEmail {}", email);
         return userRepository.findByEmail(email);
     }
 
@@ -103,12 +112,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Authority> findAllAuthority() {
+        log.info("IN UserServiceImpl findAllAuthority {}");
         return authorityRepository.findAll();
     }
 
     @Override
     @Transactional
     public Authority findAuthorityByName(String name) {
+        log.info("IN UserServiceImpl findAuthorityByName {}", name);
         return authorityRepository.findByName(name);
     }
 }

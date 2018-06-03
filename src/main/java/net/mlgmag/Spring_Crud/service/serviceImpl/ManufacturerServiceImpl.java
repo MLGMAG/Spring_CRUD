@@ -1,5 +1,6 @@
 package net.mlgmag.Spring_Crud.service.serviceImpl;
 
+import lombok.extern.slf4j.Slf4j;
 import net.mlgmag.Spring_Crud.model.Manufacturer;
 import net.mlgmag.Spring_Crud.repository.ManufacturerRepository;
 import net.mlgmag.Spring_Crud.service.genericService.ManufacturerService;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class ManufacturerServiceImpl implements ManufacturerService {
 
     private final ManufacturerRepository manufacturerRepository;
@@ -23,16 +25,19 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 
     @Override
     public void save(Manufacturer manufacturer) {
+        log.info("IN ManufacturerServiceImpl save {}", manufacturer);
         manufacturerRepository.save(manufacturer);
     }
 
     @Override
     public void update(Manufacturer manufacturer) {
+        log.info("IN ManufacturerServiceImpl update {}", manufacturer);
         manufacturerRepository.saveAndFlush(manufacturer);
     }
 
     @Override
     public void delete(Manufacturer manufacturer) {
+        log.info("IN ManufacturerServiceImpl delete {}", manufacturer);
         manufacturerRepository.delete(manufacturer);
     }
 
@@ -40,16 +45,19 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     @Transactional
     public Manufacturer findById(UUID uuid) {
         System.out.println(manufacturerRepository.getOne(uuid));
+        log.info("IN ManufacturerServiceImpl findById {}", uuid);
         return manufacturerRepository.getOne(uuid);
     }
 
     @Override
     public List<Manufacturer> findAll() {
+        log.info("IN ManufacturerServiceImpl findAll {}");
         return manufacturerRepository.findAll();
     }
 
     @Override
     public Manufacturer findByName(String name) {
+        log.info("IN ManufacturerServiceImpl findByName {}", name);
         return manufacturerRepository.findByName(name);
     }
 
