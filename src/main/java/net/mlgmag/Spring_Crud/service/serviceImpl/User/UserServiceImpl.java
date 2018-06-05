@@ -8,6 +8,7 @@ import net.mlgmag.Spring_Crud.repository.AuthorityRepository;
 import net.mlgmag.Spring_Crud.repository.UserRepository;
 import net.mlgmag.Spring_Crud.service.genericService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +50,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void update(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setAuthorities(ImmutableSet.of(authorityRepository.getOne(user.getAuthorityId())));
@@ -62,17 +65,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void delete(User user) {
         log.info("IN UserServiceImpl delete {}", user);
         userRepository.delete(user);
     }
 
     @Override
-    @Transactional
-    public User findById(UUID uuid) {
-        System.out.println(userRepository.getOne(uuid));
+    public Optional<User> findById(UUID uuid) {
         log.info("IN UserServiceImpl findById {}", uuid);
-        return userRepository.getOne(uuid);
+        return userRepository.findById(uuid);
     }
 
     @Override
@@ -117,7 +119,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public Authority findAuthorityByName(String name) {
         log.info("IN UserServiceImpl findAuthorityByName {}", name);
         return authorityRepository.findByName(name);

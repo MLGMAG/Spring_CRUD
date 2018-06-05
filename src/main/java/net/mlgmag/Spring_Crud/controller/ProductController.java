@@ -1,10 +1,10 @@
 package net.mlgmag.Spring_Crud.controller;
 
+import net.mlgmag.Spring_Crud.model.Manufacturer;
 import net.mlgmag.Spring_Crud.model.Product;
 import net.mlgmag.Spring_Crud.service.genericService.ManufacturerService;
 import net.mlgmag.Spring_Crud.service.genericService.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,6 @@ public class ProductController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public String productAddPage(Model model) {
         model.addAttribute("manufacturers", manufacturerService.findAll());
         model.addAttribute("product", new Product());
@@ -35,7 +34,6 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public String productAdd(@ModelAttribute("product") Product product, Model model) {
 
         if (productService.validate(product, model)) {
@@ -48,19 +46,17 @@ public class ProductController {
     }
 
     @GetMapping("/update/")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public String productUpdatePage(@RequestParam(value = "id") UUID id, Model model) {
         model.addAttribute("manufacturers", manufacturerService.findAll());
-        model.addAttribute("product", productService.findById(id));
+        model.addAttribute("product", productService.findById(id).orElse(null));
         model.addAttribute("title", "Edit Product");
         return "Product/productUpdate";
     }
 
     @PostMapping("/update/")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public String productUpdate(@ModelAttribute("product") Product product, Model model) {
 
-        if (!product.getName().equals(productService.findById(product.getId()).getName())) {
+        if (!product.getName().equals(productService.findById(product.getId()).map(Product::getName).orElse(null))) {
             if (productService.findByName(product.getName()) != null) {
                 model.addAttribute("manufacturers", manufacturerService.findAll());
                 model.addAttribute("DuplicateProductName", "Product name already exist");
@@ -69,21 +65,21 @@ public class ProductController {
             }
         }
 
-        product.getManufacturer().setName(manufacturerService.findById(product.getManufacturer().getId()).getName());
+        product.getManufacturer().setName(manufacturerService
+                .findById(product.getManufacturer().getId()).map(Manufacturer::getName).orElse(null));
         productService.update(product);
         return "redirect:/product/list";
     }
 
     @GetMapping("/delete/")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public String productDelete(@RequestParam(value = "id") UUID id) {
-        productService.delete(productService.findById(id));
+        productService.findById(id).ifPresent(productService::delete);
         return "redirect:/product/list";
     }
 
     @GetMapping("/")
     public String productView(@RequestParam(value = "id") UUID id, Model model) {
-        model.addAttribute("product", productService.findById(id));
+        model.addAttribute("product", productService.findById(id).orElse(null));
         model.addAttribute("title", "Product");
         return "Product/productView";
     }

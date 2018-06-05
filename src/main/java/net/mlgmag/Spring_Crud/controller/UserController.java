@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -22,7 +24,6 @@ public class UserController {
     }
 
     @GetMapping("/add")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public String userAddPage(Model model) {
         model.addAttribute("authorities", userService.findAllAuthority());
         model.addAttribute("user", new User());
@@ -45,10 +46,9 @@ public class UserController {
     }
 
     @GetMapping("/update")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public String userUpdatePage(@RequestParam(value = "id") UUID id, Model model) {
-        User user = userService.findById(id);
-        user.setPassword(null);
+        User user = userService.findById(id).orElse(null);
+        Objects.requireNonNull(user).setPassword(null);
         model.addAttribute("user", user);
         model.addAttribute("authorities", userService.findAllAuthority());
         model.addAttribute("title", "Edit User");
@@ -56,19 +56,20 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public String userUpdate(@ModelAttribute("user") User user, Model model) {
 
+        Optional<User> userOptional = userService.findById(user.getId());
+
         boolean Error = false;
-        if (!user.getUsername().equals(userService.findById(user.getId()).getUsername())) {
-            if (userService.findByUsername(user.getUsername()) != null) {
+        if (!user.getUsername().equals(userOptional.map(User::getUsername).orElse(null))) {
+            if (userService.findByUsername(user.getUsername()).orElse(null) != null) {
                 Error = true;
                 model.addAttribute("DuplicateUsername", "Username already exist");
             }
         }
 
-        if (!user.getEmail().equals(userService.findById(user.getId()).getEmail())) {
-            if (userService.findByEmail(user.getEmail()) != null) {
+        if (!user.getEmail().equals(userOptional.map(User::getEmail).orElse(null))) {
+            if (userService.findByEmail(user.getEmail()).orElse(null) != null) {
                 Error = true;
                 model.addAttribute("DuplicateEmail", "Email already exist");
             }
@@ -85,16 +86,14 @@ public class UserController {
     }
 
     @GetMapping("/delete")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public String userDelete(@RequestParam(value = "id") UUID id) {
-        userService.delete(userService.findById(id));
+        userService.findById(id).ifPresent(userService::delete);
         return "redirect:/user/list";
     }
 
     @GetMapping("/")
     public String userView(@RequestParam(value = "id") UUID id, Model model) {
-        model.addAttribute("user", userService.findById(id));
-        System.out.println(userService.findById(id));
+        model.addAttribute("user", userService.findById(id).orElse(null));
         model.addAttribute("title", "User");
         return "User/userView";
     }
