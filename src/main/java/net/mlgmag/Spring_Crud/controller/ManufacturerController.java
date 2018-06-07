@@ -40,14 +40,14 @@ public class ManufacturerController {
         return "redirect:/manufacturer/list";
     }
 
-    @GetMapping("/update/")
+    @GetMapping("/update")
     public String manufacturerUpdatePage(@RequestParam(value = "id") UUID id, Model model) {
         model.addAttribute("manufacturer", manufacturerService.findById(id).orElse(null));
         model.addAttribute("title", "Edit Manufacturer");
         return "Manufacturer/manufacturerUpdate";
     }
 
-    @PostMapping("/update/")
+    @PostMapping("/update")
     public String manufacturerUpdate(@ModelAttribute("manufacturer") Manufacturer manufacturer, Model model) {
 
         if (!manufacturer.getName().equals(manufacturerService
@@ -63,7 +63,7 @@ public class ManufacturerController {
         return "redirect:/manufacturer/list";
     }
 
-    @GetMapping("/delete/")
+    @GetMapping("/delete")
     public String manufacturerDelete(@RequestParam(value = "id") UUID id) {
         manufacturerService.findById(id).ifPresent(manufacturerService::delete);
         return "redirect:/manufacturer/list";
@@ -83,7 +83,6 @@ public class ManufacturerController {
     @GetMapping("/list")
     public String manufacturersList(Model model) {
         model.addAttribute("manufacturers", manufacturerService.findAll());
-        model.addAttribute("products", manufacturerService);
         model.addAttribute("title", "Manufacturers");
         return "Manufacturer/manufacturersList";
     }

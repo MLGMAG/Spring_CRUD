@@ -45,7 +45,7 @@ public class ProductController {
         return "redirect:/product/list";
     }
 
-    @GetMapping("/update/")
+    @GetMapping("/update")
     public String productUpdatePage(@RequestParam(value = "id") UUID id, Model model) {
         model.addAttribute("manufacturers", manufacturerService.findAll());
         model.addAttribute("product", productService.findById(id).orElse(null));
@@ -53,7 +53,7 @@ public class ProductController {
         return "Product/productUpdate";
     }
 
-    @PostMapping("/update/")
+    @PostMapping("/update")
     public String productUpdate(@ModelAttribute("product") Product product, Model model) {
 
         if (!product.getName().equals(productService.findById(product.getId()).map(Product::getName).orElse(null))) {
@@ -71,7 +71,7 @@ public class ProductController {
         return "redirect:/product/list";
     }
 
-    @GetMapping("/delete/")
+    @GetMapping("/delete")
     public String productDelete(@RequestParam(value = "id") UUID id) {
         productService.findById(id).ifPresent(productService::delete);
         return "redirect:/product/list";

@@ -12,7 +12,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default" th:object="${product}">
+            <div class="panel panel-default"
+                 th:if="${product} != null"
+                 th:object="${product}">
 
                 <div class="panel-heading">
                     <h4 class="text-center title" th:text="*{name}"></h4>
@@ -49,6 +51,13 @@
                 </div>
 
             </div>
+
+            <div class="panel panel-default" th:if="${product} == null">
+                <div class="panel-heading">
+                    <h4 class="text-center title">Object not found</h4>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
