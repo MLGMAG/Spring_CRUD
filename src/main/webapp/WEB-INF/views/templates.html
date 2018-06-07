@@ -6,16 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="http://i.imgur.com/8pTfNU5.png">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+          integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
     <style>
-        caption {
-            font-size: 30px;
-            padding-top: 8px;
-            padding-bottom: 28px;
-            color: #333;
-            text-align: center;
-        }
 
         .data {
             font-size: 18px;
@@ -27,11 +23,6 @@
             font-weight: bold;
         }
 
-        .bot-border {
-            border-bottom: 1px #f8f8f8 solid;
-            margin: 5px 0 5px 0
-        }
-
         .error {
             color: red;
             font-size: 0.9em;
@@ -41,47 +32,51 @@
     </style>
 </head>
 
-<nav class="navbar navbar-default" th:fragment="singIn&Up_navbar">
-    <div class="container-fluid">
+<!--Navigation bar for not logged users-->
+<nav class="navbar navbar-expand-sm navbar-light bg-light" th:fragment="signIn&Up_navbar">
 
-        <div class="navbar-header navbar-brand" th:text="${title}"></div>
+    <div class="navbar-brand" th:text="${title}"></div>
 
-        <ul class="nav navbar-nav">
-            <li><a th:href="@{/}">Home</a></li>
+    <div class="collapse navbar-collapse">
 
-            <li><a th:href="@{/user/list}">Users</a></li>
-
-            <li><a th:href="@{/product/list}">Products</a></li>
-
-            <li><a th:href="@{/manufacturer/list}">Manufacturers</a></li>
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right">
-            <li><a th:href="@{/singUp}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a th:href="@{/singIn}"><span class="glyphicon glyphicon-log-in"></span> Sing In</a></li>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/signUp}"><span class="fas fa-user-plus" aria-hidden="true"></span> Sign
+                    Up</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/signIn}"><span class="fas fa-sign-in-alt" aria-hidden="true"></span>
+                    Sign In</a>
+            </li>
         </ul>
 
     </div>
 </nav>
 
-<nav class="navbar navbar-default" th:fragment="logout_navbar">
-    <div class="container-fluid">
+<!--Navigation bar for logged users-->
+<nav class="navbar navbar-expand-sm navbar-light bg-light" th:fragment="logout_navbar">
 
-        <div class="navbar-header navbar-brand" th:text="${title}"></div>
+    <div class="navbar-brand" th:text="${title}"></div>
 
-        <ul class="nav navbar-nav">
-            <li><a th:href="@{/}">Home</a></li>
+    <div class="collapse navbar-collapse">
 
-            <li><a th:href="@{/user/list}">Users</a></li>
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
 
-            <li><a th:href="@{/product/list}">Products</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/user/list}">Users</a></li>
 
-            <li><a th:href="@{/manufacturer/list}">Manufacturers</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/product/list}">Products</a></li>
+
+            <li class="nav-item"><a class="nav-link" th:href="@{/manufacturer/list}">Manufacturers</a></li>
         </ul>
 
-        <ul class="nav navbar-nav navbar-right">
-            <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}"><span class="fas fa-sign-out-alt" aria-hidden="true"></span>
+                    Logout</a>
+            </li>
         </ul>
+
     </div>
 </nav>
 

@@ -30,29 +30,29 @@ public class OtherController {
         return "Other/home";
     }
 
-    @GetMapping("/singUp")
-    public String singUpPage(Model model) {
+    @GetMapping("/signUp")
+    public String signUpPage(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("title", "Sing Up");
-        return "Other/singUp";
+        model.addAttribute("title", "Sign Up");
+        return "Other/signUp";
     }
 
-    @PostMapping("/singUp")
-    public String singUp(@ModelAttribute("user") User user, Model model) {
+    @PostMapping("/signUp")
+    public String signUp(@ModelAttribute("user") User user, Model model) {
 
         if (userService.validate(user, model)) {
-            model.addAttribute("title", "Sing Up");
-            return "Other/singUp";
+            model.addAttribute("title", "Sign Up");
+            return "Other/signUp";
         }
 
         user.setAuthorityId(userService.findAuthorityByName("USER").getId());
 
         userService.save(user);
-        return "redirect:/singIn?regSuccess";
+        return "redirect:/signIn?regSuccess";
     }
 
-    @GetMapping("/singIn")
-    public String singInPage(@RequestParam(value = "error", required = false) String error,
+    @GetMapping("/signIn")
+    public String signInPage(@RequestParam(value = "error", required = false) String error,
                              @RequestParam(value = "logout", required = false) String logout,
                              @RequestParam(value = "regSuccess", required = false) String regSuccess,
                              Model model) {
@@ -60,8 +60,8 @@ public class OtherController {
         model.addAttribute("error", error != null);
         model.addAttribute("logout", logout != null);
         model.addAttribute("regSuccess", regSuccess != null);
-        model.addAttribute("title", "Sing In");
-        return "Other/singIn";
+        model.addAttribute("title", "Sign In");
+        return "Other/signIn";
     }
 
     @GetMapping("/logout")
@@ -73,6 +73,6 @@ public class OtherController {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
 
-        return "redirect:/singIn?logout";
+        return "redirect:/signIn?logout";
     }
 }

@@ -11,17 +11,19 @@
 
 <div class="container-fluid">
 
-    <div class="col-md-11"></div>
+    <div class="col-11"></div>
 
-    <div class="col-md-1">
-        <a th:href="@{/manufacturer/add}" class="btn btn-success">Add</a>
+    <div class="col-1 ml-auto">
+        <a th:href="@{/manufacturer/add}" class="btn btn-success" style="margin-top: 32px;">Add</a>
     </div>
 
 </div>
 
-<table class="table table-bordered table-hover">
+<h2 th:text="${title}" style="
+    text-align: center;
+    margin-bottom: 32px;"></h2>
 
-    <caption th:text="${title}"></caption>
+<table class="table table-bordered table-hover">
 
     <thead>
     <tr class="active">

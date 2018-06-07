@@ -11,39 +11,38 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default"
+        <div class="col">
+            <div class="panel"
                  th:if="${product} != null"
                  th:object="${product}">
 
-                <div class="panel-heading">
-                    <h4 class="text-center title" th:text="*{name}"></h4>
+                <div class="panel-heading" style="margin-top: 60px;">
+                    <h4 class="text-center" th:text="*{name}"></h4>
                 </div>
 
-                <div class="panel-body">
+                <div class="panel-body" style="margin-top: 60px;">
 
-                    <div class="col-md-6 title">Id:</div>
-                    <div class="col-md-6 text-center data" th:text="*{id}"></div>
-
-                    <div class="clearfix"></div>
-                    <div class="bot-border"></div>
-                    <div class="col-md-6 title">Name:</div>
-                    <div class="col-md-6 text-center data" th:text="*{name}"></div>
-
-                    <div class="clearfix"></div>
-                    <div class="bot-border"></div>
-                    <div class="col-md-6 title">Price:</div>
-                    <div class="col-md-6 text-center data" th:text="*{price}"></div>
-
-                    <div class="clearfix"></div>
-                    <div class="bot-border"></div>
-                    <div class="col-md-6 title">Manufacturer:</div>
-                    <div class="col-md-6 text-center data">
-                        <a th:href="@{/manufacturer/(id=*{manufacturer.id})}" th:text="*{manufacturer.name}"></a>
+                    <div class="row" style="margin-bottom: 30px;">
+                        <div class="col text-center title">Id:</div>
+                        <div class="col text-center data" th:text="*{id}"></div>
                     </div>
 
-                    <div class="clearfix"></div>
-                    <div class="bot-border"></div>
+                    <div class="row" style="margin-bottom: 30px;">
+                        <div class="col text-center title">Name:</div>
+                        <div class="col text-center data" th:text="*{name}"></div>
+                    </div>
+
+                    <div class="row" style="margin-bottom: 30px;">
+                        <div class="col text-center title">Price:</div>
+                        <div class="col text-center data" th:text="*{price}"></div>
+                    </div>
+
+                    <div class="row" style="margin-bottom: 30px;">
+                        <div class="col text-center title">Manufacturer:</div>
+                        <div class="col text-center data">
+                            <a th:href="@{/manufacturer/(id=*{manufacturer.id})}" th:text="*{manufacturer.name}"></a>
+                        </div>
+                    </div>
 
                     <h2 class="text-center">
                         <a th:href="@{/product/list}" class="btn btn-success" role="button">Back</a>
@@ -52,9 +51,9 @@
 
             </div>
 
-            <div class="panel panel-default" th:if="${product} == null">
-                <div class="panel-heading">
-                    <h4 class="text-center title">Object not found</h4>
+            <div class="panel" th:if="${product} == null">
+                <div class="panel-heading" style="margin-top: 60px;">
+                    <h4 class="text-center">Object not found</h4>
                 </div>
             </div>
 
