@@ -1,1 +1,1 @@
-web: java -jar build/server/webapp-runner-Spring_CRUD.jar build/libs/Spring_CRUD.war
+web: java -jar build/server/webapp-runner-*.jar build/libs/*.war
