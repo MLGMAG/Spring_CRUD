@@ -39,13 +39,37 @@
         <td>
             <a th:href="@{/manufacturer/(id=${manufacturer.id})}" class="btn btn-info">VIEW</a>
             &nbsp
-            <a th:href="@{/manufacturer/delete/(id=${manufacturer.id})}" class="btn btn-danger">DELETE</a>
+            <button type="button" class="btn btn-danger" data-toggle="modal"
+                    th:data-target="'#deleteModal_id=' + ${manufacturer.id}">DELETE
+            </button>
             &nbsp
             <a th:href="@{/manufacturer/update/(id=${manufacturer.id})}" class="btn btn-primary">EDIT</a>
         </td>
     </tr>
+
+    <div th:id="'deleteModal_id=' + ${manufacturer.id}" class="modal fade in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Are you sure?</h2>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you really want to delete these records? This process cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <a th:href="@{/manufacturer/delete/(id=${manufacturer.id})}" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     </tbody>
+
 </table>
+
+<th:block th:include="templates :: allJss"></th:block>
 
 </body>
 </html>

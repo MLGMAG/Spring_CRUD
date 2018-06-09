@@ -79,4 +79,4 @@ When creating a product, select the manufacturer using the drop-down menu.
 
 
 Technologies:
-Java, SQL, Spring (MVC, Data, Security), JSP, Maven, Tomcat, Git, MongoDB
+Java, SQL, Spring (MVC, Data, Security), JSP, Maven, Tomcat, Git, PosgeSQL
