@@ -3,6 +3,7 @@
 
 <head>
     <th:block th:include="templates :: header"></th:block>
+    <th:block th:replace="templates :: style"></th:block>
 </head>
 
 <body>
@@ -22,32 +23,32 @@
 
                 <div class="panel-body" style="margin-top: 60px;">
 
-                    <div class="row" style="margin-bottom: 30px;">
+                    <div class="row indent">
                         <div class="col text-center title">Id:</div>
                         <div class="col text-center data" th:text="*{id}"></div>
                     </div>
 
-                    <div class="row" style="margin-bottom: 30px;">
+                    <div class="row indent">
                         <div class="col text-center title">Username:</div>
                         <div class="col text-center data" th:text="*{username}"></div>
                     </div>
 
-                    <div class="row" style="margin-bottom: 30px;">
+                    <div class="row indent">
                         <div class="col text-center title">First Name:</div>
                         <div class="col text-center data" th:text="*{firstName}"></div>
                     </div>
 
-                    <div class="row" style="margin-bottom: 30px;">
+                    <div class="row indent">
                         <div class="col text-center title">Last Name:</div>
                         <div class="col text-center data" th:text="*{lastName}"></div>
                     </div>
 
-                    <div class="row" style="margin-bottom: 30px;">
+                    <div class="row indent">
                         <div class="col text-center title">Email:</div>
                         <div class="col text-center data" th:text="*{email}"></div>
                     </div>
 
-                    <div class="row" style="margin-bottom: 30px;">
+                    <div class="row indent">
                         <div class="col text-center title">Authorities:</div>
                         <div class="col text-center data">
                             <div th:each="authority : *{authorities}">

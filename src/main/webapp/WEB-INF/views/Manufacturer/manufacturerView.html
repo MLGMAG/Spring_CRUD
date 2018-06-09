@@ -3,6 +3,7 @@
 
 <head>
     <th:block th:include="templates :: header"></th:block>
+    <th:block th:replace="templates :: style"></th:block>
 </head>
 
 <body>
@@ -22,18 +23,18 @@
 
                 <div class="panel-body" style="margin-top: 60px;">
 
-                    <div class="row" style="margin-bottom: 30px;">
+                    <div class="row indent">
                         <div class="col text-center title">Id:</div>
                         <div class="col text-center data" th:text="*{id}"></div>
                     </div>
 
-                    <div class="row" style="margin-bottom: 30px;">
+                    <div class="row indent">
                         <div class="col text-center title">Name:</div>
                         <div class="col text-center data" th:text="*{name}"></div>
                     </div>
 
                     <div th:if="!${#lists.isEmpty(products)}">
-                        <div class="row" style="margin-bottom: 30px;">
+                        <div class="row indent">
                             <div class="col text-center title">Products:</div>
                             <div class="col text-center data">
 
