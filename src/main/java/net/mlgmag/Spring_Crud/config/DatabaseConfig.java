@@ -44,7 +44,7 @@ public class DatabaseConfig {
     @Bean
     public DataSource dataSource() throws URISyntaxException {
         BasicDataSource dataSource = new BasicDataSource();
-        
+
         //DataBase
         URI dbUri = new URI(env.getRequiredProperty("database.uri"));
         String username = dbUri.getUserInfo().split(":")[0];
