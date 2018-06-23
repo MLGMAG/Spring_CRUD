@@ -27,7 +27,7 @@ public class UserController {
     @GetMapping("/add")
     public String userAddPage(Model model) {
         model.addAttribute("authorities", Authority.values());
-        model.addAttribute("user", new User());
+        model.addAttribute(new User());
         model.addAttribute("title", "Add User");
         return "User/userAdd";
     }

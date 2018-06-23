@@ -28,7 +28,7 @@ public class ProductController {
     @GetMapping("/add")
     public String productAddPage(Model model) {
         model.addAttribute("manufacturers", manufacturerService.findAll());
-        model.addAttribute("product", new Product());
+        model.addAttribute(new Product());
         model.addAttribute("title", "Add Product");
         return "Product/productAdd";
     }

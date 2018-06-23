@@ -34,7 +34,7 @@ public class OtherController {
 
     @GetMapping("/signUp")
     public String signUpPage(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute(new User());
         model.addAttribute("title", "Sign Up");
         return "Other/signUp";
     }
@@ -58,7 +58,7 @@ public class OtherController {
                              @RequestParam(value = "logout", required = false) String logout,
                              @RequestParam(value = "regSuccess", required = false) String regSuccess,
                              Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute(new User());
         model.addAttribute("error", error != null);
         model.addAttribute("logout", logout != null);
         model.addAttribute("regSuccess", regSuccess != null);
