@@ -1,4 +1,4 @@
-package net.mlgmag.Spring_Crud.service.genericService;
+package net.mlgmag.Spring_Crud.definition;
 
 import net.mlgmag.Spring_Crud.model.Product;
 import org.springframework.ui.Model;

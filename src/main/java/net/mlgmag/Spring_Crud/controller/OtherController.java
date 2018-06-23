@@ -1,9 +1,9 @@
 package net.mlgmag.Spring_Crud.controller;
 
 import com.google.common.collect.ImmutableSet;
+import net.mlgmag.Spring_Crud.definition.UserService;
 import net.mlgmag.Spring_Crud.enums.Authority;
 import net.mlgmag.Spring_Crud.model.User;
-import net.mlgmag.Spring_Crud.service.genericService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -1,9 +1,9 @@
-package net.mlgmag.Spring_Crud.service.serviceImpl;
+package net.mlgmag.Spring_Crud.service;
 
 import lombok.extern.slf4j.Slf4j;
+import net.mlgmag.Spring_Crud.definition.ProductService;
 import net.mlgmag.Spring_Crud.model.Product;
 import net.mlgmag.Spring_Crud.repository.ProductRepository;
-import net.mlgmag.Spring_Crud.service.genericService.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;

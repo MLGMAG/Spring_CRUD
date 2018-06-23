@@ -1,4 +1,4 @@
-package net.mlgmag.Spring_Crud.service.genericService;
+package net.mlgmag.Spring_Crud.definition;
 
 import java.util.List;
 import java.util.Optional;

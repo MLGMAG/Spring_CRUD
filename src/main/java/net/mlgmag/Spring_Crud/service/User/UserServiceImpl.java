@@ -1,11 +1,11 @@
-package net.mlgmag.Spring_Crud.service.serviceImpl.User;
+package net.mlgmag.Spring_Crud.service.User;
 
 import com.google.common.collect.ImmutableSet;
 import lombok.extern.slf4j.Slf4j;
+import net.mlgmag.Spring_Crud.definition.UserService;
 import net.mlgmag.Spring_Crud.enums.Authority;
 import net.mlgmag.Spring_Crud.model.User;
 import net.mlgmag.Spring_Crud.repository.UserRepository;
-import net.mlgmag.Spring_Crud.service.genericService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

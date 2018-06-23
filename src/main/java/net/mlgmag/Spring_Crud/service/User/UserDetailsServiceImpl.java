@@ -1,4 +1,4 @@
-package net.mlgmag.Spring_Crud.service.serviceImpl.User;
+package net.mlgmag.Spring_Crud.service.User;
 
 import lombok.extern.slf4j.Slf4j;
 import net.mlgmag.Spring_Crud.repository.UserRepository;

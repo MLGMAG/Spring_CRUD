@@ -1,6 +1,6 @@
 package net.mlgmag.Spring_Crud.config.security;
 
-import net.mlgmag.Spring_Crud.service.serviceImpl.User.UserDetailsServiceImpl;
+import net.mlgmag.Spring_Crud.service.User.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

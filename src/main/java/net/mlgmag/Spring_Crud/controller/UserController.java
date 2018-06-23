@@ -1,8 +1,8 @@
 package net.mlgmag.Spring_Crud.controller;
 
+import net.mlgmag.Spring_Crud.definition.UserService;
 import net.mlgmag.Spring_Crud.enums.Authority;
 import net.mlgmag.Spring_Crud.model.User;
-import net.mlgmag.Spring_Crud.service.genericService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
