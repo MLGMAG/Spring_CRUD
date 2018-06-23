@@ -57,7 +57,7 @@ public class ProductController {
     public String productUpdate(@ModelAttribute("product") Product product, Model model) {
 
         if (!product.getName().equals(productService.findById(product.getId()).map(Product::getName).orElse(null))) {
-            if (productService.findByName(product.getName()) != null) {
+            if (productService.findByName(product.getName()).isPresent()) {
                 model.addAttribute("manufacturers", manufacturerService.findAll());
                 model.addAttribute("DuplicateProductName", "Product name already exist");
                 model.addAttribute("title", "Edit Product");

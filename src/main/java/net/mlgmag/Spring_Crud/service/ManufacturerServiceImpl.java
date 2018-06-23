@@ -58,7 +58,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public Manufacturer findByName(String name) {
+    public Optional<Manufacturer> findByName(String name) {
         log.info("IN ManufacturerServiceImpl findByName {}", name);
         return manufacturerRepository.findByName(name);
     }
@@ -66,7 +66,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     @Override
     public Boolean validate(Manufacturer manufacturer, Model model) {
         boolean Error = false;
-        if (findByName(manufacturer.getName()) != null) {
+        if (findByName(manufacturer.getName()).isPresent()) {
             Error = true;
             model.addAttribute("DuplicateManufacturer", "Manufacturer name already exist");
         }

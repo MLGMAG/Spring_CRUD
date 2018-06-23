@@ -52,7 +52,7 @@ public class ManufacturerController {
 
         if (!manufacturer.getName().equals(manufacturerService
                 .findById(manufacturer.getId()).map(Manufacturer::getName).orElse(null))) {
-            if (manufacturerService.findByName(manufacturer.getName()) != null) {
+            if (manufacturerService.findByName(manufacturer.getName()).isPresent()) {
                 model.addAttribute("DuplicateManufacturer", "Manufacturer name already exist");
                 model.addAttribute("title", "Edit Manufacturer");
                 return "Manufacturer/manufacturerUpdate";

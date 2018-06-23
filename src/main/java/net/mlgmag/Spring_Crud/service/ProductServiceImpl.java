@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product findByName(String name) {
+    public Optional<Product> findByName(String name) {
         log.info("IN ProductServiceImpl findByName {} ", name);
         return productRepository.findByName(name);
     }
@@ -66,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Boolean validate(Product product, Model model) {
         boolean Error = false;
-        if (findByName(product.getName()) != null) {
+        if (findByName(product.getName()).isPresent()) {
             Error = true;
             model.addAttribute("DuplicateProductName", "Product name already exist");
         }
