@@ -1,5 +1,6 @@
 package net.mlgmag.Spring_Crud.controller;
 
+import net.mlgmag.Spring_Crud.enums.Authority;
 import net.mlgmag.Spring_Crud.model.User;
 import net.mlgmag.Spring_Crud.service.genericService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class UserController {
 
     @GetMapping("/add")
     public String userAddPage(Model model) {
-        model.addAttribute("authorities", userService.findAllAuthority());
+        model.addAttribute("authorities", Authority.values());
         model.addAttribute("user", new User());
         model.addAttribute("title", "Add User");
         return "User/userAdd";
@@ -36,7 +37,7 @@ public class UserController {
     public String userAdd(@ModelAttribute("user") User user, Model model) {
 
         if (userService.validate(user, model)) {
-            model.addAttribute("authorities", userService.findAllAuthority());
+            model.addAttribute("authorities", Authority.values());
             model.addAttribute("title", "Add User");
             return "User/userAdd";
         }
@@ -50,7 +51,7 @@ public class UserController {
         User user = userService.findById(id).orElse(null);
         Objects.requireNonNull(user).setPassword(null);
         model.addAttribute("user", user);
-        model.addAttribute("authorities", userService.findAllAuthority());
+        model.addAttribute("authorities", Authority.values());
         model.addAttribute("title", "Edit User");
         return "User/userUpdate";
     }
@@ -76,7 +77,7 @@ public class UserController {
         }
 
         if (Error) {
-            model.addAttribute("authorities", userService.findAllAuthority());
+            model.addAttribute("authorities", Authority.values());
             model.addAttribute("title", "Edit User");
             return "User/userUpdate";
         }

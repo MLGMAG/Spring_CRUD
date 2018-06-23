@@ -2,9 +2,8 @@ package net.mlgmag.Spring_Crud.service.serviceImpl.User;
 
 import com.google.common.collect.ImmutableSet;
 import lombok.extern.slf4j.Slf4j;
-import net.mlgmag.Spring_Crud.model.Authority;
+import net.mlgmag.Spring_Crud.enums.Authority;
 import net.mlgmag.Spring_Crud.model.User;
-import net.mlgmag.Spring_Crud.repository.AuthorityRepository;
 import net.mlgmag.Spring_Crud.repository.UserRepository;
 import net.mlgmag.Spring_Crud.service.genericService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +23,11 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final AuthorityRepository authorityRepository;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userDao, AuthorityRepository authorityRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userDao;
-        this.authorityRepository = authorityRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -39,7 +35,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setAuthorities(ImmutableSet.of(authorityRepository.getOne(user.getAuthorityId())));
+        if (user.getAuthorities().contains(Authority.ADMIN)) {
+            user.setAuthorities(ImmutableSet.of(Authority.USER, Authority.ADMIN));
+        }
         user.setCredentialsNonExpired(true);
         user.setEnabled(true);
         user.setCredentialsNonExpired(true);
@@ -54,7 +52,9 @@ public class UserServiceImpl implements UserService {
     @PreAuthorize("hasAuthority('ADMIN')")
     public void update(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setAuthorities(ImmutableSet.of(authorityRepository.getOne(user.getAuthorityId())));
+        if (user.getAuthorities().contains(Authority.ADMIN)) {
+            user.setAuthorities(ImmutableSet.of(Authority.USER, Authority.ADMIN));
+        }
         user.setCredentialsNonExpired(true);
         user.setEnabled(true);
         user.setCredentialsNonExpired(true);
@@ -110,17 +110,5 @@ public class UserServiceImpl implements UserService {
         }
 
         return Error;
-    }
-
-    @Override
-    public List<Authority> findAllAuthority() {
-        log.info("IN UserServiceImpl findAllAuthority {}");
-        return authorityRepository.findAll();
-    }
-
-    @Override
-    public Authority findAuthorityByName(String name) {
-        log.info("IN UserServiceImpl findAuthorityByName {}", name);
-        return authorityRepository.findByName(name);
     }
 }

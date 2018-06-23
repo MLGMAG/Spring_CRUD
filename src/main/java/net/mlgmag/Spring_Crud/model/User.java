@@ -1,6 +1,7 @@
 package net.mlgmag.Spring_Crud.model;
 
 import lombok.Data;
+import net.mlgmag.Spring_Crud.enums.Authority;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -37,12 +38,10 @@ public class User implements UserDetails {
     @Transient
     private String confirmPassword;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "authority_id"))
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = Authority.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "id"))
     private Set<Authority> authorities;
-
-    @Transient
-    private UUID authorityId;
 
     @Column(name = "NonExpired", columnDefinition = "boolean")
     private boolean isAccountNonExpired;

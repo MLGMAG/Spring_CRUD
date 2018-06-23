@@ -5,7 +5,6 @@ CREATE TABLE manufacturers (
   PRIMARY KEY (id)
 );
 
-
 CREATE TABLE products (
   id                      uuid              NOT NULL UNIQUE,
   name                    VARCHAR(255)      NOT NULL UNIQUE,
@@ -30,19 +29,4 @@ CREATE TABLE users (
   Enabled                 boolean         NOT NULL,
 
   PRIMARY KEY (id)
-);
-
-CREATE TABLE authorities (
-  id                      uuid              NOT NULL UNIQUE,
-  name                    VARCHAR(255)      NOT NULL UNIQUE,
-
-  PRIMARY KEY(id)
-);
-
-CREATE TABLE user_authority(
-user_id                   uuid      NOT NULL UNIQUE,
-authority_id              uuid      NOT NULL,
-
-FOREIGN KEY(user_id) REFERENCES users(id),
-FOREIGN KEY(authority_id) REFERENCES authorities(id)
 );
