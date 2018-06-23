@@ -42,7 +42,7 @@ public class OtherController {
     @PostMapping("/signUp")
     public String signUp(@ModelAttribute("user") User user, Model model) {
 
-        if (userService.validate(user, model)) {
+        if (userService.saveValidation(user, model)) {
             model.addAttribute("title", "Sign Up");
             return "Other/signUp";
         }

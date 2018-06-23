@@ -12,6 +12,8 @@ public interface UserService extends GenericService<User, UUID> {
 
     Optional<User> findByEmail(String email);
 
-    Boolean validate(User user, Model model);
+    Boolean usernameValidation(String username, Model model);
+
+    Boolean emailValidation(String email, Model model);
 
 }

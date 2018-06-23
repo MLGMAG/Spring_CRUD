@@ -64,13 +64,31 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public Boolean validate(Manufacturer manufacturer, Model model) {
-        boolean Error = false;
-        if (findByName(manufacturer.getName()).isPresent()) {
-            Error = true;
-            model.addAttribute("DuplicateManufacturer", "Manufacturer name already exist");
+    public Boolean manufacturerNameValidation(String name, Model model) {
+
+        if (findByName(name).isPresent()) {
+            String error = "Manufacturer name already exist";
+            log.info("IN ManufacturerServiceImpl manufacturerNameValidation {} ->", "Validation failed: " + error);
+            model.addAttribute("DuplicateManufacturer", error);
+            return true;
         }
-        return Error;
+
+        return false;
+    }
+
+    @Override
+    public Boolean saveValidation(Manufacturer manufacturer, Model model) {
+        return manufacturerNameValidation(manufacturer.getName(), model);
+    }
+
+    @Override
+    public Boolean updateValidation(Manufacturer manufacturer, Model model) {
+
+        if (!manufacturer.getName().equals(findById(manufacturer.getId()).map(Manufacturer::getName).orElse(null))) {
+            return manufacturerNameValidation(manufacturer.getName(), model);
+        }
+
+        return false;
     }
 
 }

@@ -31,7 +31,7 @@ public class ManufacturerController {
     @PostMapping("/add")
     public String manufacturerAdd(@ModelAttribute("manufacturer") Manufacturer manufacturer, Model model) {
 
-        if (manufacturerService.validate(manufacturer, model)) {
+        if (manufacturerService.saveValidation(manufacturer, model)) {
             model.addAttribute("title", "Add Manufacturer");
             return "Manufacturer/manufacturerAdd";
         }
@@ -50,13 +50,9 @@ public class ManufacturerController {
     @PostMapping("/update")
     public String manufacturerUpdate(@ModelAttribute("manufacturer") Manufacturer manufacturer, Model model) {
 
-        if (!manufacturer.getName().equals(manufacturerService
-                .findById(manufacturer.getId()).map(Manufacturer::getName).orElse(null))) {
-            if (manufacturerService.findByName(manufacturer.getName()).isPresent()) {
-                model.addAttribute("DuplicateManufacturer", "Manufacturer name already exist");
-                model.addAttribute("title", "Edit Manufacturer");
-                return "Manufacturer/manufacturerUpdate";
-            }
+        if (manufacturerService.updateValidation(manufacturer, model)) {
+            model.addAttribute("title", "Edit Manufacturer");
+            return "Manufacturer/manufacturerUpdate";
         }
 
         manufacturerService.update(manufacturer);

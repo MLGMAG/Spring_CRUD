@@ -10,6 +10,6 @@ public interface ProductService extends GenericService<Product, UUID> {
 
     Optional<Product> findByName(String name);
 
-    Boolean validate(Product product, Model model);
+    Boolean productNameValidation(String name, Model model);
 
 }

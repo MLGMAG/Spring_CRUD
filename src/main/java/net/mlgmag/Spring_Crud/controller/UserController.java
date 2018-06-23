@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -36,7 +35,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String userAdd(@ModelAttribute("user") User user, Model model) {
 
-        if (userService.validate(user, model)) {
+        if (userService.saveValidation(user, model)) {
             model.addAttribute("authorities", Authority.values());
             model.addAttribute("title", "Add User");
             return "User/userAdd";
@@ -59,27 +58,10 @@ public class UserController {
     @PostMapping("/update")
     public String userUpdate(@ModelAttribute("user") User user, Model model) {
 
-        Optional<User> userOptional = userService.findById(user.getId());
-
-        boolean Error = false;
-        if (!user.getUsername().equals(userOptional.map(User::getUsername).orElse(null))) {
-            if (userService.findByUsername(user.getUsername()).orElse(null) != null) {
-                Error = true;
-                model.addAttribute("DuplicateUsername", "Username already exist");
-            }
-        }
-
-        if (!user.getEmail().equals(userOptional.map(User::getEmail).orElse(null))) {
-            if (userService.findByEmail(user.getEmail()).orElse(null) != null) {
-                Error = true;
-                model.addAttribute("DuplicateEmail", "Email already exist");
-            }
-        }
-
-        if (Error) {
+        if (userService.updateValidation(user, model)) {
             model.addAttribute("authorities", Authority.values());
             model.addAttribute("title", "Edit User");
-            return "User/userUpdate";
+            return "User/userAdd";
         }
 
         userService.update(user);

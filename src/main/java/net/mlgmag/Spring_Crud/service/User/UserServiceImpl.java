@@ -96,17 +96,48 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean validate(User user, Model model) {
-        boolean Error = false;
+    public Boolean usernameValidation(String username, Model model) {
 
-        if (findByUsername(user.getUsername()).orElse(null) != null) {
-            Error = true;
-            model.addAttribute("DuplicateUsername", "Username already exist");
+        if (findByUsername(username).isPresent()) {
+            String error = "Username already exist";
+            log.info("IN UserServiceImpl usernameValidation {} ->", "Validation failed: " + error);
+            model.addAttribute("DuplicateUsername", error);
+            return true;
         }
 
-        if (findByEmail(user.getEmail()).orElse(null) != null) {
-            Error = true;
-            model.addAttribute("DuplicateEmail", "Email already exist");
+        return false;
+    }
+
+    @Override
+    public Boolean emailValidation(String email, Model model) {
+
+        if (findByEmail(email).isPresent()) {
+            String error = "Email already exist";
+            log.info("IN UserServiceImpl emailValidation {} ->", "Validation failed: " + error);
+            model.addAttribute("DuplicateEmail", error);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public Boolean saveValidation(User user, Model model) {
+        return usernameValidation(user.getUsername(), model) | emailValidation(user.getEmail(), model);
+    }
+
+    @Override
+    public Boolean updateValidation(User user, Model model) {
+
+        Boolean Error = false;
+        Optional<User> userOptional = findById(user.getId());
+
+        if (!user.getUsername().equals(userOptional.map(User::getUsername).orElse(null))) {
+            Error = usernameValidation(user.getUsername(), model);
+        }
+
+        if (!user.getEmail().equals(userOptional.map(User::getEmail).orElse(null))) {
+            Error = emailValidation(user.getEmail(), model);
         }
 
         return Error;

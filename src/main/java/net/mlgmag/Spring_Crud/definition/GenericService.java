@@ -1,5 +1,7 @@
 package net.mlgmag.Spring_Crud.definition;
 
+import org.springframework.ui.Model;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -14,5 +16,9 @@ public interface GenericService<T, ID> {
     Optional<T> findById(ID uuid);
 
     List<T> findAll();
+
+    Boolean saveValidation(T t, Model model);
+
+    Boolean updateValidation(T t, Model model);
 
 }

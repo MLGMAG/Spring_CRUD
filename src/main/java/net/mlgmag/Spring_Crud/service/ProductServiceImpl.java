@@ -64,13 +64,31 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Boolean validate(Product product, Model model) {
-        boolean Error = false;
-        if (findByName(product.getName()).isPresent()) {
-            Error = true;
-            model.addAttribute("DuplicateProductName", "Product name already exist");
+    public Boolean productNameValidation(String name, Model model) {
+
+        if (findByName(name).isPresent()) {
+            String error = "Product name already exist";
+            log.info("IN ProductServiceImpl productNameValidation {} ->", "Validation failed: " + error);
+            model.addAttribute("DuplicateProductName", error);
+            return true;
         }
-        return Error;
+
+        return false;
+    }
+
+    @Override
+    public Boolean saveValidation(Product product, Model model) {
+        return productNameValidation(product.getName(), model);
+    }
+
+    @Override
+    public Boolean updateValidation(Product product, Model model) {
+
+        if (!product.getName().equals(findById(product.getId()).map(Product::getName).orElse(null))) {
+            return productNameValidation(product.getName(), model);
+        }
+
+        return false;
     }
 
 }

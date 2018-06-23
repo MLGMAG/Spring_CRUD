@@ -10,6 +10,6 @@ public interface ManufacturerService extends GenericService<Manufacturer, UUID> 
 
     Optional<Manufacturer> findByName(String name);
 
-    Boolean validate(Manufacturer manufacturer, Model model);
+    Boolean manufacturerNameValidation(String name, Model model);
 
 }
