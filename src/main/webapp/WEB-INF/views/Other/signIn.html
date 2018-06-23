@@ -21,15 +21,30 @@
                             <legend th:text="${title}"></legend>
 
                             <div th:if="${logout}">
-                                <div class="alert alert-info" role="alert">You've has been logged out successfully</div>
+                                <div class="alert alert-info" role="alert">
+                                    You've has been logged out successfully
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
                             </div>
 
                             <div th:if="${regSuccess}">
-                                <div class="alert alert-success" role="alert">Registration completed successfully</div>
+                                <div class="alert alert-success" role="alert">
+                                    Registration completed successfully
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
                             </div>
 
                             <div th:if="${error}">
-                                <div class="alert alert-danger" role="alert">Invalid username or password</div>
+                                <div class="alert alert-danger" role="alert">
+                                    Invalid username or password
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
                             </div>
 
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
@@ -55,6 +70,8 @@
         </div>
     </div>
 </div>
+
+<th:block th:include="templates :: allJss"></th:block>
 
 </body>
 </html>
