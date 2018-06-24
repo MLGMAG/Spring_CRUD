@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         if (user.getAuthorities().contains(Authority.ADMIN)) {
@@ -44,6 +45,20 @@ public class UserServiceImpl implements UserService {
         user.setAccountNonLocked(true);
         user.setAccountNonExpired(true);
         log.info("IN UserServiceImpl save {}", user);
+        userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void registration(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setAuthorities(ImmutableSet.of(Authority.USER));
+        user.setCredentialsNonExpired(true);
+        user.setEnabled(true);
+        user.setCredentialsNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setAccountNonExpired(true);
+        log.info("IN UserServiceImpl registration {}", user);
         userRepository.save(user);
     }
 

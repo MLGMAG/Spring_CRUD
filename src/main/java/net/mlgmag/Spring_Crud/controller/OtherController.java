@@ -1,8 +1,6 @@
 package net.mlgmag.Spring_Crud.controller;
 
-import com.google.common.collect.ImmutableSet;
 import net.mlgmag.Spring_Crud.definition.UserService;
-import net.mlgmag.Spring_Crud.enums.Authority;
 import net.mlgmag.Spring_Crud.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -47,9 +45,7 @@ public class OtherController {
             return "Other/signUp";
         }
 
-        user.setAuthorities(ImmutableSet.of(Authority.USER));
-
-        userService.save(user);
+        userService.registration(user);
         return "redirect:/signIn?regSuccess";
     }
 

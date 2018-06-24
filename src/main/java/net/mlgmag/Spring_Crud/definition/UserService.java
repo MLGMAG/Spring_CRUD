@@ -8,6 +8,8 @@ import java.util.UUID;
 
 public interface UserService extends GenericService<User, UUID> {
 
+    void registration(User user);
+
     Optional<User> findByUsername(String username);
 
     Optional<User> findByEmail(String email);

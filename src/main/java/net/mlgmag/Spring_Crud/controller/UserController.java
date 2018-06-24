@@ -4,7 +4,6 @@ import net.mlgmag.Spring_Crud.definition.UserService;
 import net.mlgmag.Spring_Crud.enums.Authority;
 import net.mlgmag.Spring_Crud.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +31,6 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public String userAdd(@ModelAttribute("user") User user, Model model) {
 
         if (userService.saveValidation(user, model)) {
