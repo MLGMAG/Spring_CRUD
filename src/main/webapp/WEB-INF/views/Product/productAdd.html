@@ -38,13 +38,27 @@
                             <div class="form-group">
                                 <label th:for="manufacturer.id">Manufacturer</label>
                                 <br>
-                                <select class="form-control" th:field="*{manufacturer.id}">
-                                    <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.id}"
-                                            th:text="${manufacturer.name}"></option>
-                                </select>
+
+                                <div th:if="${!#lists.isEmpty(manufacturers)}">
+                                    <select class="form-control" th:field="*{manufacturer.id}">
+                                        <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.id}"
+                                                th:text="${manufacturer.name}"></option>
+                                    </select>
+                                </div>
+
+                                <div th:if="!${!#lists.isEmpty(manufacturers)}">
+                                    No manufacturers in database, please add them
+                                </div>
                             </div>
 
-                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Add product">
+
+                            <input class="btn btn-lg btn-success btn-block" th:if="${!#lists.isEmpty(manufacturers)}"
+                                   type="submit" value="Add product">
+
+                            <button class="btn btn-lg btn-success btn-block" th:if="!${!#lists.isEmpty(manufacturers)}"
+                                    type="button" disabled>
+                                Add product
+                            </button>
 
                         </fieldset>
                     </form>
