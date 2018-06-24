@@ -52,15 +52,15 @@
 
                             <div class="form-group">
                                 <label th:for="password">Password</label>
-                                <input class="form-control" id="password" type="password" placeholder="Password"
+                                <input class="form-control" type="password" placeholder="Password"
                                        th:field="*{password}"
                                        pattern=".{8,}" required title="Minimum password size is 8">
                             </div>
 
                             <div class="form-group">
                                 <label>Confirm password</label>
-                                <input class="form-control" id="confirmPassword" type="password"
-                                       placeholder="Confirm password" th:field="*{confirmPassword}">
+                                <input class="form-control" type="password" placeholder="Confirm password"
+                                       th:field="*{confirmPassword}">
                             </div>
 
                             <div class="form-group">
