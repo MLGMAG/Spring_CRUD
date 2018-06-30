@@ -13,12 +13,11 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <div class="panel"
-                 style="margin-top: 60px; border: solid #007bff; background-color: #ffffff;"
+            <div class="panel border-panel"
                  th:if="${manufacturer} != null"
                  th:object="${manufacturer}">
 
-                <div class="panel-heading" style="background-color: #dee2e6; padding-top: 15px; padding-bottom: 10px;">
+                <div class="panel-heading title-panel">
                     <h4 class="text-center" th:text="*{name}"></h4>
                 </div>
 
