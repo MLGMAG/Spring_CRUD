@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head>
-    <th:block th:include="templates :: header"></th:block>
-</head>
+<th:block th:replace="templates :: header"></th:block>
 
 <body>
 
@@ -15,7 +13,7 @@
         <div class="col-4">
             <div class="panel" style="margin-top: 80px;">
                 <div class="panel-body">
-                    <form th:object="${user}" th:method="@{/user/update}" method="post">
+                    <form th:object="${user}" th:action="@{/user/update}" method="post">
                         <fieldset>
 
                             <legend th:text="${title}"></legend>
