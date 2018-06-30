@@ -19,7 +19,7 @@
                             <legend th:text="${title}"></legend>
 
                             <div th:if="${logout}">
-                                <div class="alert alert-info" role="alert">
+                                <div class="alert alert-info fade show" role="alert">
                                     You've has been logged out successfully
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -28,7 +28,7 @@
                             </div>
 
                             <div th:if="${regSuccess}">
-                                <div class="alert alert-success" role="alert">
+                                <div class="alert alert-success fade show" role="alert">
                                     Registration completed successfully
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -37,7 +37,7 @@
                             </div>
 
                             <div th:if="${error}">
-                                <div class="alert alert-danger" role="alert">
+                                <div class="alert alert-danger fade show" role="alert">
                                     Invalid username or password
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
