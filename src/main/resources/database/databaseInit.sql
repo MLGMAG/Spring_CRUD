@@ -30,3 +30,11 @@ CREATE TABLE users (
 
   PRIMARY KEY (id)
 );
+
+CREATE TABLE user_authority (
+
+id                        uuid            NOT NULL,
+authority                 VARCHAR(255)    NOT NULL,
+
+FOREIGN KEY(id) REFERENCES users(id)
+);
