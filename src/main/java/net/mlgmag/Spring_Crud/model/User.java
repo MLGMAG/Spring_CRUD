@@ -41,6 +41,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Authority.class, fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "authority", columnDefinition = "VARCHAR(255)", nullable = false)
     private Set<Authority> authorities;
 
     @Column(name = "NonExpired", columnDefinition = "boolean")
