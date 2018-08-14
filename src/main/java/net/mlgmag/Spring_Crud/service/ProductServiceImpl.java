@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -33,22 +32,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void update(Product product) {
-        log.info("IN ProductServiceImpl update {}", product);
-        productRepository.saveAndFlush(product);
-    }
-
-    @Override
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void delete(Product product) {
         log.info("IN ProductServiceImpl delete {}", product);
         productRepository.delete(product);
     }
 
     @Override
-    public Optional<Product> findById(UUID uuid) {
-        log.info("IN ProductServiceImpl findById {} ", uuid);
-        return productRepository.findById(uuid);
+    public Product findById(UUID id) {
+        log.info("IN ProductServiceImpl findById {} ", id);
+        return productRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Product with id \"" + id + "\" not found"));
     }
 
     @Override
@@ -58,22 +51,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> findByName(String name) {
+    public Product findByName(String name) {
         log.info("IN ProductServiceImpl findByName {} ", name);
-        return productRepository.findByName(name);
+        return productRepository.findByName(name)
+                .orElseThrow(() -> new IllegalStateException("Product with name \"" + name + "\" not found"));
     }
 
     @Override
     public Boolean productNameValidation(String name, Model model) {
-
-        if (findByName(name).isPresent()) {
+        try {
+            findByName(name);
             String error = "Product name already exist";
             log.info("IN ProductServiceImpl productNameValidation {} ->", "Validation failed: " + error);
             model.addAttribute("DuplicateProductName", error);
             return true;
+        } catch (IllegalStateException e) {
+            return false;
         }
-
-        return false;
     }
 
     @Override
@@ -84,7 +78,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Boolean updateValidation(Product product, Model model) {
 
-        if (!product.getName().equals(findById(product.getId()).map(Product::getName).orElse(null))) {
+        if (!product.getName().equals(findById(product.getId()).getName())) {
             return productNameValidation(product.getName(), model);
         }
 

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
 import java.util.UUID;
 
 @Controller
@@ -45,8 +44,8 @@ public class UserController {
 
     @GetMapping("/update")
     public String userUpdatePage(@RequestParam(value = "id") UUID id, Model model) {
-        User user = userService.findById(id).orElse(null);
-        Objects.requireNonNull(user).setPassword(null);
+        User user = userService.findById(id);
+        user.setPassword(null);
         model.addAttribute("user", user);
         model.addAttribute("authorities", Authority.values());
         model.addAttribute("title", "Edit User");
@@ -62,19 +61,19 @@ public class UserController {
             return "User/userAdd";
         }
 
-        userService.update(user);
+        userService.save(user);
         return "redirect:/user/list";
     }
 
     @GetMapping("/delete")
     public String userDelete(@RequestParam(value = "id") UUID id) {
-        userService.findById(id).ifPresent(userService::delete);
+        userService.delete(userService.findById(id));
         return "redirect:/user/list";
     }
 
     @GetMapping("/")
     public String userView(@RequestParam(value = "id") UUID id, Model model) {
-        model.addAttribute("user", userService.findById(id).orElse(null));
+        model.addAttribute("user", userService.findById(id));
         model.addAttribute("title", "User");
         return "User/userView";
     }

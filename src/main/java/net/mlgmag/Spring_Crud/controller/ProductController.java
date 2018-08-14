@@ -2,7 +2,6 @@ package net.mlgmag.Spring_Crud.controller;
 
 import net.mlgmag.Spring_Crud.definition.ManufacturerService;
 import net.mlgmag.Spring_Crud.definition.ProductService;
-import net.mlgmag.Spring_Crud.model.Manufacturer;
 import net.mlgmag.Spring_Crud.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,7 +47,7 @@ public class ProductController {
     @GetMapping("/update")
     public String productUpdatePage(@RequestParam(value = "id") UUID id, Model model) {
         model.addAttribute("manufacturers", manufacturerService.findAll());
-        model.addAttribute("product", productService.findById(id).orElse(null));
+        model.addAttribute("product", productService.findById(id));
         model.addAttribute("title", "Edit Product");
         return "Product/productUpdate";
     }
@@ -63,20 +62,20 @@ public class ProductController {
         }
 
         product.getManufacturer().setName(manufacturerService
-                .findById(product.getManufacturer().getId()).map(Manufacturer::getName).orElse(null));
-        productService.update(product);
+                .findById(product.getManufacturer().getId()).getName());
+        productService.save(product);
         return "redirect:/product/list";
     }
 
     @GetMapping("/delete")
     public String productDelete(@RequestParam(value = "id") UUID id) {
-        productService.findById(id).ifPresent(productService::delete);
+        productService.delete(productService.findById(id));
         return "redirect:/product/list";
     }
 
     @GetMapping("/")
     public String productView(@RequestParam(value = "id") UUID id, Model model) {
-        model.addAttribute("product", productService.findById(id).orElse(null));
+        model.addAttribute("product", productService.findById(id));
         model.addAttribute("title", "Product");
         return "Product/productView";
     }

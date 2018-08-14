@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -33,22 +32,16 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 
     @Override
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void update(Manufacturer manufacturer) {
-        log.info("IN ManufacturerServiceImpl update {}", manufacturer);
-        manufacturerRepository.saveAndFlush(manufacturer);
-    }
-
-    @Override
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void delete(Manufacturer manufacturer) {
         log.info("IN ManufacturerServiceImpl delete {}", manufacturer);
         manufacturerRepository.delete(manufacturer);
     }
 
     @Override
-    public Optional<Manufacturer> findById(UUID uuid) {
-        log.info("IN ManufacturerServiceImpl findById {}", uuid);
-        return manufacturerRepository.findById(uuid);
+    public Manufacturer findById(UUID id) {
+        log.info("IN ManufacturerServiceImpl findById {}", id);
+        return manufacturerRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Manufacturer with id \"" + id + "\" not found"));
     }
 
     @Override
@@ -58,22 +51,23 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public Optional<Manufacturer> findByName(String name) {
+    public Manufacturer findByName(String name) {
         log.info("IN ManufacturerServiceImpl findByName {}", name);
-        return manufacturerRepository.findByName(name);
+        return manufacturerRepository.findByName(name)
+                .orElseThrow(() -> new IllegalStateException("Manufacturer with name \"" + name + "\" not found"));
     }
 
     @Override
     public Boolean manufacturerNameValidation(String name, Model model) {
-
-        if (findByName(name).isPresent()) {
+        try {
+            findByName(name);
             String error = "Manufacturer name already exist";
             log.info("IN ManufacturerServiceImpl manufacturerNameValidation {} ->", "Validation failed: " + error);
             model.addAttribute("DuplicateManufacturer", error);
             return true;
+        } catch (IllegalStateException e) {
+            return false;
         }
-
-        return false;
     }
 
     @Override
@@ -84,7 +78,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     @Override
     public Boolean updateValidation(Manufacturer manufacturer, Model model) {
 
-        if (!manufacturer.getName().equals(findById(manufacturer.getId()).map(Manufacturer::getName).orElse(null))) {
+        if (!manufacturer.getName().equals(findById(manufacturer.getId()).getName())) {
             return manufacturerNameValidation(manufacturer.getName(), model);
         }
 

@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -39,11 +38,6 @@ public class UserServiceImpl implements UserService {
         if (user.getAuthorities().contains(Authority.ADMIN)) {
             user.setAuthorities(ImmutableSet.of(Authority.USER, Authority.ADMIN));
         }
-        user.setCredentialsNonExpired(true);
-        user.setEnabled(true);
-        user.setCredentialsNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setAccountNonExpired(true);
         log.info("IN UserServiceImpl save {}", user);
         userRepository.save(user);
     }
@@ -53,30 +47,8 @@ public class UserServiceImpl implements UserService {
     public void registration(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setAuthorities(ImmutableSet.of(Authority.USER));
-        user.setCredentialsNonExpired(true);
-        user.setEnabled(true);
-        user.setCredentialsNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setAccountNonExpired(true);
         log.info("IN UserServiceImpl registration {}", user);
         userRepository.save(user);
-    }
-
-    @Override
-    @Transactional
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public void update(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        if (user.getAuthorities().contains(Authority.ADMIN)) {
-            user.setAuthorities(ImmutableSet.of(Authority.USER, Authority.ADMIN));
-        }
-        user.setCredentialsNonExpired(true);
-        user.setEnabled(true);
-        user.setCredentialsNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setAccountNonExpired(true);
-        log.info("IN UserServiceImpl update {}", user);
-        userRepository.saveAndFlush(user);
     }
 
     @Override
@@ -87,9 +59,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findById(UUID uuid) {
-        log.info("IN UserServiceImpl findById {}", uuid);
-        return userRepository.findById(uuid);
+    public User findById(UUID id) {
+        log.info("IN UserServiceImpl findById {}", id);
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("User with id \"" + id + "\" not found"));
     }
 
     @Override
@@ -99,41 +72,43 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByUsername(String username) {
+    public User findByUsername(String username) {
         log.info("IN UserServiceImpl findByUsername {}", username);
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalStateException("User with username \"" + username + "\" not found"));
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
+    public User findByEmail(String email) {
         log.info("IN UserServiceImpl findByEmail {}", email);
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalStateException("User with email \"" + email + "\" not found"));
     }
 
     @Override
     public Boolean usernameValidation(String username, Model model) {
-
-        if (findByUsername(username).isPresent()) {
+        try {
+            findByUsername(username);
             String error = "Username already exist";
             log.info("IN UserServiceImpl usernameValidation {} ->", "Validation failed: " + error);
             model.addAttribute("DuplicateUsername", error);
             return true;
+        } catch (IllegalStateException e) {
+            return false;
         }
-
-        return false;
     }
 
     @Override
     public Boolean emailValidation(String email, Model model) {
-
-        if (findByEmail(email).isPresent()) {
+        try {
+            findByEmail(email);
             String error = "Email already exist";
             log.info("IN UserServiceImpl emailValidation {} ->", "Validation failed: " + error);
             model.addAttribute("DuplicateEmail", error);
             return true;
+        } catch (IllegalStateException e) {
+            return false;
         }
-
-        return false;
     }
 
     @Override
@@ -145,13 +120,13 @@ public class UserServiceImpl implements UserService {
     public Boolean updateValidation(User user, Model model) {
 
         Boolean Error = false;
-        Optional<User> userOptional = findById(user.getId());
+        User userFromDb = findById(user.getId());
 
-        if (!user.getUsername().equals(userOptional.map(User::getUsername).orElse(null))) {
+        if (!user.getUsername().equals(userFromDb.getUsername())) {
             Error = usernameValidation(user.getUsername(), model);
         }
 
-        if (!user.getEmail().equals(userOptional.map(User::getEmail).orElse(null))) {
+        if (!user.getEmail().equals(userFromDb.getEmail())) {
             Error = emailValidation(user.getEmail(), model);
         }
 

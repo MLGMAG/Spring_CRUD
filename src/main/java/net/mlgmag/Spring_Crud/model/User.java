@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -42,15 +43,15 @@ public class User implements UserDetails {
     @ElementCollection(targetClass = Authority.class, fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "id"))
     @Column(name = "authority", columnDefinition = "VARCHAR(255)", nullable = false)
-    private Set<Authority> authorities;
+    private Set<Authority> authorities = new HashSet<>();
 
     @Column(name = "NonExpired", columnDefinition = "boolean")
-    private boolean isAccountNonExpired;
+    private boolean isAccountNonExpired = true;
     @Column(name = "NonLocked", columnDefinition = "boolean")
-    private boolean isAccountNonLocked;
+    private boolean isAccountNonLocked = true;
     @Column(name = "CredentialsNonExpired", columnDefinition = "boolean")
-    private boolean isCredentialsNonExpired;
+    private boolean isCredentialsNonExpired = true;
     @Column(name = "Enabled", columnDefinition = "boolean")
-    private boolean isEnabled;
+    private boolean isEnabled = true;
 
 }

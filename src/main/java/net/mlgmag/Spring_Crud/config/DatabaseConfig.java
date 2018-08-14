@@ -16,8 +16,6 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Properties;
 
 @Configuration
@@ -30,7 +28,7 @@ public class DatabaseConfig {
     private Environment env;
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws URISyntaxException {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
 
         entityManagerFactory.setDataSource(dataSource());
@@ -42,17 +40,14 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public DataSource dataSource() throws URISyntaxException {
+    public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
 
         //DataBase
-        URI dbUri = new URI(env.getRequiredProperty("database.uri"));
-        String username = dbUri.getUserInfo().split(":")[0];
-        String password = dbUri.getUserInfo().split(":")[1];
-        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
-        dataSource.setUrl(dbUrl);
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
+        dataSource.setUrl(env.getRequiredProperty("database.url"));
+        dataSource.setDriverClassName(env.getRequiredProperty("database.driver"));
+        dataSource.setUsername(env.getRequiredProperty("database.user"));
+        dataSource.setPassword(env.getRequiredProperty("database.password"));
 
         //Connection Pool
         dataSource.setInitialSize(Integer.valueOf(env.getRequiredProperty("database.initialSize")));
@@ -67,7 +62,7 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager() throws URISyntaxException {
+    public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
 
